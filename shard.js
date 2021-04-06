@@ -16,7 +16,7 @@ manager.on('shardCreate', shard => {
   console.log(chalk.blue(`[Shard]`), chalk.green(`[Launch]`),`Launched Shard With ID:`, chalk.green(`${shard.id}`))
   if(shard.manager.totalShards == shard.id + 1) {
     shard.on('ready', () => {
-      axios.post(process.env.REGULAR_WEBHOOK, {
+      axios.post(process.env.SHARD_WEBHOOK, {
         "content": null,
         "embeds": [
           {
