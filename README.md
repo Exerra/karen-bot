@@ -20,5 +20,7 @@
 ## Special thanks to
 
 [@Salint](https://github.com/Salint) for helping out in general
+
 [@levichlev](https://github.com/levichlev) for helping out with the Spotify command
+
 [@Julz4455](https://github.com/Julz4455) for not getting angry that I borrowed some code
