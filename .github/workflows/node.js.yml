@@ -1,0 +1,56 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x, 15.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm ci
+    - run: npm run build --if-present
+    - name: Lint Action
+      if: ${{ github.event_name == 'pull_request' }}
+      uses: wearerequired/lint-action@v1.7.0
+
+    # - name: If 14.x succesful, IFTTT
+    #   if: ${{ success() && matrix.node-version == "14.x" }}
+    #   run: "curl -X POST -H \"Content-Type: application/json\" -d '{\"value1\": \"Karen Bot 14.x CI succesful!\", \"value2\": \"Karen Bot CI\"}' https://maker.ifttt.com/trigger/karen-started/with/key/VGe4NzQgMTJKZ1o2kzLKqMqED7V63eco1ILRUmLvfD"
+
+    # - name: If 15.x succesful, IFTTT
+    #   if: ${{ success() && matrix.node-version == "15.x" }}
+    #   run: "curl -X POST -H \"Content-Type: application/json\" -d '{\"value1\": \"Karen Bot 15.x CI succesful!\", \"value2\": \"Karen Bot CI\"}' https://maker.ifttt.com/trigger/karen-started/with/key/VGe4NzQgMTJKZ1o2kzLKqMqED7V63eco1ILRUmLvfD"
+
+    # - name: If 14.x failure, IFTTT
+    #   if: ${{ failure() && matrix.node-version == "14.x" }}
+    #   run: "curl -X POST -H \"Content-Type: application/json\" -d '{\"value1\": \"Karen Bot 14.x CI failed!\", \"value2\": \"Karen Bot CI\"}' https://maker.ifttt.com/trigger/karen-started/with/key/VGe4NzQgMTJKZ1o2kzLKqMqED7V63eco1ILRUmLvfD"
+
+    # - name: If 15.x failure, IFTTT
+    #   if: ${{ failure() && matrix.node-version == "15.x" }}
+    #   run: "curl -X POST -H \"Content-Type: application/json\" -d '{\"value1\": \"Karen Bot 15.x CI failed!\", \"value2\": \"Karen Bot CI\"}' https://maker.ifttt.com/trigger/karen-started/with/key/VGe4NzQgMTJKZ1o2kzLKqMqED7V63eco1ILRUmLvfD"
+    
+    - name: If succeeded, IFTTT
+      if: ${{ success() }}
+      run: "curl -X POST -H \"Content-Type: application/json\" -d '{\"value1\": \"Karen Bot CI succesful!\", \"value2\": \"Karen Bot CI\"}' https://maker.ifttt.com/trigger/karen-started/with/key/VGe4NzQgMTJKZ1o2kzLKqMqED7V63eco1ILRUmLvfD"
+
+    - name: If failure, IFTTT
+      if: ${{ failure() }}
+      run: "curl -X POST -H \"Content-Type: application/json\" -d '{\"value1\": \"Karen Bot CI failed!\", \"value2\": \"Karen Bot CI\"}' https://maker.ifttt.com/trigger/karen-started/with/key/VGe4NzQgMTJKZ1o2kzLKqMqED7V63eco1ILRUmLvfD"
