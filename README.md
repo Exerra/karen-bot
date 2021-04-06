@@ -16,3 +16,9 @@
 * Use Emoji for commit titles (Read about them [here](https://gitmoji.dev))
 * Keep commit titles short and then explain them in the description of the commit.
 * **DO NOT PUSH TO MASTER BRANCH!** Push to a new branch (e.g username-whatyouchanged and create a PR)
+
+## Special thanks to
+
+[@Salint](https://github.com/Salint) for helping out in general
+[@levichlev](https://github.com/levichlev) for helping out with the Spotify command
+[@Julz4455](https://github.com/Julz4455) for not getting angry that I borrowed some code
