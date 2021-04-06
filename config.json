@@ -1,0 +1,91 @@
+{
+    "prefix": "m!",
+    "botversion": "7.0.0",
+    "logo": "https://exerra.xyz/assets/002pfp.gif",
+    "creator": "Occult Waifu#1659",
+    "color": [
+        173,
+        145,
+        255
+    ],
+    "colordecimal": "AD91FF",
+    "botname": "Karen Bot",
+    "DevIDs": [
+        "391878815263096833",
+        "223739857812324353",
+        "334067823229796367"
+    ],
+    "resourceIntensiveTaskAllowedIDs": [
+        "391878815263096833",
+        "223739857812324353",
+        "334067823229796367",
+        "426452196893261824"
+    ],
+    "badwords": [
+        "fuck",
+        "bitch",
+        "shit",
+        "cunt",
+        "ass",
+        "asshole",
+        "nigga",
+        "nigger",
+        "niggers",
+        "nibba",
+        "pussy",
+        "dick",
+        "f*ck",
+        "cyka",
+        "сука",
+        "debil",
+        "дебил",
+        "хуи"
+    ],
+    "lofi_yt": [
+        "https://www.youtube.com/watch?v=4X_uoKF2Wvo",
+        "https://www.youtube.com/watch?v=wAPCSnAhhC8",
+        "https://www.youtube.com/watch?v=ivNIpLdzh7M",
+        "https://www.youtube.com/watch?v=lTRiuFIWV54",
+        "https://www.youtube.com/watch?v=s49CT4DTAkw",
+        "https://www.youtube.com/watch?v=XXGG39bHQi4",
+        "https://www.youtube.com/watch?v=nH5o0wG2Vqc",
+        "https://www.youtube.com/watch?v=9r8VtP5kdoo",
+        "https://www.youtube.com/watch?v=tQvNJDUhzBQ",
+        "https://www.youtube.com/watch?v=kTL_hGa64Zo",
+        "https://www.youtube.com/watch?v=dR17U5-VKtw",
+        "https://www.youtube.com/watch?v=snphzO9UFJM",
+        "https://www.youtube.com/watch?v=yGTUPQ-6tg8"
+    ],
+    "swearreply": [
+        "Sucks to be you, yknow getting your message deleted and all",
+        "Do you know what you just fucking did? Your stupid fat donkey ass just said a bad fucking word. This is a fucking christian server you ugly asswipe. No wonder nobody loves you.",
+        "HOW MANY TIMES DO I HAVE TO TELL YOU?? WHY IS YOUR STUPID ASS STILL SWEARING. ANSWER ME YOU ASS WIPE.",
+        "Kids these days 🙄",
+        "sHUT UP I DONT CARE! GO ASSAULT AN INANIMATE OBJECT FOR FUCKS SAKE",
+        "lOoK aT mE, i LiKe tO sWear lMao rOfl iM so COoL",
+        "🤮 disgusting",
+        "HEY\nWatch your language you fucking dumbass how many times do I have to tell you",
+        "Back in my day we used to hang kids like you"
+    ],
+    "helpcreatorreply": [
+        "Testing today, are we?",
+        "Good to see you, creator.",
+        "Finally, you're here.",
+        "Can you help me?"
+    ],
+    "lofiyt": [
+      "https://www.youtube.com/watch?v=4X_uoKF2Wvo",
+      "https://www.youtube.com/watch?v=wAPCSnAhhC8",
+      "https://www.youtube.com/watch?v=ivNIpLdzh7M",
+      "https://www.youtube.com/watch?v=lTRiuFIWV54",
+      "https://www.youtube.com/watch?v=s49CT4DTAkw",
+      "https://www.youtube.com/watch?v=XXGG39bHQi4",
+      "https://www.youtube.com/watch?v=nH5o0wG2Vqc",
+      "https://www.youtube.com/watch?v=9r8VtP5kdoo",
+      "https://www.youtube.com/watch?v=tQvNJDUhzBQ",
+      "https://www.youtube.com/watch?v=kTL_hGa64Zo",
+      "https://www.youtube.com/watch?v=dR17U5-VKtw",
+      "https://www.youtube.com/watch?v=snphzO9UFJM",
+      "https://www.youtube.com/watch?v=yGTUPQ-6tg8"
+    ]
+}

@@ -1,0 +1,43 @@
+{
+  "name": "karen-bot",
+  "version": "7.0.0",
+  "description": "The marvelous Karen brought to Discord!",
+  "main": "shard.js",
+  "scripts": {
+    "start": "node shard.js",
+    "test": "pm2 start shard.js --name karen"
+  },
+  "engines": {
+    "node": "14.x.x"
+  },
+  "author": "Amelia (Exerra)",
+  "license": "MIT",
+  "dependencies": {
+    "@discordjs/opus": "^0.3.3",
+    "anilist-node": "^1.6.1",
+    "ascii-table": "0.0.9",
+    "axios": "^0.21.1",
+    "canvas": "^2.7.0",
+    "chalk": "^4.1.0",
+    "discord-backup": "^2.4.1",
+    "discord-slash-commands-client": "^1.1.1",
+    "discord-welcome": "^1.5.1",
+    "discord.js": "^12.5.1",
+    "dotenv": "^8.2.0",
+    "ffmpeg-static": "^4.2.7",
+    "hastebin-gen": "^2.0.5",
+    "kahoot-spam": "^1.1.8",
+    "lyrics-parse": "^1.1.0",
+    "mkdirp": "^1.0.4",
+    "moment": "^2.29.1",
+    "moment-duration-format": "^2.3.2",
+    "node-fetch": "^2.6.1",
+    "node-spotify-api": "^1.1.1",
+    "nsfai": "^2.0.0",
+    "qrcode": "^1.4.4",
+    "turndown": "^5.0.1",
+    "twitter": "^1.7.1",
+    "winston": "^3.3.3",
+    "ytdl-core": "^4.5.0"
+  }
+}

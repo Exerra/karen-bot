@@ -102,3 +102,16 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Some commands hush hush (Most are WIP)
+sms.*
+events
+cmdsOLDOLD
+add*
+bal*
+canva*
+discord*
+jail*
+level*
+music*
+agree*
