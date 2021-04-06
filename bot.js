@@ -78,7 +78,7 @@ for(const file of commandFiles) {
     })
 	}
 }
-let evAlpha = {}
+/* let evAlpha = {}
 const eventFiles = fs.readdirSync('events/').filter(file => file.endsWith('.js'))
 console.log(chalk.magenta('[Karen Bot]'), chalk.yellow(`[Event]`), chalk.white('[Load]'), `Loading a total of ${eventFiles.length} events`)
 for(const ev of eventFiles) {
@@ -110,7 +110,7 @@ for(const ev of eventFiles) {
       }
     })
 	}
-}
+} */
 
 // Gets settingsmap
 axios({
