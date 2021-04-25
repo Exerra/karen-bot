@@ -49,7 +49,7 @@ module.exports = {
                 msg.channel
                     .awaitMessages(filter, {
                         max: 0,
-                        time: 05000
+                        time: "05000"
                     })
                     .then(collected => {
                         if (collected) {
