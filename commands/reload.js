@@ -49,11 +49,11 @@ module.exports = {
                 msg.channel
                     .awaitMessages(filter, {
                         max: 0,
-                        time: 05000
+                        time: "05000"
                     })
                     .then(collected => {
                         if (collected) {
-                            newProfilePicture = collected.first().content;
+                            let newProfilePicture = collected.first().content;
                             client.user.setAvatar(newProfilePicture)
                             msg.channel.send(`Changed profile picture!`);
                         }
