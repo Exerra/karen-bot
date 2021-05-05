@@ -12,7 +12,7 @@ module.exports = {
         let config = app.config;
         if (msg.member.hasPermission('KICK_MEMBERS')) {
 
-            let member = msg.mentions.members.first() || msg.guild.members.get(args[1]);
+            let member = msg.mentions.members.first() || msg.guild.members.cache.get(args[1]);
 
             if (!member)
                 return msg.reply("Please mention a valid member of this server");
