@@ -342,8 +342,10 @@ client.once('ready', async () => {
       })
       .catch(console.error);
     }
-    myTimer()
-    var myVar = setInterval(myTimer, 600000)
+    if (process.env.VALIDATION  == undefined) {
+      myTimer()
+      var myVar = setInterval(myTimer, 600000)
+    }
     
     /* fs.readdir("./cmds", function(err, files) {
         files.forEach(function(name) {
