@@ -9,7 +9,7 @@ module.exports = {
     const app = require('../bot.js');
     let config = app.config;
     if (msg.member.hasPermission('BAN_MEMBERS')) {
-      let member = msg.mentions.members.first() || msg.guild.members.get(args[1])
+      let member = msg.mentions.members.first() || msg.guild.members.cache.get(args[0])
       if (!member)
           return msg.reply("Please mention a valid member of this server");
       if (!member.bannable)
