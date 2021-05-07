@@ -287,23 +287,25 @@ const serverFunc = {
 client.once('ready', async () => {
     logger.log('info', `Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`);
 
-    axios({
-      "method": "POST",
-      "url": `${process.env.API_SERVER}/karen/logs/`,
-      "headers": {
-        "Authorization": process.env.AUTH_B64,
-        "Content-Type": "application/json; charset=utf-8",
-        'User-Agent': process.env.AUTH_USERAGENT
-      },
-      "auth": {
-        "username": process.env.AUTH_USER,
-        "password": process.env.AUTH_PASS
-      },
-      "data": {
-        "content": `Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`,
-        "type": "info"
-      }
-    })
+    if (process.env.VALIDATION  == undefined) {
+      axios({
+        "method": "POST",
+        "url": `${process.env.API_SERVER}/karen/logs/`,
+        "headers": {
+          "Authorization": process.env.AUTH_B64,
+          "Content-Type": "application/json; charset=utf-8",
+          'User-Agent': process.env.AUTH_USERAGENT
+        },
+        "auth": {
+          "username": process.env.AUTH_USER,
+          "password": process.env.AUTH_PASS
+        },
+        "data": {
+          "content": `Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`,
+          "type": "info"
+        }
+      }) 
+    }
 
     /* client.user.setActivity(`${client.guilds.cache.size} servers | ` + config.prefix +`help`, { type: "WATCHING" }); */
     const why = await (await fetch(`https://nekos.life/api/v2/why`)).json()

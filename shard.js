@@ -10,28 +10,31 @@ const manager = new ShardingManager('./bot.js', {
   mode: "process"
 })
 const exec = require('child_process').execSync
+const nodeSpotifyApi = require('node-spotify-api')
 
 // These handlers are safe here
 manager.on('shardCreate', shard => {
   console.log(chalk.blue(`[Shard]`), chalk.green(`[Launch]`),`Launched Shard With ID:`, chalk.green(`${shard.id}`))
   if(shard.manager.totalShards == shard.id + 1) {
     shard.on('ready', () => {
-      axios.post(process.env.SHARD_WEBHOOK, {
-        "content": null,
-        "embeds": [
-          {
-            "title": `Shard ${shard.id} online`,
-            "description": `Shard ${shard.id} is now online!`,
-            "color": 11375103,
-            "author": {
-              "name": "Karen Bot",
-              "icon_url": "https://karen.exerra.xyz/assets/BotLogoNoOutline.png"
+      if (process.env.VALIDATION == undefined) {
+        axios.post(process.env.SHARD_WEBHOOK, {
+          "content": null,
+          "embeds": [
+            {
+              "title": `Shard ${shard.id} online`,
+              "description": `Shard ${shard.id} is now online!`,
+              "color": 11375103,
+              "author": {
+                "name": "Karen Bot",
+                "icon_url": "https://karen.exerra.xyz/assets/BotLogoNoOutline.png"
+              }
             }
-          }
-        ],
-        "username": "Karen Bot Shard",
-        "avatar_url": "https://karen.exerra.xyz/assets/BotLogoNoOutline.png"
-      })
+          ],
+          "username": "Karen Bot Shard",
+          "avatar_url": "https://karen.exerra.xyz/assets/BotLogoNoOutline.png"
+        })
+      }
       /* exec(`curl -X POST -H "Content-Type: application/json" -d '{"value1": "Karen Bot is now online and ready to go!", "value2": "Karen Bot Started"}' process.env.IFFT_WEBHOOK`) */
     })
   }
