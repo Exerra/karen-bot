@@ -22,7 +22,7 @@ var nsfai = new NSFAI(process.env.NSFAI_KEY);
 let commands = {}; 
 
 // mobile status
-const Constants = require('./node_modules/discord.js/src/util/Constants.js')
+const Constants = require('./node_modules/discord.js/src/util/Constants.js') // skipcq: JS-0260
 Constants.DefaultOptions.ws.properties.$browser = 'Discord iOS' // Or Discord Android
 
 // winston logger (hopefully gonna replace console.log with this)
