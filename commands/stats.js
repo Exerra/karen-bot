@@ -6,7 +6,8 @@ require('moment-duration-format')
 module.exports = {
   name: 'stats',
   description: '',
-  type: '',
+  type: 'Private',
+  permissionsLevel: 'Bot Owner',
   async execute(client, msg, args) {
     const app = require('../bot.js');
     let config = app.config;
