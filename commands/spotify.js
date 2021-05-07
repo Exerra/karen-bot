@@ -13,23 +13,28 @@ module.exports = {
   execute(client, msg, args) {
     const app = require('../bot.js');
     let config = app.config;
+    // defines some funky args stuff
     args[0] = args.join(' ')
     args[0] = args[0].substring(0)
+
+    // creates the spotify object.
+    // i suspect i culd make it const for the prettier colours...
+    // yeah ima do that
     var spotify = new Spotify({
         id: process.env.SPOTIFY_ID,
         secret: process.env.SPOTIFY_SECRET
     });
 
-/*     String.prototype.capitalize = () => {
-      return this.charAt(0).toUpperCase() + this.slice(1);
-    } */
-
+    // Tries to search
     try {
         spotify
             .search({ type: 'track', query: args[0], limit: '1' })
             .then(function action(response) {
+                // If it doesn't find a resposne, return error
                 if (response.tracks.items[0] == null) return msg.channel.send(`Error: No search results for \`${args[0]}\``)
+                // idk?
                 action.response = response;
+                // Sends a "looking up" message, then edits it to show the response stuff
                 msg.channel.send(`:compass: Looking up \`${args[0]}\``).then(async (msg) => {
                     var popularity = response.tracks.items[0].popularity / 10;
                     const embed = new Discord.MessageEmbed()
@@ -41,6 +46,8 @@ module.exports = {
                     embed.addField('Popularity', `${Math.trunc(response.tracks.items[0].popularity / 10)} / 10`)
                     embed.addField('Album name', response.tracks.items[0].album.name)
                     embed.addField('Album Type', response.tracks.items[0].album.album_type.capitalize())
+                    // thanks to @levichlev for making this thingy
+                    // i forgot about "for" loops (i dont really know why) when making this and was stumped on how to make it nicer if there are multiple artists :)
                     var aname = 'Artist\'s name'
                     if (response.tracks.items[0].album.artists.length != 1) {
                         var a = [];
@@ -49,16 +56,13 @@ module.exports = {
                         }
                         aname = 'Artist\'s names'
                         embed.addField(aname, a.join('\n'))
-                    }
-                    else {
+                    } else {
                         embed.addField(aname, response.tracks.items[0].album.artists[0].name)
                     }
                     embed.addField('Release Date', response.tracks.items[0].album.release_date + '\n(Year-Month-Day)', true)
                     embed.setTimestamp()
                     return msg.edit('Here you go!').then(() => { msg.edit(embed) })
-
-
-                        .catch(function (err) {
+                        .catch((err) => {
                             console.error('Error occurred: ' + err);
                         });
 
