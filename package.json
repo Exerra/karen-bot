@@ -1,6 +1,6 @@
 {
   "name": "karen-bot",
-  "version": "7.0.0",
+  "version": "7.1.0",
   "description": "The marvelous Karen brought to Discord!",
   "main": "shard.js",
   "scripts": {
@@ -20,7 +20,6 @@
     "canvas": "^2.7.0",
     "chalk": "^4.1.0",
     "discord-backup": "^2.4.1",
-    "discord-slash-commands-client": "^1.1.1",
     "discord-welcome": "^1.5.1",
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
