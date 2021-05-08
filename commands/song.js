@@ -3,13 +3,13 @@ const Spotify = require('node-spotify-api')
 require('dotenv').config()
 
 module.exports = {
-  name: 'spotify',
+  name: 'song',
   description: 'Searches a song and returns Popularity, Album name, Album type, Artist name(s) and Release date',
   type: 'Search',
   args: true,
   usage: '[song]',
   example: 'Break my heart',
-  aliases: ['song'],
+  aliases: ['spotify'],
   execute(client, msg, args) {
     const app = require('../bot.js');
     let config = app.config;

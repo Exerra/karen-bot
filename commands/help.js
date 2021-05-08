@@ -38,7 +38,7 @@ module.exports = {
       help.addField('Reddit', 'Info about Reddit commands')
       help.addField('Profile', `Profile command.\nUsage: ${config.prefix}profile`)
       help.addField('Artist', `Searches up a spotify artist.\nUsage: ${config.prefix}artist [artist]`)
-      help.addField('Spotify', `Searches up a spotify song.\nUsage: ${config.prefix}spotify [keyword(s)]`)
+      help.addField('Song', `Searches up a spotify song.\nUsage: ${config.prefix}song [keyword(s)]`)
       help.addField('Suggest', `Suggest a command/feature.\nUsage:${config.prefix}suggest [suggestion]`)
       help.setFooter(`With ❤️ from ${config.creator} | Page 1 out of ${helppagevar}`, config.logo)
       msg.author.send(help);
