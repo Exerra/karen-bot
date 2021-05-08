@@ -20,7 +20,7 @@ module.exports = {
     // creates the spotify object.
     // i suspect i culd make it const for the prettier colours...
     // yeah ima do that
-    var spotify = new Spotify({
+    const spotify = new Spotify({
         id: process.env.SPOTIFY_ID,
         secret: process.env.SPOTIFY_SECRET
     });
@@ -36,7 +36,6 @@ module.exports = {
                 action.response = response;
                 // Sends a "looking up" message, then edits it to show the response stuff
                 msg.channel.send(`:compass: Looking up \`${args[0]}\``).then(async (msg) => {
-                    var popularity = response.tracks.items[0].popularity / 10;
                     const embed = new Discord.MessageEmbed()
                     embed.setTitle(response.tracks.items[0].name)
                     embed.setURL(response.tracks.items[0].external_urls.spotify)
