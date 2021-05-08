@@ -3,13 +3,13 @@ const Spotify = require('node-spotify-api')
 require('dotenv').config()
 
 module.exports = {
-  name: 'spotify',
+  name: 'song',
   description: 'Searches a song and returns Popularity, Album name, Album type, Artist name(s) and Release date',
   type: 'Search',
   args: true,
   usage: '[song]',
   example: 'Break my heart',
-  aliases: ['song'],
+  aliases: ['spotify'],
   execute(client, msg, args) {
     const app = require('../bot.js');
     let config = app.config;
@@ -20,7 +20,7 @@ module.exports = {
     // creates the spotify object.
     // i suspect i culd make it const for the prettier colours...
     // yeah ima do that
-    var spotify = new Spotify({
+    const spotify = new Spotify({
         id: process.env.SPOTIFY_ID,
         secret: process.env.SPOTIFY_SECRET
     });
@@ -36,7 +36,6 @@ module.exports = {
                 action.response = response;
                 // Sends a "looking up" message, then edits it to show the response stuff
                 msg.channel.send(`:compass: Looking up \`${args[0]}\``).then(async (msg) => {
-                    var popularity = response.tracks.items[0].popularity / 10;
                     const embed = new Discord.MessageEmbed()
                     embed.setTitle(response.tracks.items[0].name)
                     embed.setURL(response.tracks.items[0].external_urls.spotify)
