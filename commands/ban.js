@@ -9,11 +9,19 @@ module.exports = {
     const app = require('../bot.js');
     let config = app.config;
     if (msg.member.hasPermission('BAN_MEMBERS')) {
+
+        // Defines member
+        // msg.mentions.members.first() checks if a member is mentioned (e.g "m!ban @Occult")
+        // msg.guild.members.cache.get() gets member by ID if a member is not mentioned (e.g "m!ban 391878815263096833") 
         let member = msg.mentions.members.first() || msg.guild.members.cache.get(args[0])
+        // If it can't find a user (if an invalid member is mentioned, or an invalid ID is provided), send an error
         if (!member) return msg.reply("Please mention a valid member of this server");
+        // If Karen can't ban a user (e.g if Karen's roles are below the person meant to be banned, or if Karen doesn't have permissions), throw an error
         if (!member.bannable) return msg.reply("I cannot ban this user! Do they have a higher role? Do I have ban permissions?");
         
+        // Define the reason
         let reason = args.slice(1).join(' ');
+        // If reason is undefined, make the reason to that
         if (!reason) reason = "No reason provided";
 
         // Time for public humiliation
