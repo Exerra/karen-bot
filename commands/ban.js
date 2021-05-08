@@ -25,8 +25,7 @@ module.exports = {
         if (!reason) reason = "No reason provided";
 
         // Time for public humiliation
-        await member.ban({reason})
-            .catch(error => msg.reply(`Sorry ${msg.author} I couldn't ban because of : ${error}`));
+        await member.ban({reason}).catch(error => msg.reply(`Sorry ${msg.author} I couldn't ban because of : ${error}`));
         const embed = {
             title: `Member banned`,
             description: `${member.user.tag} has been banned`,
@@ -66,9 +65,9 @@ module.exports = {
         if (!modLogChannelConst) return;
         // Send embed
         modLogChannelConst.send({ embed });
-  }
-  else {
-      msg.channel.send('Looks like somebody here doesn\'t have ban permissions!')
-  }
+    }
+    else {
+        msg.channel.send('Looks like somebody here doesn\'t have ban permissions!')
+    }
   }
 }
