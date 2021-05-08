@@ -10,10 +10,9 @@ module.exports = {
     let config = app.config;
     if (msg.member.hasPermission('BAN_MEMBERS')) {
         let member = msg.mentions.members.first() || msg.guild.members.cache.get(args[0])
-        if (!member)
-            return msg.reply("Please mention a valid member of this server");
-        if (!member.bannable)
-            return msg.reply("I cannot ban this user! Do they have a higher role? Do I have ban permissions?");
+        if (!member) return msg.reply("Please mention a valid member of this server");
+        if (!member.bannable) return msg.reply("I cannot ban this user! Do they have a higher role? Do I have ban permissions?");
+        
         let reason = args.slice(1).join(' ');
         if (!reason) reason = "No reason provided";
 
