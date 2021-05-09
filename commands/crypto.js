@@ -4,9 +4,9 @@ module.exports = {
   name: 'crypto',
   description: 'A command that checks crypto prices',
   type: 'search',
-  args: false,
-  usage: '',
-  example: '',
+  args: true,
+  usage: '[cryptocurrency]',
+  example: 'dogecoin',
   aliases: ['c'],
   async execute(client, msg, args) {
     // Defines stuff
@@ -21,20 +21,27 @@ module.exports = {
     args[0] = args[0].toLowerCase()
     let median_transaction_fee
 
-    // A super shitty system of getting coins
+    // * A super shitty system of getting coins
     // but idk how else to do it
-    // maybe switch?
+    // ? maybe switch
     // idk too much about them
+    // TODO: add more coins
     if (args[0] == 'bitcoin' || args[0] == 'btc') crypto = 'Bitcoin'
     else if (args[0] == 'dogecoin' || args[0] == 'doge') crypto = 'Dogecoin'
     else if (args[0] == 'ethereum' || args[0] == 'eth') crypto = 'Ethereum'
     else if (args[0] == 'litecoin' || args[0] == 'ltc') crypto = 'Litecoin'
+    else if (args[0] == 'ripple' || args[0] == 'xrp') crypto = 'Ripple'
+    else if (args[0] == 'groestlcoin' || args[0] == 'grs') crypto = 'Groestlcoin'
+    else if (args[0] == 'stellar' || args[0] == 'xlm') crypto = 'Stellar'
     else if (args[0] == 'dash') crypto = 'Dash'
     // If all the if statements fail, return an error and return
     else {
       embed.setColor('RED')
-      embed.setTitle('Error: No (valid) crypto mentioned')
-      msg.channel.send(embed)
+      embed.setAuthor('Error')
+      embed.setTitle('No (valid) cryptocurrency mentioned')
+      embed.setThumbnail('https://www.freeiconspng.com/uploads/orange-error-icon-0.png')
+      embed.setDescription('For a full list of supported cryptocurrencies, [click here!](https://docs.karen.exerra.xyz/supported-crypto-currencies)')
+      msg.channel.send(embed) 
       return
     }
 
@@ -52,16 +59,16 @@ module.exports = {
     // I added a bit of code to change the amount of numbers after decimals if needed
     if (parseFloat(result.median_transaction_fee_usd_24h) <= 0.01) median_transaction_fee = parseFloat(result.median_transaction_fee_usd_24h).toFixed(11)
     else median_transaction_fee = parseFloat(result.median_transaction_fee_usd_24h).toFixed(2)
-
+    
     // This adds a bunch of fields for the embed, pretty self-explanatory
     embed.addFields(
       { name: "Price", value: `$${result.market_price_usd}`, inline: false },
       { name: "Price change (24h)", value: `${parseFloat(result.market_price_usd_change_24h_percentage).toFixed(2)}%`, inline: true},
       { name: "Median transaction fee (24h)", value: `$${median_transaction_fee}`, inline: true},
       { name: "Inflation (24h)", value: `$${parseInt(result.inflation_usd_24h)}`, inline: true  },
-      { name: "Blocks", value: result.blocks, inline: true },
-      { name: "Market dominance", value: `${result.market_dominance_percentage}%`, inline: true},
-      {name : "Transactions", value: `${result.transactions}`, inline: true}
+      { name: "Blocks", value: parseInt(result.blocks), inline: true },
+      { name: "Market dominance", value: `${parseFloat(result.market_dominance_percentage)}%`, inline: true},
+      {name : "Transactions", value: `${parseInt(result.transactions)}`, inline: true}
     )
     msg.channel.send(embed)
   }
