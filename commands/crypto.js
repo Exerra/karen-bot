@@ -14,10 +14,13 @@ module.exports = {
     const fetch = require('node-fetch')
     let crypto = String()
     const embed = new Discord.MessageEmbed().setTimestamp().setColor(config.color)
+    args[0] = args[0].toLowerCase()
 
     if (args[0] == 'bitcoin' || args[0] == 'btc') crypto = 'Bitcoin'
     else if (args[0] == 'dogecoin' || args[0] == 'doge') crypto = 'Dogecoin'
     else if (args[0] == 'ethereum' || args[0] == 'eth') crypto = 'Ethereum'
+    else if (args[0] == 'litecoin' || args[0] == 'ltc') crypto = 'Litecoin'
+    else if (args[0] == 'dash') crypto = 'Dash'
     else {
       embed.setColor('RED')
       embed.setTitle('Error: No (valid) crypto mentioned')
@@ -30,10 +33,13 @@ module.exports = {
     embed.setAuthor('Blockchair', 'https://loutre.blockchair.io/images/twitter_card.png')
     embed.setTitle(`Statistics for ${crypto}`)
     embed.setThumbnail(`https://cdn.exerra.xyz/files/png/crypto/${crypto}.png`)
+    let median_transaction_fee
+    if (parseFloat(result.median_transaction_fee_usd_24h) <= 0.01) median_transaction_fee = parseFloat(result.median_transaction_fee_usd_24h).toFixed(11)
+    else median_transaction_fee = parseFloat(result.median_transaction_fee_usd_24h).toFixed(2)
     embed.addFields(
       { name: "Price", value: `$${result.market_price_usd}`, inline: false },
       { name: "Price change (24h)", value: `${parseFloat(result.market_price_usd_change_24h_percentage).toFixed(2)}%`, inline: true},
-      { name: "Median transaction fee (24h)", value: `$${parseFloat(result.median_transaction_fee_usd_24h).toFixed(2)}`, inline: true},
+      { name: "Median transaction fee (24h)", value: `$${median_transaction_fee}`, inline: true},
       { name: "Inflation (24h)", value: `$${parseInt(result.inflation_usd_24h)}`, inline: true  },
       { name: "Blocks", value: result.blocks, inline: true },
       { name: "Market dominance", value: `${result.market_dominance_percentage}%`, inline: true},
