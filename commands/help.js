@@ -26,7 +26,7 @@ module.exports = {
       devhelp.addField('Eval', 'Evaluates js code')
       devhelp.setFooter(`With ❤️ from ${config.creator} | Page 1 out of ${helppagevar}`, config.logo)
     }
-    if (args[1] == undefined || args[1] == '1') {
+    if (args[0] == undefined || args[0] == '1') {
       var help = new Discord.MessageEmbed()
       if (allowedToUse) help.setTitle(config.helpcreatorreply[Math.floor(Math.random() * config.helpcreatorreply.length)])
       else help.setTitle(`Welcome ${msg.author.username}`)
@@ -38,13 +38,13 @@ module.exports = {
       help.addField('Reddit', 'Info about Reddit commands')
       help.addField('Profile', `Profile command.\nUsage: ${config.prefix}profile`)
       help.addField('Artist', `Searches up a spotify artist.\nUsage: ${config.prefix}artist [artist]`)
-      help.addField('Spotify', `Searches up a spotify song.\nUsage: ${config.prefix}spotify [keyword(s)]`)
+      help.addField('Song', `Searches up a spotify song.\nUsage: ${config.prefix}song [keyword(s)]`)
       help.addField('Suggest', `Suggest a command/feature.\nUsage:${config.prefix}suggest [suggestion]`)
       help.setFooter(`With ❤️ from ${config.creator} | Page 1 out of ${helppagevar}`, config.logo)
-      msg.channel.send(help);
+      msg.author.send(help);
 
       // if args 1 is undefined then sends mod and reddit commands
-      if (args[1] == undefined) {
+      if (args[0] == undefined) {
         // sends reddit commands
         let reddit = new Discord.MessageEmbed()
         reddit.setTitle('Reddit commands')
@@ -69,13 +69,14 @@ module.exports = {
         moderation.addField('Warn', `Warns a mentioned user. Person using the command must have KICK_MEMBERS permission.\nUsage: ${config.prefix}warn (show (shows all warns for mentioned person))`)
         moderation.addField('Settings', `Change various settings for this guild\nUsage: ${config.prefix}settings`)
         moderation.setFooter(`With ❤️ from ${config.creator}`, config.logo)
-        msg.channel.send(reddit)
-        msg.channel.send(moderation)
+        msg.author.send(reddit)
+        msg.author.send(moderation)
       }
       // if dev then send devhelp
-      if (allowedToUse) msg.channel.send(devhelp)
+      if (allowedToUse) msg.author.send(devhelp)
+      msg.channel.send('Check your DMs')
     }
-    else if (args[1] == '2') {
+    else if (args[0] == '2') {
       var help2 = new Discord.MessageEmbed()
       help2.setTitle('Help 2')
       help2.setThumbnail(msg.author.avatarURL())
@@ -89,9 +90,10 @@ module.exports = {
       help2.addField('Discord', 'Just invite links to discord servers')
       //help2.addField('SMS', `Only for a limited time ;). Command will be here until credits run out. Usage: ${config.prefix}sms. It will prompt you with additional messages where you input content and telephone number.`)
       help2.setFooter(`With ❤️ from ${config.creator} | Page 2 out of ${helppagevar}`, config.logo)
-      msg.channel.send(help2)
+      msg.author.send(help2)
+      msg.channel.send('Check your DMs')
     }
-    else if (args[1].toLowerCase() == 'reddit') {
+    else if (args[0].toLowerCase() == 'reddit') {
       let reddit = new Discord.MessageEmbed()
       reddit.setTitle('Reddit commands')
       reddit.setColor(config.color)
@@ -101,7 +103,8 @@ module.exports = {
       reddit.addField('Top', `Returns the top posts from a subreddit. \nUsage:${config.prefix}top [subreddit] [number of posts]`)
       reddit.addField('Random', `Returns a random post from Reddit. \nUsage:${config.prefix}random`)
       reddit.setFooter(`With ❤️ from ${config.creator}`, config.logo)
-      msg.channel.send(reddit)
+      msg.author.send(reddit)
+      msg.channel.send('Check your DMs')
     }
   }
 }

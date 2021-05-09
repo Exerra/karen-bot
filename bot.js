@@ -22,7 +22,7 @@ var nsfai = new NSFAI(process.env.NSFAI_KEY);
 let commands = {}; 
 
 // mobile status
-const Constants = require('./node_modules/discord.js/src/util/Constants.js')
+const Constants = require('./node_modules/discord.js/src/util/Constants.js') // skipcq: JS-0260
 Constants.DefaultOptions.ws.properties.$browser = 'Discord iOS' // Or Discord Android
 
 // winston logger (hopefully gonna replace console.log with this)
@@ -287,23 +287,25 @@ const serverFunc = {
 client.once('ready', async () => {
     logger.log('info', `Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`);
 
-    axios({
-      "method": "POST",
-      "url": `${process.env.API_SERVER}/karen/logs/`,
-      "headers": {
-        "Authorization": process.env.AUTH_B64,
-        "Content-Type": "application/json; charset=utf-8",
-        'User-Agent': process.env.AUTH_USERAGENT
-      },
-      "auth": {
-        "username": process.env.AUTH_USER,
-        "password": process.env.AUTH_PASS
-      },
-      "data": {
-        "content": `Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`,
-        "type": "info"
-      }
-    })
+    if (process.env.VALIDATION  == undefined) {
+      axios({
+        "method": "POST",
+        "url": `${process.env.API_SERVER}/karen/logs/`,
+        "headers": {
+          "Authorization": process.env.AUTH_B64,
+          "Content-Type": "application/json; charset=utf-8",
+          'User-Agent': process.env.AUTH_USERAGENT
+        },
+        "auth": {
+          "username": process.env.AUTH_USER,
+          "password": process.env.AUTH_PASS
+        },
+        "data": {
+          "content": `Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`,
+          "type": "info"
+        }
+      }) 
+    }
 
     /* client.user.setActivity(`${client.guilds.cache.size} servers | ` + config.prefix +`help`, { type: "WATCHING" }); */
     const why = await (await fetch(`https://nekos.life/api/v2/why`)).json()
@@ -342,8 +344,10 @@ client.once('ready', async () => {
       })
       .catch(console.error);
     }
-    myTimer()
-    var myVar = setInterval(myTimer, 600000)
+    if (process.env.VALIDATION  == undefined) {
+      myTimer()
+      var myVar = setInterval(myTimer, 600000)
+    }
     
     /* fs.readdir("./cmds", function(err, files) {
         files.forEach(function(name) {
