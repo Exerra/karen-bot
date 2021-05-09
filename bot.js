@@ -1,6 +1,3 @@
-/* 
-  TODO: Create a node module to make embeds and message sending easier (maybe make it public too)
-*/
 // Dependancies
 const Discord = require('discord.js');
 const fs = require('fs');
