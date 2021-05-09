@@ -66,7 +66,7 @@ module.exports = {
         moderation.addField('Kick', `Kicks the mentioned user. Person using the command must be able to kick.\nUsage: ${config.prefix}kick [user] [reason]`)
         moderation.addField('Ban', `Bans the mentioned user. Person using the command must be able to ban.\nUsage: ${config.prefix}ban [user] [reason]`)
         moderation.addField('Makerole', `Makes a new role based on the parameters. Person using the command must first have MANAGE_ROLES permission, and then have the same permissions as the role they are trying to make.\nUsage: ${config.prefix}makerole [name] [color (hex)] [permission]`)
-        moderation.addField('Warn', `Warns a mentioned user. Person using the command must have KICK_MEMBERS permission.\nUsage: ${config.prefix}warn (show (shows all warns for mentioned person))`)
+        moderation.addField('Warn (DISABLED FOR MAINTENANCE)', `Warns a mentioned user. Person using the command must have KICK_MEMBERS permission.\nUsage: ${config.prefix}warn (show (shows all warns for mentioned person))`)
         moderation.addField('Settings', `Change various settings for this guild\nUsage: ${config.prefix}settings`)
         moderation.setFooter(`With ❤️ from ${config.creator}`, config.logo)
         msg.author.send(reddit)
