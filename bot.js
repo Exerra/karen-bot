@@ -143,6 +143,9 @@ axios({
 
 //* A bunch of functions for guild settings and stuff
 const serverFunc = {
+  /**
+    *  @param {number} guild - The guild where to create settings
+  */
   createGuildSettings: (guild) => {
     settingsmap.set(guild, {
       guildPrefix: "",
@@ -193,6 +196,9 @@ const serverFunc = {
         "data": JSON.stringify([... settingsmap])
     })
   },
+  /**
+    *  @param {Map} settings - Settings to update
+  */
   updateGuildSettings: (settings) => {
     axios({
       "method": "POST",
@@ -225,6 +231,10 @@ const serverFunc = {
       settingsmap = new Map(res.data); // skipcq: JS-0128
     })
   },
+  /**
+    *  @param {number} guild - Guild where it takes place
+    *  @param {number} user - User which activated it
+  */
   createGuildProfile: (guild, user) => {
     guildUser = `${guild}-${user}`
     guildProfile.set(guildUser, {
@@ -247,6 +257,9 @@ const serverFunc = {
     })
     console.log(guildProfile)
   },
+  /**
+    *  @param {Map} profile - Updated profile
+  */
   updateGuildProfile: (profile) => {
     axios({
       "method": "POST",
