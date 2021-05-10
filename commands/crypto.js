@@ -20,6 +20,8 @@ module.exports = {
     // Converts args[0] (aka what cryptocurrency to fetch) to lowercase
     args[0] = args[0].toLowerCase()
     let median_transaction_fee
+    // Used for limited availability warning
+    let limited_availability = false
 
     // * A super shitty system of getting coins
     // but idk how else to do it
@@ -30,9 +32,9 @@ module.exports = {
     else if (args[0] == 'dogecoin' || args[0] == 'doge') crypto = 'Dogecoin'
     else if (args[0] == 'ethereum' || args[0] == 'eth') crypto = 'Ethereum'
     else if (args[0] == 'litecoin' || args[0] == 'ltc') crypto = 'Litecoin'
-    else if (args[0] == 'ripple' || args[0] == 'xrp') crypto = 'Ripple'
+    else if (args[0] == 'ripple' || args[0] == 'xrp') crypto = 'Ripple', limited_availability = true // Currently ripple is not fully supported, so set limited_availability to true
     else if (args[0] == 'groestlcoin' || args[0] == 'grs') crypto = 'Groestlcoin'
-    else if (args[0] == 'stellar' || args[0] == 'xlm') crypto = 'Stellar'
+    else if (args[0] == 'stellar' || args[0] == 'xlm') crypto = 'Stellar', limited_availability = true
     else if (args[0] == 'dash') crypto = 'Dash'
     // If all the if statements fail, return an error and return
     else {
@@ -48,14 +50,21 @@ module.exports = {
     // Just to let the user know Karen is doing something (in case Karen or the API runs a bit slowly)
     msg.channel.send(`:compass: Searching for info about ${crypto}`).then(async mxg => {
       // Fetches the Blockchair API with the selected cryptocurrency
+
       const res = await (await fetch(`https://api.blockchair.com/${crypto.toLowerCase()}/stats`)).json()
+      
       // Makes it so I dont have to type in res.data.field, but I can just do result.field (way quicker)
       const result = res.data
       // Credit the API
       embed.setAuthor('Blockchair', 'https://loutre.blockchair.io/images/twitter_card.png')
       embed.setTitle(`Statistics for ${crypto}`)
+
+      // So since some cryptocurrencies are not fully supported by the Blockchair API, this provides a warning for those
+      if (limited_availability) embed.setDescription(`⚠️ Warning: There is limited information for ${crypto}`)
+      
       // Fetches image for crypto from my CDN
       embed.setThumbnail(`https://cdn.exerra.xyz/files/png/crypto/${crypto}.png`)
+
       // While testing I noticed that some cryptocurrencies have quite low median transaction fees
       // soooo
       // I added a bit of code to change the amount of numbers after decimals if needed
