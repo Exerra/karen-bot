@@ -3,7 +3,7 @@ const Discord = require('discord.js')
 module.exports = {
   name: 'crypto',
   description: 'A command that checks crypto prices',
-  type: 'search',
+  type: 'Search',
   args: true,
   usage: '[cryptocurrency]',
   example: 'dogecoin',
@@ -52,7 +52,7 @@ module.exports = {
       // Fetches the Blockchair API with the selected cryptocurrency
 
       const res = await (await fetch(`https://api.blockchair.com/${crypto.toLowerCase()}/stats`)).json()
-      
+
       // Makes it so I dont have to type in res.data.field, but I can just do result.field (way quicker)
       const result = res.data
       // Credit the API
