@@ -9,7 +9,8 @@
 </p>
 
 Karen Bot is a multi-purpose bot
-TODO: finish later
+
+TODO: finish readme later
 
 ## Links
 
