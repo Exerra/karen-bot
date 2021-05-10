@@ -40,6 +40,7 @@ module.exports = {
       help.addField('Artist', `Searches up a spotify artist.\nUsage: ${config.prefix}artist [artist]`)
       help.addField('Song', `Searches up a spotify song.\nUsage: ${config.prefix}song [keyword(s)]`)
       help.addField('Suggest', `Suggest a command/feature.\nUsage:${config.prefix}suggest [suggestion]`)
+      help.addField('Crypto', `Returns information about a given currency. [Only some are supported](https://docs.karen.exerra.xyz/supported-crypto-currencies).\nUsage: ${config.prefix}crypto [cryptocurrency]`)
       help.setFooter(`With ❤️ from ${config.creator} | Page 1 out of ${helppagevar}`, config.logo)
       msg.author.send(help);
 
