@@ -8,6 +8,9 @@
 	</a>
 </p>
 
+Karen Bot is a multi-purpose bot
+TODO: finish later
+
 ## Links
 
 [Main website](https://karen.exerra.xyz)
