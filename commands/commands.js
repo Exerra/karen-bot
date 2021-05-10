@@ -85,7 +85,7 @@ emojiForKey = key => {
   if(key == 'Text') return ":regional_indicator_t:"
   if(key == 'User') return '<:blush_eoto:693817007979757589>'
   if(key == 'Search') return ':compass:'
-  if(key == 'Reddit') return '<:redditplat:841325658050134037>'
+  if(key == 'Reddit') return '<:redditplat:841329105575215134>'
   if(key == 'Uncategorized') return ':question:'
   return ":grey_question:"
 }
