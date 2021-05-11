@@ -2,8 +2,8 @@ const config = {
     "self": "702896046480818218",
     "trueOwner": "391878815263096833",
     // Bot Owner IDs, useful for the new internal permissions system. Should always be a level 4 permission level.
-    "ownerID": ['391878815263096833', '166601149774954496'],
-    //           Amiichu
+    "ownerID": ['391878815263096833', '166601149774954496', '334067823229796367'],
+    //           Amiichu                    floyd                 julz
     // Bot Admins, Level 3 permission level.
     "admins": [''],
     // Bot support, level 2 permission level, still a large amount of commands at your disposal.
