@@ -5,6 +5,7 @@ module.exports = {
   name: 'creator',
   description: 'Gets information about the creator of Karen Bot',
   type: 'Search',
+  args: false,
   async execute(client, msg, args) {
     const app = require('../bot.js');
     let config = app.config;

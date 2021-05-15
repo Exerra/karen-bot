@@ -6,7 +6,7 @@ module.exports = {
     type: 'Moderation',
     args: true,
     usage: '@[user] [reason]',
-        
+    example: "391878815263096833 spamming",
     async execute(client, msg, args) {
         const app = require('../bot.js');
         let config = app.config;
@@ -22,6 +22,9 @@ module.exports = {
 
             let reason = args.slice(1).join(' ');
             if (!reason) reason = "No reason provided";
+
+            await member.send(`onmg AHahaHAHahaAHAHAHAHA im wheezing rn you got kicked from ${msg.guild.name} (id: ${msg.guild.id}) for ${reason}. thats what you get you devil! REPEL THE DEMONS! UNBLOW!!! YOU ARE DESTROYED FOREVER!!! AND YOU WILL NEVER BE BACK!!!! thank you god... let it happen... cause it to happen`)
+            await member.send('https://static.independent.co.uk/s3fs-public/thumbnails/image/2020/04/05/16/kenneth-copeland-blow-coronavirus.png?width=1200')
 
             await member.kick(reason)
                 .catch(error => msg.reply(`Sorry ${msg.author} I couldn't kick because of : ${error}`));
@@ -55,6 +58,7 @@ module.exports = {
                 ]
             };
             msg.channel.send({ embed: kickMessage });
+            console.log(member)
             if (settingsmap.get(member.guild.id).modLogEnabled == false) return
             const modLogChannelConst = member.guild.channels.cache.get(settingsmap.get(member.guild.id).modLogChannel);
             if (!modLogChannelConst) return;

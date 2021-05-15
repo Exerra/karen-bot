@@ -7,7 +7,6 @@ module.exports = {
   args: true,
   usage: '[cryptocurrency]',
   example: 'dogecoin',
-  aliases: ['c'],
   async execute(client, msg, args) {
     // Defines stuff
     const app = require('../bot.js')

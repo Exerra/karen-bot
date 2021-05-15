@@ -7,7 +7,7 @@ require('dotenv').config()
 module.exports = {
   name: `backup`,
   description: ``,
-  type: ``,
+  type: `Private`,
   args: true,
   usage: `<create/load/view> <backup_id (load and view only)>`,
   example: `load 754996287338265696`,

@@ -5,7 +5,7 @@ let api = KahootSpam
 module.exports = {
   name: 'kahoot',
   description: 'Spams a kahoot lobby',
-  type: 'Restricted',
+  type: 'Private',
   args: true,
   execute(client, msg, args) {
     const app = require('../bot.js');
