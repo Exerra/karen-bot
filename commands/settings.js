@@ -23,7 +23,7 @@ module.exports = {
             .setColor(config.color)
         
         if (settingsmap.get(msg.guild.id).autoSpotifyEmbed == undefined) {
-            await settingsmap.set(msg.guild.id, {...settingsmap.get(msg.guild.id), autoSpotifyEmbed: false})
+            settingsmap.set(msg.guild.id, {...settingsmap.get(msg.guild.id), autoSpotifyEmbed: false})
             serverFunc.updateGuildSettings(settingsmap)
         }
 
