@@ -22,6 +22,11 @@ module.exports = {
         const settingsInfoEmbed = new Discord.MessageEmbed()
             .setColor(config.color)
         
+        if (settingsmap.get(msg.guild.id).autoSpotifyEmbed == undefined) {
+            await settingsmap.set(msg.guild.id, {...settingsmap.get(msg.guild.id), autoSpotifyEmbed: false})
+            serverFunc.updateGuildSettings(settingsmap)
+        }
+
         if (args[0] == undefined || args[0].toLowerCase() == 'help') {
             // * If the guild is not in the map, add it to map and pipe it over to exserver
             if (settingsmap.get(msg.guild.id) == undefined) app.serverFunc.createGuildSettings(msg.guild.id)
@@ -37,6 +42,9 @@ module.exports = {
             
             if (settingsmap.get(msg.guild.id).antiNSFW == false) settingsInfoEmbed.addField('AntiNSFW', `Removes NSFW images if posted in a SFW channel\n**Currently Disabled**`, true)
             else settingsInfoEmbed.addField('AntiNSFW', `Removes NSFW images if posted in a SFW channel\n**Currently Enabled**`, true)
+
+            if (settingsmap.get(msg.guild.id).autoSpotifyEmbed == false) settingsInfoEmbed.addField('AutoSpotifyEmbed', `Automatically sends an embed with song info if a spotify link is sent\n**Currently Disabled**`, true)
+            else settingsInfoEmbed.addField('AutoSpotifyEmbed', `Automatically sends an embed with song info if a spotify link is sent\n**Currently Enabled**`, true)
 
             // Empty, just like my emotions - Amelia
             settingsInfoEmbed.addField('\u200B', '\u200B', true)
@@ -217,6 +225,51 @@ module.exports = {
                             }
                         })
                 })
+            }
+
+            // ---
+
+            if (args[1].toLowerCase() == 'autospotifyembed' && args[2] == undefined) {
+                msg.channel
+                .send("What do you want to set it to? Options: True, False")
+                .then(() => {
+                    msg.channel
+                        .awaitMessages(filter, {
+                            max: 1,
+                            time: 15000
+                        })
+                        .then(collected => {
+                            if (collected) {
+                                autoSpotifyEmbedCollected = collected.first().content;
+                                if (autoSpotifyEmbedCollected.toLowerCase() == 'true') {
+                                    settingsmap.set(msg.guild.id, {...settingsmap.get(msg.guild.id), autoSpotifyEmbed: false})
+                                    app.serverFunc.updateGuildSettings(settingsmap)
+                                    msg.channel.send(`AutoSpotifyEmbed setting confirmed: ${autoSpotifyEmbedCollected}`);
+                                    return //refreshMap()
+                                } else if (autoSpotifyEmbedCollected.toLowerCase() == 'false') {
+                                    settingsmap.set(msg.guild.id, {...settingsmap.get(msg.guild.id), autoSpotifyEmbed: false})
+                                    app.serverFunc.updateGuildSettings(settingsmap)
+                                    msg.channel.send(`AutoSpotifyEmbed setting confirmed: ${autoSpotifyEmbedCollected}`);
+                                    return //refreshMap()
+                                }
+                                msg.channel.send('Wrong input! Options: True, False')
+                            }
+                        })
+                })
+            } else if (args[1].toLowerCase() == 'autospotifyembed') {
+                // * OTHERWISE check if args[2] is a valid response and set the setting accordingly :)
+                if (args[2].toLowerCase() == 'true') {
+                    settingsmap.set(msg.guild.id, {...settingsmap.get(msg.guild.id), autoSpotifyEmbed: true})
+                    app.serverFunc.updateGuildSettings(settingsmap)
+                    msg.channel.send(`AutoSpotifyEmbed setting confirmed: ${args[2].toLowerCase()}`);
+                    return //refreshMap()
+                } else if (args[2].toLowerCase() == 'false') {
+                    settingsmap.set(msg.guild.id, {...settingsmap.get(msg.guild.id), autoSpotifyEmbed: false})
+                    app.serverFunc.updateGuildSettings(settingsmap)
+                    msg.channel.send(`AutoSpotifyEmbed setting confirmed: ${args[2].toLowerCase()}`);
+                    return //refreshMap()
+                }
+                msg.channel.send('Wrong input! Options: True, False')
             }
         }
     } else {

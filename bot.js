@@ -12,6 +12,7 @@ client.kahootnames = require('./kahootnames.js')
 require('./modules/functions.js')(client)
 var NSFAI = require('nsfai');
 require('dotenv').config()
+const Spotify = require('node-spotify-api')
  
 var nsfai = new NSFAI(process.env.NSFAI_KEY);
 
@@ -158,6 +159,7 @@ const serverFunc = {
       welcomeEnabled: false,
       welcomeChannel: "",
       antiNSFW: false,
+      autoSpotifyEmbed: false,
       modLogSettingsBool: {
         memberJoined: false,
         memberLeft: false,
@@ -479,9 +481,69 @@ client.on('message', async msg => {
   // Tbh idk why I did this, I wrote this at like 04:00
   try {
     let guildPrefixLet = settingsmap.get(msg.guild.id).guildPrefix // skipcq: JS-0128
+    if (settingsmap.get(msg.guild.id).autoSpotifyEmbed == undefined) {
+      await settingsmap.set(msg.guild.id, {...settingsmap.get(msg.guild.id), autoSpotifyEmbed: false})
+      serverFunc.updateGuildSettings(settingsmap)
+    }
   } catch (err) {
     serverFunc.createGuildSettings(msg.guild.id)
   }
+
+
+  // GARBAGE CODE
+  const spotify = new Spotify({
+    id: process.env.SPOTIFY_ID,
+    secret: process.env.SPOTIFY_SECRET
+  });
+  const matchSpotifyUrl = (url) => {
+      var p = /https:\/\/open\.spotify\.com\/track\//;
+      return (url.match(p)) ? true : false ;
+  }
+
+  const spotargs = msg.content.split(" ");
+
+  if (matchSpotifyUrl(spotargs[0])) {
+    if (!settingsmap.autoSpotifyEmbed) return
+    spotify
+      .request(`https://api.spotify.com/v1/tracks/${spotargs[0].substr(31)}`)
+      .then(function(data) {
+          if (!data.album) return;
+          const embed = new Discord.MessageEmbed()
+          embed.setTitle(data.name)
+          embed.setURL(data.external_urls.spotify)
+          embed.setThumbnail(data.album.images[0].url)
+          embed.setAuthor('Spotify', 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/240px-Spotify_logo_without_text.svg.png')
+          embed.setColor(config.color)
+          embed.addField('Popularity', `${Math.trunc(data.popularity / 10)} / 10`)
+          embed.addField('Album name', data.album.name)
+          embed.addField('Album Type', data.album.album_type.capitalize())
+          // thanks to @levichlev for making this thingy
+          // i forgot about "for" loops (i dont really know why) when making this and was stumped on how to make it nicer if there are multiple artists :)
+          var aname = 'Artist\'s name'
+          if (data.album.artists.length != 1) {
+              var a = [];
+              for (i in data.album.artists) {
+                  a[i] = data.album.artists[i].name;
+              }
+              aname = 'Artist\'s names'
+              embed.addField(aname, a.join('\n'))
+          } else {
+              embed.addField(aname, data.album.artists[0].name)
+          }
+          embed.addField('Release Date', data.album.release_date + '\n(Year-Month-Day)', true)
+          embed.setTimestamp()
+          embed.setFooter(`Triggered by ${msg.author.username}`, msg.author.avatarURL({ dynamic: true }))
+          msg.delete()
+          msg.channel.send(embed)
+      })
+      .catch(function(err) {
+          msg.channel.send('eror tiem' + err)
+      });
+  }
+  // garbage code end
+
+
+
   if (msg.attachments.size > 0) {
     if (msg.attachments.every(attachIsImage)){
         //something
