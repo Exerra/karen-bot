@@ -503,7 +503,7 @@ client.on('message', async msg => {
   const spotargs = msg.content.split(" ");
 
   if (matchSpotifyUrl(spotargs[0])) {
-    if (!settingsmap.get(msg.author.id).autoSpotifyEmbed) return
+    if (!settingsmap.get(msg.guild.id).autoSpotifyEmbed) return
     spotify
       .request(`https://api.spotify.com/v1/tracks/${spotargs[0].substr(31)}`)
       .then(function(data) {
