@@ -482,7 +482,7 @@ client.on('message', async msg => {
   try {
     let guildPrefixLet = settingsmap.get(msg.guild.id).guildPrefix // skipcq: JS-0128
     if (settingsmap.get(msg.guild.id).autoSpotifyEmbed == undefined) {
-      await settingsmap.set(msg.guild.id, {...settingsmap.get(msg.guild.id), autoSpotifyEmbed: false})
+      settingsmap.set(msg.guild.id, {...settingsmap.get(msg.guild.id), autoSpotifyEmbed: false})
       serverFunc.updateGuildSettings(settingsmap)
     }
   } catch (err) {
