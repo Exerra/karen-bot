@@ -5,6 +5,7 @@ module.exports = {
     description: 'Kicks a mentioned user',
     type: 'Moderation',
     args: true,
+    aliases: ['k'],
     usage: '@[user] [reason]',
     example: "391878815263096833 spamming",
     async execute(client, msg, args) {

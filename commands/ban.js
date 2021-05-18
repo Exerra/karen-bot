@@ -6,6 +6,7 @@ module.exports = {
     type: 'Moderation',
     args: true,
     usage: '@[user] [reason]',
+    aliases: ['b'],
     example: "391878815263096833 spamming",
   async execute(client, msg, args) {
     const app = require('../bot.js');
