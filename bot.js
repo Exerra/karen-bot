@@ -495,14 +495,19 @@ client.on('message', async msg => {
     id: process.env.SPOTIFY_ID,
     secret: process.env.SPOTIFY_SECRET
   });
-  const matchSpotifyUrl = (url) => {
+  const matchSpotifyTrackUrl = (url) => {
       var p = /https:\/\/open\.spotify\.com\/track\//;
       return (url.match(p)) ? true : false ;
   }
 
+  const matchSpotifyArtistUrl = (url) => {
+    var p = /https:\/\/open\.spotify\.com\/artist\//;
+    return (url.match(p)) ? true : false ;
+}
+
   const spotargs = msg.content.split(" ");
 
-  if (matchSpotifyUrl(spotargs[0])) {
+  if (matchSpotifyTrackUrl(spotargs[0])) {
     if (!settingsmap.get(msg.guild.id).autoSpotifyEmbed) return
     spotify
       .request(`https://api.spotify.com/v1/tracks/${spotargs[0].substr(31)}`)
@@ -514,7 +519,7 @@ client.on('message', async msg => {
           embed.setThumbnail(data.album.images[0].url)
           embed.setAuthor('Spotify', 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/240px-Spotify_logo_without_text.svg.png')
           embed.setColor(config.color)
-          embed.addField('Monthly Popularity', `${Math.trunc(data.popularity / 10)} / 10`)
+          embed.addField('Monthly popularity', `${Math.trunc(data.popularity / 10)} / 10`)
           embed.addField('Album name', data.album.name)
           embed.addField('Album Type', data.album.album_type.capitalize())
           // thanks to @levichlev for making this thingy
@@ -539,6 +544,44 @@ client.on('message', async msg => {
       .catch(function(err) {
           msg.channel.send('eror tiem' + err)
       });
+  } else if (matchSpotifyArtistUrl(spotargs[0])) {
+    if (!settingsmap.get(msg.guild.id).autoSpotifyEmbed) return
+    spotify
+      .request(`https://api.spotify.com/v1/artists/${spotargs[0].substr(32)}`)
+      .then(function(data) {
+        var popularity = data.popularity / 10;
+        const embed = new Discord.MessageEmbed()
+        embed.setTitle(data.name)
+        embed.setURL(data.external_urls.spotify)
+        embed.setThumbnail(data.images[0].url)
+        embed.setAuthor('Spotify', 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/240px-Spotify_logo_without_text.svg.png')
+        embed.setColor(config.color)
+        embed.addField('Followers', data.followers.total)
+        embed.addField('Monthly popularity', `${Math.trunc(data.popularity / 10)} / 10`)
+        var aname = 'Genres'
+        if (data.genres.length != 1) {
+          var a = [];
+          for (i in data.genres) {
+              a[i] = data.genres[i].toString().capitalize()
+          }
+          aname = 'Genres'
+          embed.addField(aname, a.join('\n'))
+        }
+        else {
+          embed.addField(aname, data.album.genres[0])
+        }
+        embed.setTimestamp()
+        embed.setFooter(`Triggered by ${msg.author.username}`, msg.author.avatarURL({ dynamic: true }))
+        return msg.channel.send(embed)
+
+
+        .catch(function (err) {
+          console.error('Error occurred: ' + err);
+        });
+      })
+      .catch(err => {
+
+      })
   }
   // garbage code end
 

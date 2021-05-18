@@ -41,7 +41,7 @@ module.exports = {
                     embed.setAuthor('Spotify', 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/240px-Spotify_logo_without_text.svg.png')
                     embed.setColor(config.color)
                     embed.addField('Followers', response.artists.items[0].followers.total)
-                    embed.addField('Popularity', `${Math.trunc(response.artists.items[0].popularity / 10)} / 10`)
+                    embed.addField('Monthly popularity', `${Math.trunc(response.artists.items[0].popularity / 10)} / 10`)
                     var aname = 'Genres'
                     if (response.artists.items[0].genres.length != 1) {
                         var a = [];
