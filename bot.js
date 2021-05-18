@@ -296,6 +296,20 @@ const serverFunc = {
   },
 }
 
+let statusQuotes = [
+  "5G causes corona cancer",
+  "I have a medical condition that doesn't let me wear masks",
+  "Corona vaccines put Microsoft chips in you",
+  "Vaccines cause autism",
+  "The earth is flat",
+  "One two three four you all suck and need to get baptised",
+  "im gay for jesus mom, mary",
+  "THE LOCHNESS MONSTER HAS RETURNED",
+  "AAAAAAAAAAAAAAAAAAAAAAA",
+  "THE PURGE IS COMING",
+  "WHERE ARE MY KIDS"
+]
+
 client.once('ready', async () => {
     logger.log('info', `Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`);
 
@@ -320,8 +334,8 @@ client.once('ready', async () => {
     }
 
     /* client.user.setActivity(`${client.guilds.cache.size} servers | ` + config.prefix +`help`, { type: "WATCHING" }); */
-    const why = await (await fetch(`https://nekos.life/api/v2/why`)).json()
-    client.user.setActivity(config.prefix +`help | ${why.why}`, { type: "WATCHING" });
+    const why = statusQuotes[Math.floor(Math.random()*statusQuotes.length)];
+    client.user.setActivity(config.prefix +`help | ${why}`, { type: "WATCHING" });
 
 
     function myTimer() {
@@ -372,16 +386,16 @@ client.once('reconnecting', async () => {
       "content": `Reconnecting!`,
       "type": 'info'
     })
-    const why = await (await fetch(`https://nekos.life/api/v2/why`)).json()
-    client.user.setActivity(config.prefix +`help | ${why.why}`, { type: "WATCHING" });
+    const why = statusQuotes[Math.floor(Math.random()*statusQuotes.length)];
+    client.user.setActivity(config.prefix +`help | ${why}`, { type: "WATCHING" });
 });
 client.once('disconnect', async () => {
     axios.post(`${process.env.API_SERVER}/karen/logs/`, {
       "content": `Disconnect!`,
       "type": 'info'
     })
-    const why = await (await fetch(`https://nekos.life/api/v2/why`)).json()
-  client.user.setActivity(config.prefix +`help | ${why.why}`, { type: "WATCHING" });
+    const why = statusQuotes[Math.floor(Math.random()*statusQuotes.length)];
+  client.user.setActivity(config.prefix +`help | ${why}`, { type: "WATCHING" });
 });
 
 client.on("guildDelete", async guild => {
