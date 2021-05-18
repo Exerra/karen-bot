@@ -118,3 +118,7 @@ agree*
 log
 *.conf
 help*
+
+
+# Test JSON
+hahah.json

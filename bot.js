@@ -503,7 +503,12 @@ client.on('message', async msg => {
   const matchSpotifyArtistUrl = (url) => {
     var p = /https:\/\/open\.spotify\.com\/artist\//;
     return (url.match(p)) ? true : false ;
-}
+  }
+
+  const matchSpotifyPlaylistUrl = (url) => {
+    var p = /https:\/\/open\.spotify\.com\/playlist\//;
+    return (url.match(p)) ? true : false ;
+  }
 
   const spotargs = msg.content.split(" ");
 
@@ -517,7 +522,7 @@ client.on('message', async msg => {
           embed.setTitle(data.name)
           embed.setURL(data.external_urls.spotify)
           embed.setThumbnail(data.album.images[0].url)
-          embed.setAuthor('Spotify', 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/240px-Spotify_logo_without_text.svg.png')
+          embed.setAuthor('Spotify Song', 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/240px-Spotify_logo_without_text.svg.png')
           embed.setColor(config.color)
           embed.addField('Monthly popularity', `${Math.trunc(data.popularity / 10)} / 10`)
           embed.addField('Album name', data.album.name)
@@ -554,7 +559,7 @@ client.on('message', async msg => {
         embed.setTitle(data.name)
         embed.setURL(data.external_urls.spotify)
         embed.setThumbnail(data.images[0].url)
-        embed.setAuthor('Spotify', 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/240px-Spotify_logo_without_text.svg.png')
+        embed.setAuthor('Spotify Artist', 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/240px-Spotify_logo_without_text.svg.png')
         embed.setColor(config.color)
         embed.addField('Followers', data.followers.total)
         embed.addField('Monthly popularity', `${Math.trunc(data.popularity / 10)} / 10`)
@@ -580,6 +585,29 @@ client.on('message', async msg => {
         });
       })
       .catch(err => {
+
+      })
+  } else if (matchSpotifyPlaylistUrl(spotargs[0])) {
+    if (!settingsmap.get(msg.guild.id).autoSpotifyEmbed) return
+    spotify
+      .request(`https://api.spotify.com/v1/playlists/${spotargs[0].substr(34)}?total=1`)
+      .then(function(data) {
+        const embed = new Discord.MessageEmbed()
+        embed.setTitle(data.name)
+        embed.setURL(data.external_urls.spotify)
+        embed.setThumbnail(data.images[0].url)
+        embed.setAuthor('Spotify Playlist', 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/240px-Spotify_logo_without_text.svg.png')
+        embed.setColor(config.color)
+        embed.addField('Owner', `[${data.owner.display_name}](${data.owner.external_urls.spotify})`)
+        embed.addField('Followers', data.followers.total)
+        embed.addField('Song count', data.tracks.total)
+        embed.addField('Collaborative', data.collaborative.toString().capitalize())
+        embed.addField('Public', data.public.toString().capitalize())
+
+        embed.setTimestamp()
+        embed.setFooter(`Triggered by ${msg.author.username}`, msg.author.avatarURL({ dynamic: true }))
+
+        msg.channel.send(embed)
 
       })
   }
