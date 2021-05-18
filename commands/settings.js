@@ -46,6 +46,9 @@ module.exports = {
             if (settingsmap.get(msg.guild.id).autoSpotifyEmbed == false) settingsInfoEmbed.addField('AutoSpotifyEmbed', `Automatically sends an embed with song info if a spotify link is sent\n**Currently Disabled**`, true)
             else settingsInfoEmbed.addField('AutoSpotifyEmbed', `Automatically sends an embed with song info if a spotify link is sent\n**Currently Enabled**`, true)
 
+            if (settingsmap.get(msg.guild.id).guildPrefix == "") settingsInfoEmbed.addField('Prefix', `A custom prefix for this guild\n**Currently disabled**`, true)
+            else settingsInfoEmbed.addField('Prefix', `A custom prefix for this guild\n**Currently "${settingsmap.get(msg.guild.id).guildPrefix}"**`, true)
+
             // Empty, just like my emotions - Amelia
             settingsInfoEmbed.addField('\u200B', '\u200B', true)
             settingsInfoEmbed.addField('\u200B', '\u200B', true)
@@ -270,6 +273,36 @@ module.exports = {
                     return //refreshMap()
                 }
                 msg.channel.send('Wrong input! Options: True, False')
+            }
+            // ---------------------------------
+
+            if (args[1].toLowerCase() == 'prefix' && args[2] == undefined) {
+                msg.channel
+                .send("What prefix should I use? If you do not want a prefix, type \"none\"")
+                .then(() => {
+                    msg.channel
+                        .awaitMessages(filter, {
+                            max: 1,
+                            time: 15000
+                        })
+                        .then(collected => {
+                            if (collected) {
+                                let prefixToUse = collected.first().content;
+                                if (prefixToUse.toLowerCase() !== "") {
+                                    if (prefixToUse.toLowerCase() == "none") {
+                                        settingsmap.set(msg.guild.id, {...settingsmap.get(msg.guild.id), guildPrefix: ""})
+                                        app.serverFunc.updateGuildSettings(settingsmap)
+                                        msg.channel.send(`Alright, turned off guild prefix.`)
+                                        return
+                                    }
+                                    settingsmap.set(msg.guild.id, {...settingsmap.get(msg.guild.id), guildPrefix: prefixToUse})
+                                    app.serverFunc.updateGuildSettings(settingsmap)
+                                    msg.channel.send(`Alright, set guild prefix to ${prefixToUse}.`)
+
+                                }
+                            }
+                        })
+                })
             }
         }
     } else {
