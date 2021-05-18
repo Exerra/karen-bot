@@ -703,7 +703,9 @@ client.on('message', async msg => {
   }
 
   if (msg.content.toLowerCase().startsWith(config.prefix)) executeCommand(config.prefix)
-  else if (settingsmap.get(msg.guild.id).guildPrefix !== "") executeCommand(settingsmap.get(msg.guild.id).guildPrefix)
+  else if (settingsmap.get(msg.guild.id).guildPrefix !== "") {
+    if (msg.content.toLowerCase().startsWith(settingsmap.get(msg.guild.id).guildPrefix)) executeCommand(settingsmap.get(msg.guild.id).guildPrefix)
+  }
 
   var message = msg.content.toLowerCase();
   config.badwords.forEach(function(value) {
