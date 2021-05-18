@@ -514,7 +514,7 @@ client.on('message', async msg => {
           embed.setThumbnail(data.album.images[0].url)
           embed.setAuthor('Spotify', 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/240px-Spotify_logo_without_text.svg.png')
           embed.setColor(config.color)
-          embed.addField('Popularity', `${Math.trunc(data.popularity / 10)} / 10`)
+          embed.addField('Monthly Popularity', `${Math.trunc(data.popularity / 10)} / 10`)
           embed.addField('Album name', data.album.name)
           embed.addField('Album Type', data.album.album_type.capitalize())
           // thanks to @levichlev for making this thingy
