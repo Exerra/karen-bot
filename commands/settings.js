@@ -69,7 +69,7 @@ module.exports = {
                             if (collected) {
                                 antiSwearCollected = collected.first().content;
                                 if (antiSwearCollected.toLowerCase() == 'true') {
-                                    settingsmap.set(msg.guild.id, {...settingsmap.get(msg.guild.id), swearProtectionEnabled: false})
+                                    settingsmap.set(msg.guild.id, {...settingsmap.get(msg.guild.id), swearProtectionEnabled: true})
                                     app.serverFunc.updateGuildSettings(settingsmap)
                                     msg.channel.send(`AntiSwear setting confirmed: ${antiSwearCollected}`);
                                     return //refreshMap()
@@ -114,7 +114,7 @@ module.exports = {
                             if (collected) {
                                 AntiNSFWCollected = collected.first().content;
                                 if (AntiNSFWCollected.toLowerCase() == 'true') {
-                                    settingsmap.set(msg.guild.id, {...settingsmap.get(msg.guild.id), antiNSFW: false})
+                                    settingsmap.set(msg.guild.id, {...settingsmap.get(msg.guild.id), antiNSFW: true})
                                     app.serverFunc.updateGuildSettings(settingsmap)
                                     msg.channel.send(`AntiNSFW setting confirmed: ${AntiNSFWCollected}`);
                                     return //refreshMap()
@@ -245,7 +245,7 @@ module.exports = {
                             if (collected) {
                                 autoSpotifyEmbedCollected = collected.first().content;
                                 if (autoSpotifyEmbedCollected.toLowerCase() == 'true') {
-                                    settingsmap.set(msg.guild.id, {...settingsmap.get(msg.guild.id), autoSpotifyEmbed: false})
+                                    settingsmap.set(msg.guild.id, {...settingsmap.get(msg.guild.id), autoSpotifyEmbed: true})
                                     app.serverFunc.updateGuildSettings(settingsmap)
                                     msg.channel.send(`AutoSpotifyEmbed setting confirmed: ${autoSpotifyEmbedCollected}`);
                                     return //refreshMap()
