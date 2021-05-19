@@ -487,6 +487,7 @@ client.on('guildMemberAdd', async member => {
   if (settingsmap.get(member.guild.id).welcomeEnabled == false) return;
   const channel = member.guild.channels.cache.find(ch => ch.id == settingsmap.get(member.guild.id).welcomeChannel);
   channel.send(`Welcome to this server, ${member}.`);
+  member.send('READ THE RULES\nDO IT NOW\nYOU BETTER FUCKING DO IT')
 });
 
 client.on('message', async msg => {
