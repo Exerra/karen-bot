@@ -1,12 +1,6 @@
 <p align="center">
   <img src="readme.svg">
 </p>
-<p align="center">
-	<a href="https://gitmoji.dev">
-		<img src="https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?style=flat-square"
-			 alt="Gitmoji">
-	</a>
-</p>
 
 Karen Bot is a multi-purpose bot
 
@@ -25,7 +19,6 @@ TODO: finish readme later
 ## Commit etiquette
 
 * Push small commits (e.g If you changed 2 directories, commit one directory, then commit the other directory and only THEN push)
-* Use Emoji for commit titles (Read about them [here](https://gitmoji.dev))
 * Keep commit titles short and then explain them in the description of the commit.
 * **DO NOT PUSH TO MASTER BRANCH!** Push to a new branch (e.g username-whatyouchanged and create a PR)
 
