@@ -307,7 +307,12 @@ let statusQuotes = [
   "THE LOCHNESS MONSTER HAS RETURNED",
   "AAAAAAAAAAAAAAAAAAAAAAA",
   "THE PURGE IS COMING",
-  "WHERE ARE MY KIDS"
+  "WHERE ARE MY KIDS",
+  "luki works for the government",
+  "I ATE MARIJUANA BREAD PLEASE HELP",
+  "are you vaccinated? no? good",
+  "BUT THIS MOMMY BLOG SAYS ITS BAD",
+  "facebook is best social media"
 ]
 
 client.once('ready', async () => {
