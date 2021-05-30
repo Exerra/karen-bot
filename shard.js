@@ -10,7 +10,6 @@ const manager = new ShardingManager('./bot.js', {
   mode: "process"
 })
 const exec = require('child_process').execSync
-const nodeSpotifyApi = require('node-spotify-api')
 
 // These handlers are safe here
 manager.on('shardCreate', shard => {
@@ -35,6 +34,7 @@ manager.on('shardCreate', shard => {
           "avatar_url": "https://karen.exerra.xyz/assets/BotLogoNoOutline.png"
         })
       }
+      // I will probably remove this since I already get notifs from discord when Karen Bot is online
       /* exec(`curl -X POST -H "Content-Type: application/json" -d '{"value1": "Karen Bot is now online and ready to go!", "value2": "Karen Bot Started"}' process.env.IFFT_WEBHOOK`) */
     })
   }
