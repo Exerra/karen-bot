@@ -2,6 +2,8 @@
   <img src="readme.svg">
 </p>
 
+[![Discord Bots](https://top.gg/api/widget/status/599289687743397889.svg)](https://top.gg/bot/599289687743397889)
+
 Karen Bot is a multi-purpose bot
 
 TODO: finish readme later
