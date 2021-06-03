@@ -30,7 +30,7 @@ module.exports = {
     axios.post(process.env.SUGGESTION_WEBHOOK, {
         "content": args[0],
         "embeds": null,
-        "username": msg.author.tag,
+        "username": `${msg.author.tag} (${msg.author.id})`,
         "avatar_url": msg.author.avatarURL({ dynamic: true })
     })
   }
