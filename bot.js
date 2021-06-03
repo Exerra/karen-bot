@@ -339,9 +339,10 @@ client.once('ready', async () => {
     }
 
     /* client.user.setActivity(`${client.guilds.cache.size} servers | ` + config.prefix +`help`, { type: "WATCHING" }); */
-    const why = statusQuotes[Math.floor(Math.random()*statusQuotes.length)];
+    let why = statusQuotes[Math.floor(Math.random()*statusQuotes.length)];
+    // emergency status
+    why = "⚠️ WELCOME FUNCTIONALITY DISABLED ⚠️"
     client.user.setActivity(config.prefix +`help | ${why}`, { type: "WATCHING" });
-
 
     function myTimer() {
       const promises = [
@@ -391,7 +392,9 @@ client.once('reconnecting', async () => {
       "content": `Reconnecting!`,
       "type": 'info'
     })
-    const why = statusQuotes[Math.floor(Math.random()*statusQuotes.length)];
+    let why = statusQuotes[Math.floor(Math.random()*statusQuotes.length)];
+    // emergency status
+    why = "⚠️ WELCOME FUNCTIONALITY DISABLED ⚠️"
     client.user.setActivity(config.prefix +`help | ${why}`, { type: "WATCHING" });
 });
 client.once('disconnect', async () => {
@@ -399,7 +402,9 @@ client.once('disconnect', async () => {
       "content": `Disconnect!`,
       "type": 'info'
     })
-    const why = statusQuotes[Math.floor(Math.random()*statusQuotes.length)];
+    let why = statusQuotes[Math.floor(Math.random()*statusQuotes.length)];
+    // emergency status
+    why = "⚠️ WELCOME FUNCTIONALITY DISABLED ⚠️"
   client.user.setActivity(config.prefix +`help | ${why}`, { type: "WATCHING" });
 });
 
@@ -409,7 +414,7 @@ client.on("guildDelete", async guild => {
     "content": `I have been removed from: ${guild.name} (id: ${guild.id})`,
     "type": 'info'
   })
-  const why = await (await fetch(`https://nekos.life/api/v2/why`)).json() // skipcq: JS-0128
+  let why = await (await fetch(`https://nekos.life/api/v2/why`)).json() // skipcq: JS-0128
 });
 
 client.on("guildCreate", async guild => {
@@ -418,11 +423,11 @@ client.on("guildCreate", async guild => {
       "content": `New guild joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`,
       "type": 'info'
     })
-    const why = await (await fetch(`https://nekos.life/api/v2/why`)).json() // skipcq: JS-0128
+    let why = await (await fetch(`https://nekos.life/api/v2/why`)).json() // skipcq: JS-0128
 });
 
 client.on('guildMemberAdd', async member => {
-  const why = await (await fetch(`https://nekos.life/api/v2/why`)).json() // skipcq: JS-0128
+  let why = await (await fetch(`https://nekos.life/api/v2/why`)).json() // skipcq: JS-0128
   axios({
     "method": "POST",
     "url": `${process.env.API_SERVER}/karen/profile/get/`,
