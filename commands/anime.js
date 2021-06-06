@@ -15,9 +15,11 @@ module.exports = {
     let config = app.config;
     args[0] = args.join(' ')
     if (args[0] == undefined) return msg.channel.send('Ugh, put the anime in there')
-    msg.channel.send(`:compass: Searching for anime with name: \`${args[0]}\`.`).then(async mxg => {
+    msg.channel.startTyping();
+    const run = async () => {
+      console.log('yes')
       const search = await anilist.search('anime', args[0])
-      if(typeof search.media[0] == 'undefined') return mxg.edit(`Couldn't find the anime: \`${args[0]}\``)
+      if(typeof search.media[0] == 'undefined') return msg.channel.send(`Couldn't find the anime: \`${args[0]}\``)
       const anime = await anilist.media.anime(search.media[0].id)
       const tags = []
       anime.tags.map((tag) => {
@@ -27,8 +29,7 @@ module.exports = {
       if(animeDescription.length > 1024) {
         animeDescription = `${anime.description.replace(/<[^>]*>?/gm, '').substring(0, 1020)}...`
       }
-      console.log(anime.format)
-      if (anime.format == 'MUSIC') return mxg.edit(`Couldn't find the anime: \`${args[0]}\``)
+      if (anime.format == 'MUSIC') return msg.channel.send(`Couldn't find the anime: \`${args[0]}\``)
 
       const animeEmbed = new Discord.MessageEmbed()
         .setColor(config.color)
@@ -47,8 +48,9 @@ module.exports = {
           msg.author.avatarURL({ format: 'png' })
         )
         .setTimestamp()
-      mxg.channel.send(animeEmbed)
-      return mxg.delete()
-    })
+      msg.channel.send(animeEmbed)
+      return msg.channel.stopTyping()
+    }
+    run()
   }
 }

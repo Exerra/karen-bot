@@ -118,7 +118,11 @@ agree*
 log
 *.conf
 help*
+improve*
 
+
+
+test.ics
 
 # Test JSON
 hahah.json

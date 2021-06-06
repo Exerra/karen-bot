@@ -14,9 +14,12 @@ module.exports = {
     const app = require('../bot.js');
     let config = app.config;
     args[0] = args.join(' ')
-    msg.channel.send(`:compass: Searching for manga with name: \`${args[0]}\`.`).then(async mxg => {
+
+
+    const run = (async () => {
+      msg.channel.startTyping()
       const search = await anilist.search('manga', args[0])
-      if(typeof search.media[0] == 'undefined') return mxg.edit(`Couldn't find the manga: \`${args[0]}\``)
+      if(typeof search.media[0] == 'undefined') return msg.channel.send(`Couldn't find the manga: \`${args[0]}\``)
       const anime = await anilist.media.manga(search.media[0].id)
       const tags = []
       anime.tags.map((tag) => {
@@ -42,8 +45,9 @@ module.exports = {
           msg.author.avatarURL({ format: 'png' })
         )
         .setTimestamp()
-      mxg.channel.send(animeEmbed)
-      return mxg.delete()
+      msg.channel.send(animeEmbed)
+      return msg.channel.stopTyping()
     })
+    run()
   }
 }

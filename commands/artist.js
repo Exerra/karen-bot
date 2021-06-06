@@ -25,44 +25,39 @@ module.exports = {
       return this.charAt(0).toUpperCase() + this.slice(1);
     } */
 
+    msg.channel.startTyping()
+
     try {
         spotify
             .search({ type: 'artist', query: args[0], limit: '1' })
             .then(function action(response) {
                 if (response.artists.items[0] == null) return msg.channel.send(`Error: No search results for \`${args[0]}\``)
                 action.response = response;
-
-                msg.channel.send(`:compass: Looking up \`${args[0]}\``).then(async (msg) => {
-                    var popularity = response.artists.items[0].popularity / 10;
-                    const embed = new Discord.MessageEmbed()
-                    embed.setTitle(response.artists.items[0].name)
-                    embed.setURL(response.artists.items[0].external_urls.spotify)
-                    embed.setThumbnail(response.artists.items[0].images[0].url)
-                    embed.setAuthor('Spotify', 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/240px-Spotify_logo_without_text.svg.png')
-                    embed.setColor(config.color)
-                    embed.addField('Followers', response.artists.items[0].followers.total)
-                    embed.addField('Monthly popularity', `${Math.trunc(response.artists.items[0].popularity / 10)} / 10`)
-                    var aname = 'Genres'
-                    if (response.artists.items[0].genres.length != 1) {
-                        var a = [];
-                        for (i in response.artists.items[0].genres) {
-                            a[i] = response.artists.items[0].genres[i].toString().capitalize()
-                        }
-                        aname = 'Genres'
-                        embed.addField(aname, a.join('\n'))
+                
+                var popularity = response.artists.items[0].popularity / 10;
+                const embed = new Discord.MessageEmbed()
+                embed.setTitle(response.artists.items[0].name)
+                embed.setURL(response.artists.items[0].external_urls.spotify)
+                embed.setThumbnail(response.artists.items[0].images[0].url)
+                embed.setAuthor('Spotify', 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/240px-Spotify_logo_without_text.svg.png')
+                embed.setColor(config.color)
+                embed.addField('Followers', response.artists.items[0].followers.total)
+                embed.addField('Monthly popularity', `${Math.trunc(response.artists.items[0].popularity / 10)} / 10`)
+                var aname = 'Genres'
+                if (response.artists.items[0].genres.length != 1) {
+                    var a = [];
+                    for (i in response.artists.items[0].genres) {
+                        a[i] = response.artists.items[0].genres[i].toString().capitalize()
                     }
-                    else {
-                        embed.addField(aname, response.artists.items[0].album.genres[0])
-                    }
-                    embed.setTimestamp()
-                    return msg.edit('Here you go!').then(() => { msg.edit(embed) })
+                    aname = 'Genres'
+                    embed.addField(aname, a.join('\n'))
+                }
+                else {
+                    embed.addField(aname, response.artists.items[0].album.genres[0])
+                }
+                embed.setTimestamp()
+                return msg.channel.send(embed), msg.channel.stopTyping()
 
-
-                    .catch(function (err) {
-                        console.error('Error occurred: ' + err);
-                    });
-
-                })
             })
     } catch (err) {
         msg.channel.send(err)
