@@ -14,8 +14,9 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x, 15.x, 16.x]
+        node-version: [14.x]
         # 14.x because LTS, 15.x because that will be future LTS and 16.x because its latest
+        # Some package made the ci thingy to go nuts on future versions so rip that
 
     steps:
     - uses: actions/checkout@v2
