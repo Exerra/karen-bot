@@ -25,12 +25,10 @@ module.exports = {
       return this.charAt(0).toUpperCase() + this.slice(1);
     } */
 
-    msg.channel.startTyping()
-
     try {
         spotify
             .search({ type: 'artist', query: args[0], limit: '1' })
-            .then(function action(response) {
+            .then(action = (response) => {
                 if (response.artists.items[0] == null) return msg.channel.send(`Error: No search results for \`${args[0]}\``)
                 action.response = response;
                 
@@ -56,8 +54,7 @@ module.exports = {
                     embed.addField(aname, response.artists.items[0].album.genres[0])
                 }
                 embed.setTimestamp()
-                return msg.channel.send(embed), msg.channel.stopTyping()
-
+                return msg.channel.send(embed)
             })
     } catch (err) {
         msg.channel.send(err)

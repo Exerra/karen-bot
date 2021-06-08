@@ -4,7 +4,8 @@ const fs = require('fs')
 module.exports = {
   name: 'reload',
   description: '',
-  type: 'Owner',
+  type: 'Private',
+  permissionsLevel: 'Bot Owner',
   execute(client, msg, args) {
     const app = require('../bot.js');
     let config = app.config;
@@ -12,14 +13,6 @@ module.exports = {
     const filter = m => m.author.id === msg.author.id;
     let reason = "";
 
-    // Verification
-    var allowedToUse = false;
-    config.DevIDs.forEach(id => {
-        if (msg.author.id == id)
-            allowedToUse = true;
-    });
-
-    if(!allowedToUse) return msg.channel.send('No <a:EPIC:735577586708643940>');
     fs.readFile(app.dir + "/config.json", function (err, data) {
         if (args[0] == undefined) return msg.channel.send('args[0] is not defined')
         else if (args[0] == 'version') {

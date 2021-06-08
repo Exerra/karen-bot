@@ -22,13 +22,12 @@ module.exports = {
         var deleteCount1 = deleteCount0+1;
 
 
-        if (!deleteCount0 || deleteCount0 < 2 || deleteCount0 > 99)
-            return msg.reply("Please provide a number between 2 and 99 for the number of messages to delete");
+        if (!deleteCount0 || deleteCount0 < 2 || deleteCount0 > 99) return msg.reply("Please provide a number between 2 and 99 for the number of messages to delete");
 
         const fetched = await msg.channel.messages.fetch({ limit: deleteCount1 });
         msg.channel.bulkDelete(fetched)
-            .catch(error => msg.reply(`Couldn't delete messages because of: ${error}`));
+          .catch(error => msg.reply(`Couldn't delete messages because of: ${error}`));
     }
-    else {msg.channel.send('It looks like you don\'t have MANAGE_MESSAGE permission!')}
+    else msg.channel.send('What makes your disrespectful yee yee ass think you can access this command? YOu dont even have MANAGE_MESSAGE permission! Stop disrespecting your elders and apologize before I call the manager')
   }
 }

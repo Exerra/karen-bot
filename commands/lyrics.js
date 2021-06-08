@@ -19,15 +19,15 @@ module.exports = {
 
     // If the lyrics are found, send them, otherwise log "No Lyrics Found."
     try {
-        const lyricEmbed = new Discord.MessageEmbed()
-        lyricEmbed.setColor(config.color)
-        lyricEmbed.setAuthor('lyrics-parse')
-        lyricEmbed.setTitle('Lyrics')
-        lyricEmbed.setDescription(lyrics)
-        lyricEmbed.setFooter(`With ❤️ from ${config.creator}`, config.logo)
-        msg.channel.send(lyricEmbed)
+      const lyricEmbed = new Discord.MessageEmbed()
+        .setColor(config.color)
+        .setAuthor('lyrics-parse')
+        .setTitle('Lyrics')
+        .setDescription(lyrics)
+        .setFooter(`With ❤️ from ${config.creator}`, config.logo)
+      msg.channel.send(lyricEmbed)
     } catch (err) {
-        msg.channel.send('Error: Lyrics exceed 2048 characters')
+      msg.channel.send('Error: Lyrics exceed 2048 characters')
     }
   }
 }

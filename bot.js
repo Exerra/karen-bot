@@ -769,7 +769,10 @@ client.on('message', async msg => {
       if(command.nsfw && !msg.channel.nsfw) {
         if(!msg.channel.name.includes('nsfw')) return msg.channel.send(`Ugh this is an NSFW command, go to an NSFW channel 🙄`)
       }
+
+      msg.channel.startTyping()
       await command.execute(client, msg, args)
+      msg.channel.stopTyping()
     } catch (error) {
       console.error(error)
       axios({

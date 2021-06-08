@@ -54,9 +54,9 @@ module.exports = {
       msg.channel.send(`I was going to send this in a hastebin, but the result is over 2,000 characters!`)
     } else {
       msg.channel.send(new Discord.MessageEmbed()
-                       .addField(`\u200B`, `\`\`\`js\n${result}\`\`\``)
-                       .setColor(fail ? `#ff0033` : `#8074d2`)
-                       .setFooter(`${new Date() - start}ms`, msg.author.avatarURL()))
+        .addField(`\u200B`, `\`\`\`js\n${result}\`\`\``)
+        .setColor(fail ? `#ff0033` : `#8074d2`)
+        .setFooter(`${new Date() - start}ms`, msg.author.avatarURL()))
     }
   }
 }

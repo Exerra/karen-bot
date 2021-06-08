@@ -12,12 +12,12 @@ module.exports = {
     let member = msg.mentions.users.first();
     if (member == undefined) msg.reply('Please tell me which profile picture to get.');
     else {
-        let embed = new Discord.MessageEmbed()
+      let embed = new Discord.MessageEmbed()
         .setTitle(member.username + '\'s profile picture.')
         .setColor(config.color)
         .setImage(member.avatarURL({ dynamic: true }))
         .setFooter(`With ❤️ from ${config.creator}`, config.logo)
-        msg.channel.send(embed);
+      msg.channel.send(embed);
     }
   }
 }

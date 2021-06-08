@@ -25,13 +25,11 @@ module.exports = {
         secret: process.env.SPOTIFY_SECRET
     });
 
-    msg.channel.startTyping()
-
     // Tries to search
     try {
         spotify
             .search({ type: 'track', query: args[0], limit: '1' })
-            .then(function action(response) {
+            .then(action = (response) => {
                 // If it doesn't find a resposne, return error
                 if (response.tracks.items[0] == null) return msg.channel.send(`Error: No search results for \`${args[0]}\``)
                 // idk?
@@ -65,7 +63,6 @@ module.exports = {
             })
     } catch (err) {
         msg.channel.send(err)
-        msg.channel.stopTyping()
     }
   }
 }
