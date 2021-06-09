@@ -51,14 +51,14 @@ module.exports = {
                 embed.setDescription(`You do not have a profile!\nDo ${config.prefix}profile create to create an empty profile(cross-server)`);
                 msg.channel.send(embed);
             } else {
-                let serverErrorEmbed =  new Discord.MessageEmbed();
-                serverErrorEmbed.setTitle(`Server error`);
-                serverErrorEmbed.setThumbnail('https://img.icons8.com/bubbles/2x/error.png');
-                serverErrorEmbed.setColor("ff3333")
-                serverErrorEmbed.setDescription('Uh-oh! A wild error appeared!')
-                serverErrorEmbed.addField('Possible cause', 'It is likely that Karen Bot while communicating with its central server that has all of the profiles, got flagged as something malicious by [Cloudflare](https://support.cloudflare.com/hc/en-us/articles/200172676-Understanding-Cloudflare-DDoS-protection) systems. It is also plausible that the server is either on maintenance or has just crashed.')
-                serverErrorEmbed.addField('So.. what now?', 'Run the command a bit later. IF any outages have happened, the maintainer of Karen Bot has been notified and is on the case already :)')
-                serverErrorEmbed.setFooter(`With ❤️ from ${config.creator}`, config.logo)
+                let serverErrorEmbed =  new Discord.MessageEmbed()
+                    .setTitle(`Server error`)
+                    .setThumbnail('https://img.icons8.com/bubbles/2x/error.png')
+                    .setColor("ff3333")
+                    .setDescription('Uh-oh! A wild error appeared!')
+                    .addField('Possible cause', 'It is likely that Karen Bot while communicating with its central server that has all of the profiles, got flagged as something malicious by [Cloudflare](https://support.cloudflare.com/hc/en-us/articles/200172676-Understanding-Cloudflare-DDoS-protection) systems. It is also plausible that the server is either on maintenance or has just crashed.')
+                    .addField('So.. what now?', 'Run the command a bit later. IF any outages have happened, the maintainer of Karen Bot has been notified and is on the case already :)')
+                    .setFooter(`With ❤️ from ${config.creator}`, config.logo)
                 msg.channel.send(serverErrorEmbed)
             }
         });
@@ -300,14 +300,14 @@ module.exports = {
                 embed.setDescription(`This person does not have a profile.`);
                 msg.channel.send(embed);
             } else {
-                let serverErrorEmbed =  new Discord.MessageEmbed();
-                serverErrorEmbed.setTitle(`Server error`);
-                serverErrorEmbed.setThumbnail('https://img.icons8.com/bubbles/2x/error.png');
-                serverErrorEmbed.setColor("ff3333")
-                serverErrorEmbed.setDescription('Uh-oh! A wild error appeared!')
-                serverErrorEmbed.addField('Possible cause', 'It is likely that Karen Bot while communicating with its central server that has all of the profiles, got flagged as something malicious by [Cloudflare](https://support.cloudflare.com/hc/en-us/articles/200172676-Understanding-Cloudflare-DDoS-protection) systems. It is also plausible that the server is either on maintenance or has just crashed.')
-                serverErrorEmbed.addField('So.. what now?', 'Run the command a bit later. IF any outages have happened, the maintainer of Karen Bot has been notified and is on the case already :)')
-                serverErrorEmbed.setFooter(`With ❤️ from ${config.creator}`, config.logo)
+                let serverErrorEmbed =  new Discord.MessageEmbed()
+                    .setTitle(`Server error`)
+                    .setThumbnail('https://img.icons8.com/bubbles/2x/error.png')
+                    .setColor("ff3333")
+                    .setDescription('Uh-oh! A wild error appeared!')
+                    .addField('Possible cause', 'It is likely that Karen Bot while communicating with its central server that has all of the profiles, got flagged as something malicious by [Cloudflare](https://support.cloudflare.com/hc/en-us/articles/200172676-Understanding-Cloudflare-DDoS-protection) systems. It is also plausible that the server is either on maintenance or has just crashed.')
+                    .addField('So.. what now?', 'Run the command a bit later. IF any outages have happened, the maintainer of Karen Bot has been notified and is on the case already :)')
+                    .setFooter(`With ❤️ from ${config.creator}`, config.logo)
                 msg.channel.send(serverErrorEmbed)
             }
         });
