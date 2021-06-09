@@ -21,9 +21,9 @@ module.exports = {
 
     // makes embed
     const suggestEmbed = new Discord.MessageEmbed()
-    suggestEmbed.setColor(config.color)
-    suggestEmbed.setTitle('Suggestion sent')
-    suggestEmbed.setDescription(args[0])
+      .setColor(config.color)
+      .setTitle('Suggestion sent')
+      .setDescription(args[0])
     msg.channel.send(suggestEmbed)
 
     // sends webhook
