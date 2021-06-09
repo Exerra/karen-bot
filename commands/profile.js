@@ -36,6 +36,7 @@ module.exports = {
             embed.setThumbnail(msg.author.avatarURL({ dynamic: true }));
             embed.addField("Description", response.data.profile.description);
             embed.addField(`Birthday`, response.data.profile.birthday)
+            embed.addField(`Created at`, msg.author.createdAt)
             embed.addField("Gender", response.data.profile.gender)
             embed.addField("Country", response.data.profile.country);
             embed.setFooter(`With ❤️ from ${config.creator}`, config.logo)
@@ -285,6 +286,7 @@ module.exports = {
             embed.setThumbnail(member.avatarURL());
             embed.addField("Description", response.data.profile.description);
             embed.addField(`Birthday`, response.data.profile.birthday)
+            embed.addField(`Created at`, member.createdAt)
             embed.addField("Gender", response.data.profile.gender)
             embed.addField("Country", response.data.profile.country);
             embed.setFooter(`With ❤️ from ${config.creator}`, config.logo)
