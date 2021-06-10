@@ -29,12 +29,12 @@ module.exports = {
                     reason: `<@${msg.author.id}> created a new role for totally mischevious purposes! Someone go stop this person, or else they will take over the world!!!!`,
                 })
                 const guildcreateembed = new Discord.MessageEmbed()
-                guildcreateembed.setTitle('New role created')
-                guildcreateembed.setColor(config.color)
-                guildcreateembed.addField('Name', args[0])
-                guildcreateembed.addField('Color', args[1])
-                guildcreateembed.addField('Permissions', args[2])
-                guildcreateembed.setFooter(`Requested by ${msg.author.tag}`, msg.author.avatarURL())
+                    .setTitle('New role created')
+                    .setColor(config.color)
+                    .addField('Name', args[0])
+                    .addField('Color', args[1])
+                    .addField('Permissions', args[2])
+                    .setFooter(`Requested by ${msg.author.tag}`, msg.author.avatarURL())
                 msg.channel.send(guildcreateembed)
             } else {
                 msg.channel.send('Looks like you don\'t have the permissions to do so 😔')
