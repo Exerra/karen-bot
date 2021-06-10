@@ -71,8 +71,45 @@ module.exports = {
 
 emojiForKey = key => {
   let keys = ['Moderation', 'Fun', 'Misc', 'Image', 'Currency', 'Emoji', 'Private', 'Utility', 'NSFW', 'Music', 'Settings', 'Text']
-  if(key == 'Moderation') return ":shield:"
-  if(key == 'Fun') return ":smiley:"
+  switch (key) {
+    case 'Moderation':
+      return ":shield:"
+    case 'Fun':
+      return ":smiley:"
+    case 'NSFW':
+      return ":smirk:"
+    case 'Misc':
+      return ":neutral_face:"
+    case 'Image':
+      return ":frame_photo:"
+    case 'Currency':
+      return ":moneybag:"
+    case 'Emoji':
+      return ":smile:"
+    case 'Private':
+      return ":lock:"
+    case 'Utility': 
+      return ":wrench:"
+    case 'Music':
+      return ":loud_sound:"
+    case 'Settings':
+      return ":gear:"
+    case 'Text':
+      return ":regional_indicator_t:"
+    case 'User':
+      return '<:dorime:824992571406155801>'
+    case 'Search':
+      return ':compass:'
+    case 'Reddit':
+      return '<:redditplat:841329105575215134>'
+    case 'Uncategorized':
+      return ':question:'
+    default:
+      return ":grey_question:"
+  }
+
+  /* if(key == 'Moderation') return ":shield:"
+  if(key == 'Fun') return ":smiley:" */
   if(key == 'NSFW') return ":smirk:"
   if(key == 'Misc') return ":neutral_face:"
   if(key == 'Image') return ":frame_photo:"

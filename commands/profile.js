@@ -5,7 +5,7 @@ require('dotenv').config()
 module.exports = {
   name: 'profile',
   description: 'Profile command',
-  type: 'Profile',
+  type: 'User',
   execute(client, msg, args) {
     const app = require('../bot.js');
     let config = app.config;
