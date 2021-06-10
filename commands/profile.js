@@ -9,8 +9,39 @@ module.exports = {
   execute(client, msg, args) {
     const app = require('../bot.js');
     let config = app.config;
-    let embed = new Discord.MessageEmbed();
-    embed.setColor(config.color);
+    let pronoun
+    let embed = new Discord.MessageEmbed()
+        .setColor(config.color);
+
+    /**
+     * 
+     * @param {string} username 
+     * @param {string} avatarURL 
+     * @param {string} description 
+     * @param {string} pronouns 
+     * @param {string} birthday 
+     * @param {string} createdAt 
+     * @param {string} gender 
+     * @param {string} country 
+     * @param {string} rank 
+     * @param {string} languages 
+     */
+    const sendProfile = (username, avatarURL, description, pronouns, birthday, createdAt, gender, country, rank, languages) => {
+        embed.setTitle(`${username}'s profile`);
+        embed.setThumbnail(avatarURL);
+        embed.addField("Description", description)
+        if (pronouns == '' || pronouns == undefined) embed.addField("Pronouns", 'Not added. [Add them here](https://pronoundb.org/me)')
+        else embed.addField("Pronouns", pronouns)
+        embed.addField(`Birthday`, birthday)
+        embed.addField(`Created at`, createdAt)
+        embed.addField("Gender", gender)
+        embed.addField("Country", country);
+        embed.setFooter(`With ❤️ from ${config.creator}`, config.logo)
+        if (rank != "") embed.addField("Flowered?", rank);
+        embed.addField("Languages", languages);
+        embed.setFooter(`With ❤️ from ${config.creator}`, config.logo)
+        msg.channel.send(embed)
+    }
 
     if (args[0] == undefined) {
         // Tries to get profile from server
@@ -32,18 +63,95 @@ module.exports = {
         }).then((response) => {
             // If success, return profile
             //const profile = JSON.parse(response.data.profile);
-            embed.setTitle(`${msg.author.username}'s profile`);
-            embed.setThumbnail(msg.author.avatarURL({ dynamic: true }));
-            embed.addField("Description", response.data.profile.description);
-            embed.addField(`Birthday`, response.data.profile.birthday)
-            embed.addField(`Created at`, msg.author.createdAt)
-            embed.addField("Gender", response.data.profile.gender)
-            embed.addField("Country", response.data.profile.country);
-            embed.setFooter(`With ❤️ from ${config.creator}`, config.logo)
-            if (response.data.profile.rank != "") embed.addField("Flowered?", response.data.profile.rank);
-            embed.addField("Languages", response.data.profile.languages);
-            embed.setFooter(`With ❤️ from ${config.creator}`, config.logo)
-            msg.channel.send(embed);
+            axios({
+                "method": "GET",
+                "url": "https://pronoundb.org/api/v1/lookup",
+                "params": {
+                    "platform": "discord",
+                    "id": msg.author.id
+                }
+            }).then(res => {
+                switch (res.data.pronouns) {
+                    case 'unspecified':
+                        pronoun = 'unspecified'
+                        break;
+                    case 'hh':
+                        pronoun = 'he/him'
+                        break;
+                    case 'hi':
+                        pronoun = 'he/it'
+                        break;
+                    case 'hs':
+                        pronoun = 'he/she'
+                        break;
+                    case 'ht':
+                        pronoun = 'he/they'
+                        break;
+                    case 'ih':
+                        pronoun = 'it/him'
+                        break;
+                    case 'ii':
+                        pronoun = 'it/its'
+                        break;
+                    case 'is':
+                        pronoun = 'it/she'
+                        break;
+                    case 'it':
+                        pronoun = 'it/they'
+                        break;
+                    case 'shh':
+                        pronoun = 'she/he'
+                        break;
+                    case 'sh':
+                        pronoun = 'she/her'
+                        break;
+                    case 'si':
+                        pronoun = 'she/it'
+                        break;
+                    case 'st':
+                        pronoun = 'she/it'
+                        break;
+                    case 'th':
+                        pronoun = 'they/he'
+                        break;
+                    case 'ti':
+                        pronoun = 'they/it'
+                        break;
+                    case 'ts':
+                        pronoun = 'they/she'
+                        break;
+                    case 'tt':
+                        pronoun = 'they/them'
+                        break;
+                    case 'any':
+                        pronoun = 'Any'
+                        break;
+                    case 'other':
+                        pronoun = 'Other'
+                        break;
+                    case 'ask':
+                        pronoun = 'Ask me'
+                        break;
+                    case 'avoid':
+                        pronoun = 'Use my name'
+                        break;
+                }
+                sendProfile(msg.author.username, msg.author.avatarURL(), response.data.profile.description, pronoun, response.data.profile.birthday, msg.author.createdAt, response.data.profile.gender, response.data.profile.country, response.data.profile.rank, response.data.profile.languages)
+                /* embed.setTitle(`${msg.author.username}'s profile`);
+                embed.setThumbnail(msg.author.avatarURL({ dynamic: true }));
+                embed.addField("Description", response.data.profile.description);
+                if (pronoun == '') embed.addField("Pronouns", 'Not added. [Add them here](https://pronoundb.org/me)')
+                else embed.addField("Pronouns", pronoun)
+                embed.addField(`Birthday`, response.data.profile.birthday)
+                embed.addField(`Created at`, msg.author.createdAt)
+                embed.addField("Gender", response.data.profile.gender)
+                embed.addField("Country", response.data.profile.country);
+                embed.setFooter(`With ❤️ from ${config.creator}`, config.logo)
+                if (response.data.profile.rank != "") embed.addField("Flowered?", response.data.profile.rank);
+                embed.addField("Languages", response.data.profile.languages);
+                embed.setFooter(`With ❤️ from ${config.creator}`, config.logo)
+                msg.channel.send(embed); */
+            }, error => sendProfile(msg.author.username, msg.author.avatarURL(), response.data.profile.description, pronoun, response.data.profile.birthday, msg.author.createdAt, response.data.profile.gender, response.data.profile.country, response.data.profile.rank, response.data.profile.languages))
         }, (error) => {
             // If error (which means person doesn't have a profile), return error
             if (error.response.status === 404) {
@@ -282,18 +390,96 @@ module.exports = {
                 "id": member.id
             }
         }).then((response) => {
-            embed.setTitle(`${member.username}'s profile`);
-            embed.setThumbnail(member.avatarURL());
-            embed.addField("Description", response.data.profile.description);
-            embed.addField(`Birthday`, response.data.profile.birthday)
-            embed.addField(`Created at`, member.createdAt)
-            embed.addField("Gender", response.data.profile.gender)
-            embed.addField("Country", response.data.profile.country);
-            embed.setFooter(`With ❤️ from ${config.creator}`, config.logo)
-            if (response.data.profile.rank != "") embed.addField("Flowered?", response.data.profile.rank);
-            embed.addField("Languages", response.data.profile.languages);
-            embed.setFooter(`With ❤️ from ${config.creator}`, config.logo)
-            msg.channel.send(embed)
+            axios({
+                "method": "GET",
+                "url": "https://pronoundb.org/api/v1/lookup",
+                "params": {
+                    "platform": "discord",
+                    "id": member.id
+                }
+            }).then(res => {
+                switch (res.data.pronouns) {
+                    case 'unspecified':
+                        pronoun = 'unspecified'
+                        break;
+                    case 'hh':
+                        pronoun = 'he/him'
+                        break;
+                    case 'hi':
+                        pronoun = 'he/it'
+                        break;
+                    case 'hs':
+                        pronoun = 'he/she'
+                        break;
+                    case 'ht':
+                        pronoun = 'he/they'
+                        break;
+                    case 'ih':
+                        pronoun = 'it/him'
+                        break;
+                    case 'ii':
+                        pronoun = 'it/its'
+                        break;
+                    case 'is':
+                        pronoun = 'it/she'
+                        break;
+                    case 'it':
+                        pronoun = 'it/they'
+                        break;
+                    case 'shh':
+                        pronoun = 'she/he'
+                        break;
+                    case 'sh':
+                        pronoun = 'she/her'
+                        break;
+                    case 'si':
+                        pronoun = 'she/it'
+                        break;
+                    case 'st':
+                        pronoun = 'she/it'
+                        break;
+                    case 'th':
+                        pronoun = 'they/he'
+                        break;
+                    case 'ti':
+                        pronoun = 'they/it'
+                        break;
+                    case 'ts':
+                        pronoun = 'they/she'
+                        break;
+                    case 'tt':
+                        pronoun = 'they/them'
+                        break;
+                    case 'any':
+                        pronoun = 'Any'
+                        break;
+                    case 'other':
+                        pronoun = 'Other'
+                        break;
+                    case 'ask':
+                        pronoun = 'Ask me'
+                        break;
+                    case 'avoid':
+                        pronoun = 'Use my name'
+                        break;
+                }
+
+                sendProfile(member.username, member.avatarURL(), response.data.profile.description, pronoun, response.data.profile.birthday, member.createdAt, response.data.profile.gender, response.data.profile.country, response.data.profile.rank, response.data.profile.languages)
+                /* embed.setTitle(`${member.username}'s profile`);
+                embed.setThumbnail(member.avatarURL());
+                embed.addField("Description", response.data.profile.description)
+                if (pronoun == '') embed.addField("Pronouns", 'Not added. [Add them here](https://pronoundb.org/me)')
+                else embed.addField("Pronouns", pronoun)
+                embed.addField(`Birthday`, response.data.profile.birthday)
+                embed.addField(`Created at`, member.createdAt)
+                embed.addField("Gender", response.data.profile.gender)
+                embed.addField("Country", response.data.profile.country);
+                embed.setFooter(`With ❤️ from ${config.creator}`, config.logo)
+                if (response.data.profile.rank != "") embed.addField("Flowered?", response.data.profile.rank);
+                embed.addField("Languages", response.data.profile.languages);
+                embed.setFooter(`With ❤️ from ${config.creator}`, config.logo)
+                msg.channel.send(embed) */
+            }, error => sendProfile(member.username, member.avatarURL(), response.data.profile.description, pronoun, response.data.profile.birthday, member.createdAt, response.data.profile.gender, response.data.profile.country, response.data.profile.rank, response.data.profile.languages))
         }, (error) => {
             if (error.response.status === 404) {
                 embed.setTitle("Profile command: error");
