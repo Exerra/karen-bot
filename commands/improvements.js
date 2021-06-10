@@ -94,7 +94,7 @@ module.exports = {
                       // i want to shoot myself for this code
 
                       mlg.lineReply(embed)
-                    }, 6000)
+                    }, 6000) // 6 seconds for testing, later change to 24hr or something
                   }
               }).catch((err) => {
                 mxg.delete()
