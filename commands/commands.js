@@ -107,22 +107,4 @@ emojiForKey = key => {
     default:
       return ":grey_question:"
   }
-
-  /* if(key == 'Moderation') return ":shield:"
-  if(key == 'Fun') return ":smiley:" */
-  if(key == 'NSFW') return ":smirk:"
-  if(key == 'Misc') return ":neutral_face:"
-  if(key == 'Image') return ":frame_photo:"
-  if(key == 'Currency') return ":moneybag:"
-  if(key == 'Emoji') return ":smile:"
-  if(key == 'Private') return ":lock:"
-  if(key == 'Utility') return ":wrench:"
-  if(key == 'Music') return ":loud_sound:"
-  if(key == 'Settings') return ":gear:"
-  if(key == 'Text') return ":regional_indicator_t:"
-  if(key == 'User') return '<:blush_eoto:693817007979757589>'
-  if(key == 'Search') return ':compass:'
-  if(key == 'Reddit') return '<:redditplat:841329105575215134>'
-  if(key == 'Uncategorized') return ':question:'
-  return ":grey_question:"
 }
