@@ -137,20 +137,6 @@ module.exports = {
                         break;
                 }
                 sendProfile(msg.author.username, msg.author.avatarURL(), response.data.profile.description, pronoun, response.data.profile.birthday, msg.author.createdAt, response.data.profile.gender, response.data.profile.country, response.data.profile.rank, response.data.profile.languages)
-                /* embed.setTitle(`${msg.author.username}'s profile`);
-                embed.setThumbnail(msg.author.avatarURL({ dynamic: true }));
-                embed.addField("Description", response.data.profile.description);
-                if (pronoun == '') embed.addField("Pronouns", 'Not added. [Add them here](https://pronoundb.org/me)')
-                else embed.addField("Pronouns", pronoun)
-                embed.addField(`Birthday`, response.data.profile.birthday)
-                embed.addField(`Created at`, msg.author.createdAt)
-                embed.addField("Gender", response.data.profile.gender)
-                embed.addField("Country", response.data.profile.country);
-                embed.setFooter(`With ❤️ from ${config.creator}`, config.logo)
-                if (response.data.profile.rank != "") embed.addField("Flowered?", response.data.profile.rank);
-                embed.addField("Languages", response.data.profile.languages);
-                embed.setFooter(`With ❤️ from ${config.creator}`, config.logo)
-                msg.channel.send(embed); */
             }, error => sendProfile(msg.author.username, msg.author.avatarURL(), response.data.profile.description, pronoun, response.data.profile.birthday, msg.author.createdAt, response.data.profile.gender, response.data.profile.country, response.data.profile.rank, response.data.profile.languages))
         }, (error) => {
             // If error (which means person doesn't have a profile), return error
@@ -465,20 +451,6 @@ module.exports = {
                 }
 
                 sendProfile(member.username, member.avatarURL(), response.data.profile.description, pronoun, response.data.profile.birthday, member.createdAt, response.data.profile.gender, response.data.profile.country, response.data.profile.rank, response.data.profile.languages)
-                /* embed.setTitle(`${member.username}'s profile`);
-                embed.setThumbnail(member.avatarURL());
-                embed.addField("Description", response.data.profile.description)
-                if (pronoun == '') embed.addField("Pronouns", 'Not added. [Add them here](https://pronoundb.org/me)')
-                else embed.addField("Pronouns", pronoun)
-                embed.addField(`Birthday`, response.data.profile.birthday)
-                embed.addField(`Created at`, member.createdAt)
-                embed.addField("Gender", response.data.profile.gender)
-                embed.addField("Country", response.data.profile.country);
-                embed.setFooter(`With ❤️ from ${config.creator}`, config.logo)
-                if (response.data.profile.rank != "") embed.addField("Flowered?", response.data.profile.rank);
-                embed.addField("Languages", response.data.profile.languages);
-                embed.setFooter(`With ❤️ from ${config.creator}`, config.logo)
-                msg.channel.send(embed) */
             }, error => sendProfile(member.username, member.avatarURL(), response.data.profile.description, pronoun, response.data.profile.birthday, member.createdAt, response.data.profile.gender, response.data.profile.country, response.data.profile.rank, response.data.profile.languages))
         }, (error) => {
             if (error.response.status === 404) {
