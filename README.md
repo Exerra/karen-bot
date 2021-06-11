@@ -2,10 +2,10 @@
   <img src="readme.svg">
 </p>
 
-[![Discord Bots](https://top.gg/api/widget/status/599289687743397889.svg)](https://top.gg/bot/599289687743397889)
 <a href="https://status.exerra.xyz" id="freshstatus-badge-root" data-banner-style="compact">
   <img src="https://public-api.freshstatus.io/v1/public/badge.svg/?badge=0b9b52df-6e1d-4d16-b836-5595b35bcef8" />
 </a>
+[![Discord Bots](https://top.gg/api/widget/status/599289687743397889.svg)](https://top.gg/bot/599289687743397889)
 
 Karen Bot is a multi-purpose bot
 
