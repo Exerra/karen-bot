@@ -459,21 +459,21 @@ client.on('guildMemberAdd', async member => {
     }
     // Sends profile to server
     axios({
-        "method": "POST",
-        "url": `${process.env.API_SERVER}/karen/profile/`,
-        "headers": {
-            "Authorization": process.env.AUTH_B64,
-            "Content-Type": "application/json; charset=utf-8",
-            'User-Agent': process.env.AUTH_USERAGENT
-        },
-        "auth": {
-            "username": process.env.AUTH_USER,
-            "password": process.env.AUTH_PASS
-        },
-        "data": {
-            profile,
-            "id": member.id
-        }
+      "method": "POST",
+      "url": `${process.env.API_SERVER}/karen/profile/`,
+      "headers": {
+        "Authorization": process.env.AUTH_B64,
+        "Content-Type": "application/json; charset=utf-8",
+        'User-Agent': process.env.AUTH_USERAGENT
+      },
+      "auth": {
+        "username": process.env.AUTH_USER,
+        "password": process.env.AUTH_PASS
+      },
+      "data": {
+        profile,
+        "id": member.id
+      }
     })
   });
 
