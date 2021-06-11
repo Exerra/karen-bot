@@ -3,6 +3,9 @@
 </p>
 
 [![Discord Bots](https://top.gg/api/widget/status/599289687743397889.svg)](https://top.gg/bot/599289687743397889)
+<a href="https://status.exerra.xyz" id="freshstatus-badge-root" data-banner-style="compact">
+  <img src="https://public-api.freshstatus.io/v1/public/badge.svg/?badge=0b9b52df-6e1d-4d16-b836-5595b35bcef8" />
+</a>
 
 Karen Bot is a multi-purpose bot
 
@@ -12,7 +15,7 @@ TODO: finish readme later
 
 [Main website](https://karen.exerra.xyz)
 
-[Docs (Commands and API docs)](https://docs.karen.exerra.xyz)
+[Docs (Commands)](https://docs.karen.exerra.xyz)
 
 [Status page](https://status.exerra.xyz)
 
