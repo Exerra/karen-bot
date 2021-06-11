@@ -9,13 +9,82 @@ module.exports = {
   execute(client, msg, args) {
     const app = require('../bot.js');
     let config = app.config;
-    let pronoun
+    var pronoun
     let embed = new Discord.MessageEmbed()
         .setColor(config.color);
 
+    const determinePronouns = (pronouns) => {
+        switch (pronouns) {
+            case 'unspecified':
+                pronoun = 'unspecified'
+                break;
+            case 'hh':
+                pronoun = 'he/him'
+                break;
+            case 'hi':
+                pronoun = 'he/it'
+                break;
+            case 'hs':
+                pronoun = 'he/she'
+                break;
+            case 'ht':
+                pronoun = 'he/they'
+                break;
+            case 'ih':
+                pronoun = 'it/him'
+                break;
+            case 'ii':
+                pronoun = 'it/its'
+                break;
+            case 'is':
+                pronoun = 'it/she'
+                break;
+            case 'it':
+                pronoun = 'it/they'
+                break;
+            case 'shh':
+                pronoun = 'she/he'
+                break;
+            case 'sh':
+                pronoun = 'she/her'
+                break;
+            case 'si':
+                pronoun = 'she/it'
+                break;
+            case 'st':
+                pronoun = 'she/it'
+                break;
+            case 'th':
+                pronoun = 'they/he'
+                break;
+            case 'ti':
+                pronoun = 'they/it'
+                break;
+            case 'ts':
+                pronoun = 'they/she'
+                break;
+            case 'tt':
+                pronoun = 'they/them'
+                break;
+            case 'any':
+                pronoun = 'Any'
+                break;
+            case 'other':
+                pronoun = 'Other'
+                break;
+            case 'ask':
+                pronoun = 'Ask me'
+                break;
+            case 'avoid':
+                pronoun = 'Use my name'
+                break;
+        }
+    }
+     
+
     /**
      * 
-     * @param {string} username 
+     * @param {string} username
      * @param {string} avatarURL 
      * @param {string} description 
      * @param {string} pronouns 
@@ -71,72 +140,18 @@ module.exports = {
                     "id": msg.author.id
                 }
             }).then(res => {
-                switch (res.data.pronouns) {
-                    case 'unspecified':
-                        pronoun = 'unspecified'
-                        break;
-                    case 'hh':
-                        pronoun = 'he/him'
-                        break;
-                    case 'hi':
-                        pronoun = 'he/it'
-                        break;
-                    case 'hs':
-                        pronoun = 'he/she'
-                        break;
-                    case 'ht':
-                        pronoun = 'he/they'
-                        break;
-                    case 'ih':
-                        pronoun = 'it/him'
-                        break;
-                    case 'ii':
-                        pronoun = 'it/its'
-                        break;
-                    case 'is':
-                        pronoun = 'it/she'
-                        break;
-                    case 'it':
-                        pronoun = 'it/they'
-                        break;
-                    case 'shh':
-                        pronoun = 'she/he'
-                        break;
-                    case 'sh':
-                        pronoun = 'she/her'
-                        break;
-                    case 'si':
-                        pronoun = 'she/it'
-                        break;
-                    case 'st':
-                        pronoun = 'she/it'
-                        break;
-                    case 'th':
-                        pronoun = 'they/he'
-                        break;
-                    case 'ti':
-                        pronoun = 'they/it'
-                        break;
-                    case 'ts':
-                        pronoun = 'they/she'
-                        break;
-                    case 'tt':
-                        pronoun = 'they/them'
-                        break;
-                    case 'any':
-                        pronoun = 'Any'
-                        break;
-                    case 'other':
-                        pronoun = 'Other'
-                        break;
-                    case 'ask':
-                        pronoun = 'Ask me'
-                        break;
-                    case 'avoid':
-                        pronoun = 'Use my name'
-                        break;
-                }
-                sendProfile(msg.author.username, msg.author.avatarURL(), response.data.profile.description, pronoun, response.data.profile.birthday, msg.author.createdAt, response.data.profile.gender, response.data.profile.country, response.data.profile.rank, response.data.profile.languages)
+                determinePronouns(res.data.pronouns)
+                sendProfile(msg.author.username,
+                    msg.author.avatarURL(),
+                    response.data.profile.description,
+                    pronoun,
+                    response.data.profile.birthday,
+                    msg.author.createdAt,
+                    response.data.profile.gender,
+                    response.data.profile.country,
+                    response.data.profile.rank,
+                    response.data.profile.languages
+                )
             }, error => sendProfile(msg.author.username, msg.author.avatarURL(), response.data.profile.description, pronoun, response.data.profile.birthday, msg.author.createdAt, response.data.profile.gender, response.data.profile.country, response.data.profile.rank, response.data.profile.languages))
         }, (error) => {
             // If error (which means person doesn't have a profile), return error
@@ -384,73 +399,20 @@ module.exports = {
                     "id": member.id
                 }
             }).then(res => {
-                switch (res.data.pronouns) {
-                    case 'unspecified':
-                        pronoun = 'unspecified'
-                        break;
-                    case 'hh':
-                        pronoun = 'he/him'
-                        break;
-                    case 'hi':
-                        pronoun = 'he/it'
-                        break;
-                    case 'hs':
-                        pronoun = 'he/she'
-                        break;
-                    case 'ht':
-                        pronoun = 'he/they'
-                        break;
-                    case 'ih':
-                        pronoun = 'it/him'
-                        break;
-                    case 'ii':
-                        pronoun = 'it/its'
-                        break;
-                    case 'is':
-                        pronoun = 'it/she'
-                        break;
-                    case 'it':
-                        pronoun = 'it/they'
-                        break;
-                    case 'shh':
-                        pronoun = 'she/he'
-                        break;
-                    case 'sh':
-                        pronoun = 'she/her'
-                        break;
-                    case 'si':
-                        pronoun = 'she/it'
-                        break;
-                    case 'st':
-                        pronoun = 'she/it'
-                        break;
-                    case 'th':
-                        pronoun = 'they/he'
-                        break;
-                    case 'ti':
-                        pronoun = 'they/it'
-                        break;
-                    case 'ts':
-                        pronoun = 'they/she'
-                        break;
-                    case 'tt':
-                        pronoun = 'they/them'
-                        break;
-                    case 'any':
-                        pronoun = 'Any'
-                        break;
-                    case 'other':
-                        pronoun = 'Other'
-                        break;
-                    case 'ask':
-                        pronoun = 'Ask me'
-                        break;
-                    case 'avoid':
-                        pronoun = 'Use my name'
-                        break;
-                }
+                determinePronouns(res.data.pronouns)
 
-                sendProfile(member.username, member.avatarURL(), response.data.profile.description, pronoun, response.data.profile.birthday, member.createdAt, response.data.profile.gender, response.data.profile.country, response.data.profile.rank, response.data.profile.languages)
+                sendProfile(
+                    member.username,
+                    member.avatarURL(),
+                    response.data.profile.description,
+                    pronoun,
+                    response.data.profile.birthday,
+                    member.createdAt,
+                    response.data.profile.gender,
+                    response.data.profile.country,
+                    response.data.profile.rank,
+                    response.data.profile.languages
+                )
             }, error => sendProfile(member.username, member.avatarURL(), response.data.profile.description, pronoun, response.data.profile.birthday, member.createdAt, response.data.profile.gender, response.data.profile.country, response.data.profile.rank, response.data.profile.languages))
         }, (error) => {
             if (error.response.status === 404) {
