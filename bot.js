@@ -573,7 +573,7 @@ client.on('message', async msg => {
         msg.channel.send(embed)
       })
       .catch(function(err) {
-        msg.channel.send('eror tiem' + err)
+        console.log('eror tiem' + err)
       });
   } else if (matchSpotifyArtistUrl(spotargs[0])) {
     if (!settingsmap.get(msg.guild.id).autoSpotifyEmbed) return
