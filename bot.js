@@ -345,7 +345,7 @@ client.once('ready', async () => {
     why = "⚠️ WELCOME FUNCTIONALITY DISABLED ⚠️"
     client.user.setActivity(config.prefix +`help | ${why}`, { type: "WATCHING" });
 
-    function myTimer() {
+    let statsTimeout = () => {
       const promises = [
         client.shard.fetchClientValues('guilds.cache.size'),
         client.shard.broadcastEval('this.guilds.cache.reduce((prev, guild) => prev + guild.memberCount, 0)'),
@@ -378,8 +378,8 @@ client.once('ready', async () => {
       .catch(console.error);
     }
     if (process.env.VALIDATION  == undefined) {
-      myTimer()
-      var myVar = setInterval(myTimer, 600000)
+      statsTimeout()
+      var myVar = setInterval(statsTimeout, 600000)
     }
     
     /* fs.readdir("./cmds", function(err, files) {
@@ -666,72 +666,6 @@ client.on('message', async msg => {
     if (msg.channel.nsfw) return;
     nsfai.predict(url).then(handleResult).catch(handleError);
   }
-  
-  /* if(msg.content.toLowerCase().startsWith(config.prefix)) {
-    var args = msg.content.slice(config.prefix.length).split(/\s+/)
-    
-    var commandName = args.shift().toLowerCase()
-    let command = client.commands.get(commandName)
-        || client.commands.find(c => c.aliases && c.aliases.includes(commandName))
-
-    if(!command) return;
-
-    const level = client.permLevel(msg)
-    if(level < client.levelCache[command.permissionsLevel || "User"]) {
-      return msg.channel.send(`Shut up, you're not my mom 😒🙄`)
-    }
-
-    msg.author.permLevel = level
-    msg.member.user.permLevel = level
-
-    try {
-      if(command.args && !args.length) {
-        let reply = `Where are the arguments?? Explain yourself, WHERE IN THE FUCK DO YOU SEE ARGUMENTS!?!?!?`
-
-        if(command.usage) {
-          reply += `\nProper Usage: \`${config.prefix}${command.name} ${command.usage.replace('shard_count', 4)}\``
-        }
-
-        if(command.example) {
-          // TODO: Repalce shard_count with a non-static count (-1 since shard 1 is id 0)
-          reply += `\n\`${config.prefix}${command.name} ${command.example.replace('shard_count', 3)}\``
-        }
-
-        return msg.channel.send(reply)
-      }
-
-      if(command.nsfw && !msg.channel.nsfw) {
-        if(!msg.channel.name.includes('nsfw')) return msg.channel.send(`Ugh this is an NSFW command, go to an NSFW channel 🙄`)
-      }
-      await command.execute(client, msg, args)
-    } catch (error) {
-      console.error(error)
-      axios({
-        "method": "POST",
-        "url": `${process.env.API_SERVER}/karen/logs/`,
-        "headers": {
-          "Authorization": process.env.AUTH_B64,
-          "Content-Type": "application/json; charset=utf-8",
-          'User-Agent': process.env.AUTH_USERAGENT
-        },
-        "auth": {
-          "username": process.env.AUTH_USER,
-          "password": process.env.AUTH_PASS
-        },
-        "data": {
-          "content": `"${msg}" by ${msg.author.id} - ${error}`,
-          "type": "error"
-        }
-      })
-      axios.post(process.env.REGULAR_WEBHOOK, {
-        "content": `"${msg}" by ${msg.author.id} - ${error}`,
-        "embeds": null,
-        "username": 'Karen Bot Error',
-        "avatar_url": "https://karen.exerra.xyz/assets/BotLogoNoOutline.png"
-      })
-      msg.reply('there was an error trying to execute that command.')
-    }
-  } */
 
   const executeCommand = async (prefix) => {
     var args = msg.content.slice(prefix.length).split(/\s+/)
