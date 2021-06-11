@@ -317,76 +317,76 @@ let statusQuotes = [
 ]
 
 client.once('ready', async () => {
-    logger.log('info', `Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`);
+  logger.log('info', `Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`);
 
-    if (process.env.VALIDATION  == undefined) {
-      axios({
-        "method": "POST",
-        "url": `${process.env.API_SERVER}/karen/logs/`,
-        "headers": {
-          "Authorization": process.env.AUTH_B64,
-          "Content-Type": "application/json; charset=utf-8",
-          'User-Agent': process.env.AUTH_USERAGENT
-        },
-        "auth": {
-          "username": process.env.AUTH_USER,
-          "password": process.env.AUTH_PASS
-        },
-        "data": {
-          "content": `Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`,
-          "type": "info"
-        }
-      }) 
-    }
+  if (process.env.VALIDATION  == undefined) {
+    axios({
+      "method": "POST",
+      "url": `${process.env.API_SERVER}/karen/logs/`,
+      "headers": {
+        "Authorization": process.env.AUTH_B64,
+        "Content-Type": "application/json; charset=utf-8",
+        'User-Agent': process.env.AUTH_USERAGENT
+      },
+      "auth": {
+        "username": process.env.AUTH_USER,
+        "password": process.env.AUTH_PASS
+      },
+      "data": {
+        "content": `Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`,
+        "type": "info"
+      }
+    }) 
+  }
 
-    /* client.user.setActivity(`${client.guilds.cache.size} servers | ` + config.prefix +`help`, { type: "WATCHING" }); */
-    let why = statusQuotes[Math.floor(Math.random()*statusQuotes.length)];
-    // emergency status
-    why = "⚠️ WELCOME FUNCTIONALITY DISABLED ⚠️"
-    client.user.setActivity(config.prefix +`help | ${why}`, { type: "WATCHING" });
+  /* client.user.setActivity(`${client.guilds.cache.size} servers | ` + config.prefix +`help`, { type: "WATCHING" }); */
+  let why = statusQuotes[Math.floor(Math.random()*statusQuotes.length)];
+  // emergency status
+  why = "⚠️ WELCOME FUNCTIONALITY DISABLED ⚠️"
+  client.user.setActivity(config.prefix +`help | ${why}`, { type: "WATCHING" });
 
-    let statsTimeout = () => {
-      const promises = [
-        client.shard.fetchClientValues('guilds.cache.size'),
-        client.shard.broadcastEval('this.guilds.cache.reduce((prev, guild) => prev + guild.memberCount, 0)'),
-      ];
+  let statsTimeout = () => {
+    const promises = [
+      client.shard.fetchClientValues('guilds.cache.size'),
+      client.shard.broadcastEval('this.guilds.cache.reduce((prev, guild) => prev + guild.memberCount, 0)'),
+    ];
 
-      Promise.all(promises)
-      .then(results => {
-          const totalGuilds = results[0].reduce((prev, guildCount) => prev + guildCount, 0);
-          const totalMembers = results[1].reduce((prev, memberCount) => prev + memberCount, 0);
+    Promise.all(promises)
+    .then(results => {
+        const totalGuilds = results[0].reduce((prev, guildCount) => prev + guildCount, 0);
+        const totalMembers = results[1].reduce((prev, memberCount) => prev + memberCount, 0);
 
-          axios({
-            "method": "POST",
-            "url": `${process.env.API_SERVER}/karen/stats/`,
-            "headers": {
-              "Authorization": process.env.AUTH_B64,
-              "Content-Type": "application/json; charset=utf-8",
-              'User-Agent': process.env.AUTH_USERAGENT
-            },
-            "auth": {
-              "username": process.env.AUTH_USER,
-              "password": process.env.AUTH_PASS
-            },
-            "data": {
-              "servercount": `${totalGuilds}`,
-              "users": `${totalMembers}`,
-              "DiscordJS": `${Discord.version}`
-            }
-          })
-      })
-      .catch(console.error);
-    }
-    if (process.env.VALIDATION  == undefined) {
-      statsTimeout()
-      var myVar = setInterval(statsTimeout, 600000)
-    }
-    
-    /* fs.readdir("./cmds", function(err, files) {
-        files.forEach(function(name) {
-            commands[name.split(".")[0]] = require("./cmds/" + name);
-        });
-    }); */
+        axios({
+          "method": "POST",
+          "url": `${process.env.API_SERVER}/karen/stats/`,
+          "headers": {
+            "Authorization": process.env.AUTH_B64,
+            "Content-Type": "application/json; charset=utf-8",
+            'User-Agent': process.env.AUTH_USERAGENT
+          },
+          "auth": {
+            "username": process.env.AUTH_USER,
+            "password": process.env.AUTH_PASS
+          },
+          "data": {
+            "servercount": `${totalGuilds}`,
+            "users": `${totalMembers}`,
+            "DiscordJS": `${Discord.version}`
+          }
+        })
+    })
+    .catch(console.error);
+  }
+  if (process.env.VALIDATION  == undefined) {
+    statsTimeout()
+    var myVar = setInterval(statsTimeout, 600000)
+  }
+  
+  /* fs.readdir("./cmds", function(err, files) {
+      files.forEach(function(name) {
+          commands[name.split(".")[0]] = require("./cmds/" + name);
+      });
+  }); */
 });
 client.once('reconnecting', async () => {
     axios.post(`${process.env.API_SERVER}/karen/logs/`, {
