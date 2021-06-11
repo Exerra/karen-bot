@@ -522,8 +522,8 @@ client.on('message', async msg => {
     secret: process.env.SPOTIFY_SECRET
   });
   const matchSpotifyTrackUrl = (url) => {
-      var p = /https:\/\/open\.spotify\.com\/track\//;
-      return (url.match(p)) ? true : false ;
+    var p = /https:\/\/open\.spotify\.com\/track\//;
+    return (url.match(p)) ? true : false ;
   }
 
   const matchSpotifyArtistUrl = (url) => {
