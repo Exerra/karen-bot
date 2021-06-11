@@ -13,6 +13,10 @@ module.exports = {
     let embed = new Discord.MessageEmbed()
         .setColor(config.color);
 
+    /**
+     * 
+     * @param {string} pronouns - The response body for the pronoum.db API call
+     */
     const determinePronouns = (pronouns) => {
         switch (pronouns) {
             case 'unspecified':
@@ -84,16 +88,16 @@ module.exports = {
 
     /**
      * 
-     * @param {string} username
-     * @param {string} avatarURL 
-     * @param {string} description 
-     * @param {string} pronouns 
-     * @param {string} birthday 
-     * @param {string} createdAt 
-     * @param {string} gender 
-     * @param {string} country 
-     * @param {string} rank 
-     * @param {string} languages 
+     * @param {string} username - Username of the person the profile belongs to
+     * @param {string} avatarURL - Avatar's profile of the person who it belongs to
+     * @param {string} description - Description set in profile
+     * @param {string} pronouns - Users pronouns
+     * @param {string} birthday - Description set in the profile
+     * @param {string} createdAt - When the user has been created
+     * @param {string} gender - Users gender set in the profile
+     * @param {string} country - Users country set in the profile
+     * @param {string} rank - Users rank (aka flower)
+     * @param {string} languages - Users languages set in the profile
      */
     const sendProfile = (username, avatarURL, description, pronouns, birthday, createdAt, gender, country, rank, languages) => {
         embed.setTitle(`${username}'s profile`);
