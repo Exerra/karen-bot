@@ -643,8 +643,8 @@ client.on('message', async msg => {
 
   if (msg.attachments.size > 0) {
     if (msg.attachments.every(attachIsImage)){
-        //something
-        console.log('hm')
+      //something
+      console.log('hm')
     }
   }
           
