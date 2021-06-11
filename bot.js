@@ -419,12 +419,12 @@ client.on("guildDelete", async guild => {
 });
 
 client.on("guildCreate", async guild => {
-    // This event triggers when the bot joins a guild.
-    axios.post(`${process.env.API_SERVER}/karen/logs/`, {
-      "content": `New guild joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`,
-      "type": 'info'
-    })
-    let why = await (await fetch(`https://nekos.life/api/v2/why`)).json() // skipcq: JS-0128
+  // This event triggers when the bot joins a guild.
+  axios.post(`${process.env.API_SERVER}/karen/logs/`, {
+    "content": `New guild joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`,
+    "type": 'info'
+  })
+  let why = await (await fetch(`https://nekos.life/api/v2/why`)).json() // skipcq: JS-0128
 });
 
 client.on('guildMemberAdd', async member => {
