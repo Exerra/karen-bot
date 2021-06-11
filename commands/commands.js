@@ -100,6 +100,8 @@ emojiForKey = key => {
       return '<:dorime:824992571406155801>'
     case 'Search':
       return ':compass:'
+    case 'Under Development':
+      return ':keyboard:'
     case 'Reddit':
       return '<:redditplat:841329105575215134>'
     case 'Uncategorized':
