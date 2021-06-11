@@ -389,14 +389,14 @@ client.once('ready', async () => {
   }); */
 });
 client.once('reconnecting', async () => {
-    axios.post(`${process.env.API_SERVER}/karen/logs/`, {
-      "content": `Reconnecting!`,
-      "type": 'info'
-    })
-    let why = statusQuotes[Math.floor(Math.random()*statusQuotes.length)];
-    // emergency status
-    why = "⚠️ WELCOME FUNCTIONALITY DISABLED ⚠️"
-    client.user.setActivity(config.prefix +`help | ${why}`, { type: "WATCHING" });
+  axios.post(`${process.env.API_SERVER}/karen/logs/`, {
+    "content": `Reconnecting!`,
+    "type": 'info'
+  })
+  let why = statusQuotes[Math.floor(Math.random()*statusQuotes.length)];
+  // emergency status
+  why = "⚠️ WELCOME FUNCTIONALITY DISABLED ⚠️"
+  client.user.setActivity(config.prefix +`help | ${why}`, { type: "WATCHING" });
 });
 client.once('disconnect', async () => {
     axios.post(`${process.env.API_SERVER}/karen/logs/`, {
