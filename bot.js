@@ -433,48 +433,48 @@ client.on('guildMemberAdd', async member => {
     "method": "POST",
     "url": `${process.env.API_SERVER}/karen/profile/get/`,
     "headers": {
-        "Authorization": process.env.AUTH_B64,
-        "Content-Type": "application/json; charset=utf-8",
-        'User-Agent': process.env.AUTH_USERAGENT
+      "Authorization": process.env.AUTH_B64,
+      "Content-Type": "application/json; charset=utf-8",
+      'User-Agent': process.env.AUTH_USERAGENT
     },
     "auth": {
-        "username": process.env.AUTH_USER,
-        "password": process.env.AUTH_PASS
+      "username": process.env.AUTH_USER,
+      "password": process.env.AUTH_PASS
     },
     "data": {
-        "id": member.id
+      "id": member.id
     }
   }).then((response) => {
-      // If success, return
-      return
+    // If success, return
+    return
   }, (error) => {
-      // If error (which means person doesn't have a profile), create one
-      const profile = {
-        description: "None",
-        gender: "Not specified",
-        birthday: "Not specified",
-        country: "None",
-        rank: "",
-        languages: "None"
-      }
-      // Sends profile to server
-      axios({
-          "method": "POST",
-          "url": `${process.env.API_SERVER}/karen/profile/`,
-          "headers": {
-              "Authorization": process.env.AUTH_B64,
-              "Content-Type": "application/json; charset=utf-8",
-              'User-Agent': process.env.AUTH_USERAGENT
-          },
-          "auth": {
-              "username": process.env.AUTH_USER,
-              "password": process.env.AUTH_PASS
-          },
-          "data": {
-              profile,
-              "id": member.id
-          }
-      })
+    // If error (which means person doesn't have a profile), create one
+    const profile = {
+      description: "None",
+      gender: "Not specified",
+      birthday: "Not specified",
+      country: "None",
+      rank: "",
+      languages: "None"
+    }
+    // Sends profile to server
+    axios({
+        "method": "POST",
+        "url": `${process.env.API_SERVER}/karen/profile/`,
+        "headers": {
+            "Authorization": process.env.AUTH_B64,
+            "Content-Type": "application/json; charset=utf-8",
+            'User-Agent': process.env.AUTH_USERAGENT
+        },
+        "auth": {
+            "username": process.env.AUTH_USER,
+            "password": process.env.AUTH_PASS
+        },
+        "data": {
+            profile,
+            "id": member.id
+        }
+    })
   });
 
   // this is my shitty way of handling role adds
