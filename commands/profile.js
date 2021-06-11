@@ -146,7 +146,7 @@ module.exports = {
             }).then(res => {
                 determinePronouns(res.data.pronouns)
                 sendProfile(msg.author.username,
-                    msg.author.avatarURL(),
+                    msg.author.avatarURL({ dynamic: true }),
                     response.data.profile.description,
                     pronoun,
                     response.data.profile.birthday,
@@ -156,7 +156,7 @@ module.exports = {
                     response.data.profile.rank,
                     response.data.profile.languages
                 )
-            }, error => sendProfile(msg.author.username, msg.author.avatarURL(), response.data.profile.description, pronoun, response.data.profile.birthday, msg.author.createdAt, response.data.profile.gender, response.data.profile.country, response.data.profile.rank, response.data.profile.languages))
+            }, error => sendProfile(msg.author.username, msg.author.avatarURL({ dynamic: true }), response.data.profile.description, pronoun, response.data.profile.birthday, msg.author.createdAt, response.data.profile.gender, response.data.profile.country, response.data.profile.rank, response.data.profile.languages))
         }, (error) => {
             // If error (which means person doesn't have a profile), return error
             if (error.response.status === 404) {
@@ -407,7 +407,7 @@ module.exports = {
 
                 sendProfile(
                     member.username,
-                    member.avatarURL(),
+                    member.avatarURL({ dynamic: true }),
                     response.data.profile.description,
                     pronoun,
                     response.data.profile.birthday,
@@ -417,7 +417,7 @@ module.exports = {
                     response.data.profile.rank,
                     response.data.profile.languages
                 )
-            }, error => sendProfile(member.username, member.avatarURL(), response.data.profile.description, pronoun, response.data.profile.birthday, member.createdAt, response.data.profile.gender, response.data.profile.country, response.data.profile.rank, response.data.profile.languages))
+            }, error => sendProfile(member.username, member.avatarURL({ dynamic: true }), response.data.profile.description, pronoun, response.data.profile.birthday, member.createdAt, response.data.profile.gender, response.data.profile.country, response.data.profile.rank, response.data.profile.languages))
         }, (error) => {
             if (error.response.status === 404) {
                 embed.setTitle("Profile command: error");
