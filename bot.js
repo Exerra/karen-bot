@@ -543,37 +543,37 @@ client.on('message', async msg => {
     spotify
       .request(`https://api.spotify.com/v1/tracks/${spotargs[0].substr(31)}`)
       .then(function(data) {
-          if (!data.album) return;
-          const embed = new Discord.MessageEmbed()
-          embed.setTitle(data.name)
-          embed.setURL(data.external_urls.spotify)
-          embed.setThumbnail(data.album.images[0].url)
-          embed.setAuthor('Spotify Song', 'https://cdn.exerra.xyz/files/png/companies/spotify/240px-Spotify_logo_without_text.png')
-          embed.setColor(config.color)
-          embed.addField('Monthly popularity', `${Math.trunc(data.popularity / 10)} / 10`)
-          embed.addField('Album name', data.album.name)
-          embed.addField('Album Type', data.album.album_type.capitalize())
-          // thanks to @levichlev for making this thingy
-          // i forgot about "for" loops (i dont really know why) when making this and was stumped on how to make it nicer if there are multiple artists :)
-          var aname = 'Artist\'s name'
-          if (data.album.artists.length != 1) {
-              var a = [];
-              for (i in data.album.artists) {
-                  a[i] = data.album.artists[i].name;
-              }
-              aname = 'Artist\'s names'
-              embed.addField(aname, a.join('\n'))
-          } else {
-              embed.addField(aname, data.album.artists[0].name)
-          }
-          embed.addField('Release Date', data.album.release_date + '\n(Year-Month-Day)', true)
-          embed.setTimestamp()
-          embed.setFooter(`Triggered by ${msg.author.username}`, msg.author.avatarURL({ dynamic: true }))
-          msg.delete()
-          msg.channel.send(embed)
+        if (!data.album) return;
+        const embed = new Discord.MessageEmbed()
+        embed.setTitle(data.name)
+        embed.setURL(data.external_urls.spotify)
+        embed.setThumbnail(data.album.images[0].url)
+        embed.setAuthor('Spotify Song', 'https://cdn.exerra.xyz/files/png/companies/spotify/240px-Spotify_logo_without_text.png')
+        embed.setColor(config.color)
+        embed.addField('Monthly popularity', `${Math.trunc(data.popularity / 10)} / 10`)
+        embed.addField('Album name', data.album.name)
+        embed.addField('Album Type', data.album.album_type.capitalize())
+        // thanks to @levichlev for making this thingy
+        // i forgot about "for" loops (i dont really know why) when making this and was stumped on how to make it nicer if there are multiple artists :)
+        var aname = 'Artist\'s name'
+        if (data.album.artists.length != 1) {
+            var a = [];
+            for (i in data.album.artists) {
+                a[i] = data.album.artists[i].name;
+            }
+            aname = 'Artist\'s names'
+            embed.addField(aname, a.join('\n'))
+        } else {
+            embed.addField(aname, data.album.artists[0].name)
+        }
+        embed.addField('Release Date', data.album.release_date + '\n(Year-Month-Day)', true)
+        embed.setTimestamp()
+        embed.setFooter(`Triggered by ${msg.author.username}`, msg.author.avatarURL({ dynamic: true }))
+        msg.delete()
+        msg.channel.send(embed)
       })
       .catch(function(err) {
-          msg.channel.send('eror tiem' + err)
+        msg.channel.send('eror tiem' + err)
       });
   } else if (matchSpotifyArtistUrl(spotargs[0])) {
     if (!settingsmap.get(msg.guild.id).autoSpotifyEmbed) return
@@ -593,7 +593,7 @@ client.on('message', async msg => {
         if (data.genres.length != 1) {
           var a = [];
           for (i in data.genres) {
-              a[i] = data.genres[i].toString().capitalize()
+            a[i] = data.genres[i].toString().capitalize()
           }
           aname = 'Genres'
           embed.addField(aname, a.join('\n'))
