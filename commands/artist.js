@@ -37,7 +37,7 @@ module.exports = {
                 embed.setTitle(response.artists.items[0].name)
                 embed.setURL(response.artists.items[0].external_urls.spotify)
                 embed.setThumbnail(response.artists.items[0].images[0].url)
-                embed.setAuthor('Spotify', 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/240px-Spotify_logo_without_text.svg.png')
+                embed.setAuthor('Spotify', 'https://cdn.exerra.xyz/files/png/companies/spotify/240px-Spotify_logo_without_text.png')
                 embed.setColor(config.color)
                 embed.addField('Followers', response.artists.items[0].followers.total)
                 embed.addField('Monthly popularity', `${Math.trunc(response.artists.items[0].popularity / 10)} / 10`)
