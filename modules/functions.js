@@ -35,6 +35,6 @@ module.exports = client => {
     };
 
     client.code = (lang, contents) => {
-      return `${'```'}${lang}\n${contents}${'\n```'}`
+        return `${'```'}${lang}\n${contents}${'\n```'}`
     }
 }

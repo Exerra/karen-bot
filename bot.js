@@ -317,12 +317,48 @@ let statusQuotes = [
 ]
 
 client.once('ready', async () => {
-    logger.log('info', `Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`);
+  logger.log('info', `Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`);
 
-    if (process.env.VALIDATION  == undefined) {
+  if (process.env.VALIDATION  == undefined) {
+    axios({
+      "method": "POST",
+      "url": `${process.env.API_SERVER}/karen/logs/`,
+      "headers": {
+        "Authorization": process.env.AUTH_B64,
+        "Content-Type": "application/json; charset=utf-8",
+        'User-Agent': process.env.AUTH_USERAGENT
+      },
+      "auth": {
+        "username": process.env.AUTH_USER,
+        "password": process.env.AUTH_PASS
+      },
+      "data": {
+        "content": `Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`,
+        "type": "info"
+      }
+    }) 
+  }
+
+  /* client.user.setActivity(`${client.guilds.cache.size} servers | ` + config.prefix +`help`, { type: "WATCHING" }); */
+  let why = statusQuotes[Math.floor(Math.random()*statusQuotes.length)];
+  // emergency status
+  why = "⚠️ WELCOME FUNCTIONALITY DISABLED ⚠️"
+  client.user.setActivity(config.prefix +`help | ${why}`, { type: "WATCHING" });
+
+  let statsTimeout = () => {
+    const promises = [
+      client.shard.fetchClientValues('guilds.cache.size'),
+      client.shard.broadcastEval('this.guilds.cache.reduce((prev, guild) => prev + guild.memberCount, 0)'),
+    ];
+
+    Promise.all(promises)
+    .then(results => {
+      const totalGuilds = results[0].reduce((prev, guildCount) => prev + guildCount, 0);
+      const totalMembers = results[1].reduce((prev, memberCount) => prev + memberCount, 0);
+
       axios({
         "method": "POST",
-        "url": `${process.env.API_SERVER}/karen/logs/`,
+        "url": `${process.env.API_SERVER}/karen/stats/`,
         "headers": {
           "Authorization": process.env.AUTH_B64,
           "Content-Type": "application/json; charset=utf-8",
@@ -333,79 +369,43 @@ client.once('ready', async () => {
           "password": process.env.AUTH_PASS
         },
         "data": {
-          "content": `Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`,
-          "type": "info"
+          "servercount": `${totalGuilds}`,
+          "users": `${totalMembers}`,
+          "DiscordJS": `${Discord.version}`
         }
-      }) 
-    }
-
-    /* client.user.setActivity(`${client.guilds.cache.size} servers | ` + config.prefix +`help`, { type: "WATCHING" }); */
-    let why = statusQuotes[Math.floor(Math.random()*statusQuotes.length)];
-    // emergency status
-    why = "⚠️ WELCOME FUNCTIONALITY DISABLED ⚠️"
-    client.user.setActivity(config.prefix +`help | ${why}`, { type: "WATCHING" });
-
-    let statsTimeout = () => {
-      const promises = [
-        client.shard.fetchClientValues('guilds.cache.size'),
-        client.shard.broadcastEval('this.guilds.cache.reduce((prev, guild) => prev + guild.memberCount, 0)'),
-      ];
-
-      Promise.all(promises)
-      .then(results => {
-          const totalGuilds = results[0].reduce((prev, guildCount) => prev + guildCount, 0);
-          const totalMembers = results[1].reduce((prev, memberCount) => prev + memberCount, 0);
-
-          axios({
-            "method": "POST",
-            "url": `${process.env.API_SERVER}/karen/stats/`,
-            "headers": {
-              "Authorization": process.env.AUTH_B64,
-              "Content-Type": "application/json; charset=utf-8",
-              'User-Agent': process.env.AUTH_USERAGENT
-            },
-            "auth": {
-              "username": process.env.AUTH_USER,
-              "password": process.env.AUTH_PASS
-            },
-            "data": {
-              "servercount": `${totalGuilds}`,
-              "users": `${totalMembers}`,
-              "DiscordJS": `${Discord.version}`
-            }
-          })
       })
-      .catch(console.error);
-    }
-    if (process.env.VALIDATION  == undefined) {
-      statsTimeout()
-      var myVar = setInterval(statsTimeout, 600000)
-    }
-    
-    /* fs.readdir("./cmds", function(err, files) {
-        files.forEach(function(name) {
-            commands[name.split(".")[0]] = require("./cmds/" + name);
-        });
-    }); */
+    })
+    .catch(console.error);
+  }
+  if (process.env.VALIDATION  == undefined) {
+    statsTimeout()
+    var myVar = setInterval(statsTimeout, 600000)
+  }
+  
+  /* fs.readdir("./cmds", function(err, files) {
+      files.forEach(function(name) {
+          commands[name.split(".")[0]] = require("./cmds/" + name);
+      });
+  }); */
 });
 client.once('reconnecting', async () => {
-    axios.post(`${process.env.API_SERVER}/karen/logs/`, {
-      "content": `Reconnecting!`,
-      "type": 'info'
-    })
-    let why = statusQuotes[Math.floor(Math.random()*statusQuotes.length)];
-    // emergency status
-    why = "⚠️ WELCOME FUNCTIONALITY DISABLED ⚠️"
-    client.user.setActivity(config.prefix +`help | ${why}`, { type: "WATCHING" });
+  axios.post(`${process.env.API_SERVER}/karen/logs/`, {
+    "content": `Reconnecting!`,
+    "type": 'info'
+  })
+  let why = statusQuotes[Math.floor(Math.random()*statusQuotes.length)];
+  // emergency status
+  why = "⚠️ WELCOME FUNCTIONALITY DISABLED ⚠️"
+  client.user.setActivity(config.prefix +`help | ${why}`, { type: "WATCHING" });
 });
 client.once('disconnect', async () => {
-    axios.post(`${process.env.API_SERVER}/karen/logs/`, {
-      "content": `Disconnect!`,
-      "type": 'info'
-    })
-    let why = statusQuotes[Math.floor(Math.random()*statusQuotes.length)];
-    // emergency status
-    why = "⚠️ WELCOME FUNCTIONALITY DISABLED ⚠️"
+  axios.post(`${process.env.API_SERVER}/karen/logs/`, {
+    "content": `Disconnect!`,
+    "type": 'info'
+  })
+  let why = statusQuotes[Math.floor(Math.random()*statusQuotes.length)];
+  // emergency status
+  why = "⚠️ WELCOME FUNCTIONALITY DISABLED ⚠️"
   client.user.setActivity(config.prefix +`help | ${why}`, { type: "WATCHING" });
 });
 
@@ -419,12 +419,12 @@ client.on("guildDelete", async guild => {
 });
 
 client.on("guildCreate", async guild => {
-    // This event triggers when the bot joins a guild.
-    axios.post(`${process.env.API_SERVER}/karen/logs/`, {
-      "content": `New guild joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`,
-      "type": 'info'
-    })
-    let why = await (await fetch(`https://nekos.life/api/v2/why`)).json() // skipcq: JS-0128
+  // This event triggers when the bot joins a guild.
+  axios.post(`${process.env.API_SERVER}/karen/logs/`, {
+    "content": `New guild joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`,
+    "type": 'info'
+  })
+  let why = await (await fetch(`https://nekos.life/api/v2/why`)).json() // skipcq: JS-0128
 });
 
 client.on('guildMemberAdd', async member => {
@@ -433,48 +433,48 @@ client.on('guildMemberAdd', async member => {
     "method": "POST",
     "url": `${process.env.API_SERVER}/karen/profile/get/`,
     "headers": {
+      "Authorization": process.env.AUTH_B64,
+      "Content-Type": "application/json; charset=utf-8",
+      'User-Agent': process.env.AUTH_USERAGENT
+    },
+    "auth": {
+      "username": process.env.AUTH_USER,
+      "password": process.env.AUTH_PASS
+    },
+    "data": {
+      "id": member.id
+    }
+  }).then((response) => {
+    // If success, return
+    return
+  }, (error) => {
+    // If error (which means person doesn't have a profile), create one
+    const profile = {
+      description: "None",
+      gender: "Not specified",
+      birthday: "Not specified",
+      country: "None",
+      rank: "",
+      languages: "None"
+    }
+    // Sends profile to server
+    axios({
+      "method": "POST",
+      "url": `${process.env.API_SERVER}/karen/profile/`,
+      "headers": {
         "Authorization": process.env.AUTH_B64,
         "Content-Type": "application/json; charset=utf-8",
         'User-Agent': process.env.AUTH_USERAGENT
-    },
-    "auth": {
+      },
+      "auth": {
         "username": process.env.AUTH_USER,
         "password": process.env.AUTH_PASS
-    },
-    "data": {
+      },
+      "data": {
+        profile,
         "id": member.id
-    }
-  }).then((response) => {
-      // If success, return
-      return
-  }, (error) => {
-      // If error (which means person doesn't have a profile), create one
-      const profile = {
-        description: "None",
-        gender: "Not specified",
-        birthday: "Not specified",
-        country: "None",
-        rank: "",
-        languages: "None"
       }
-      // Sends profile to server
-      axios({
-          "method": "POST",
-          "url": `${process.env.API_SERVER}/karen/profile/`,
-          "headers": {
-              "Authorization": process.env.AUTH_B64,
-              "Content-Type": "application/json; charset=utf-8",
-              'User-Agent': process.env.AUTH_USERAGENT
-          },
-          "auth": {
-              "username": process.env.AUTH_USER,
-              "password": process.env.AUTH_PASS
-          },
-          "data": {
-              profile,
-              "id": member.id
-          }
-      })
+    })
   });
 
   // this is my shitty way of handling role adds
@@ -522,8 +522,8 @@ client.on('message', async msg => {
     secret: process.env.SPOTIFY_SECRET
   });
   const matchSpotifyTrackUrl = (url) => {
-      var p = /https:\/\/open\.spotify\.com\/track\//;
-      return (url.match(p)) ? true : false ;
+    var p = /https:\/\/open\.spotify\.com\/track\//;
+    return (url.match(p)) ? true : false ;
   }
 
   const matchSpotifyArtistUrl = (url) => {
@@ -543,37 +543,37 @@ client.on('message', async msg => {
     spotify
       .request(`https://api.spotify.com/v1/tracks/${spotargs[0].substr(31)}`)
       .then(function(data) {
-          if (!data.album) return;
-          const embed = new Discord.MessageEmbed()
-          embed.setTitle(data.name)
-          embed.setURL(data.external_urls.spotify)
-          embed.setThumbnail(data.album.images[0].url)
-          embed.setAuthor('Spotify Song', 'https://cdn.exerra.xyz/files/png/companies/spotify/240px-Spotify_logo_without_text.png')
-          embed.setColor(config.color)
-          embed.addField('Monthly popularity', `${Math.trunc(data.popularity / 10)} / 10`)
-          embed.addField('Album name', data.album.name)
-          embed.addField('Album Type', data.album.album_type.capitalize())
-          // thanks to @levichlev for making this thingy
-          // i forgot about "for" loops (i dont really know why) when making this and was stumped on how to make it nicer if there are multiple artists :)
-          var aname = 'Artist\'s name'
-          if (data.album.artists.length != 1) {
-              var a = [];
-              for (i in data.album.artists) {
-                  a[i] = data.album.artists[i].name;
-              }
-              aname = 'Artist\'s names'
-              embed.addField(aname, a.join('\n'))
-          } else {
-              embed.addField(aname, data.album.artists[0].name)
-          }
-          embed.addField('Release Date', data.album.release_date + '\n(Year-Month-Day)', true)
-          embed.setTimestamp()
-          embed.setFooter(`Triggered by ${msg.author.username}`, msg.author.avatarURL({ dynamic: true }))
-          msg.delete()
-          msg.channel.send(embed)
+        if (!data.album) return;
+        const embed = new Discord.MessageEmbed()
+        embed.setTitle(data.name)
+        embed.setURL(data.external_urls.spotify)
+        embed.setThumbnail(data.album.images[0].url)
+        embed.setAuthor('Spotify Song', 'https://cdn.exerra.xyz/files/png/companies/spotify/240px-Spotify_logo_without_text.png')
+        embed.setColor(config.color)
+        embed.addField('Monthly popularity', `${Math.trunc(data.popularity / 10)} / 10`)
+        embed.addField('Album name', data.album.name)
+        embed.addField('Album Type', data.album.album_type.capitalize())
+        // thanks to @levichlev for making this thingy
+        // i forgot about "for" loops (i dont really know why) when making this and was stumped on how to make it nicer if there are multiple artists :)
+        var aname = 'Artist\'s name'
+        if (data.album.artists.length != 1) {
+            var a = [];
+            for (i in data.album.artists) {
+                a[i] = data.album.artists[i].name;
+            }
+            aname = 'Artist\'s names'
+            embed.addField(aname, a.join('\n'))
+        } else {
+            embed.addField(aname, data.album.artists[0].name)
+        }
+        embed.addField('Release Date', data.album.release_date + '\n(Year-Month-Day)', true)
+        embed.setTimestamp()
+        embed.setFooter(`Triggered by ${msg.author.username}`, msg.author.avatarURL({ dynamic: true }))
+        msg.delete()
+        msg.channel.send(embed)
       })
       .catch(function(err) {
-          msg.channel.send('eror tiem' + err)
+        msg.channel.send('eror tiem' + err)
       });
   } else if (matchSpotifyArtistUrl(spotargs[0])) {
     if (!settingsmap.get(msg.guild.id).autoSpotifyEmbed) return
@@ -593,7 +593,7 @@ client.on('message', async msg => {
         if (data.genres.length != 1) {
           var a = [];
           for (i in data.genres) {
-              a[i] = data.genres[i].toString().capitalize()
+            a[i] = data.genres[i].toString().capitalize()
           }
           aname = 'Genres'
           embed.addField(aname, a.join('\n'))
@@ -643,8 +643,8 @@ client.on('message', async msg => {
 
   if (msg.attachments.size > 0) {
     if (msg.attachments.every(attachIsImage)){
-        //something
-        console.log('hm')
+      //something
+      console.log('hm')
     }
   }
           
