@@ -345,7 +345,7 @@ client.once('ready', async () => {
     why = "⚠️ WELCOME FUNCTIONALITY DISABLED ⚠️"
     client.user.setActivity(config.prefix +`help | ${why}`, { type: "WATCHING" });
 
-    function myTimer() {
+    let statsTimeout = () => {
       const promises = [
         client.shard.fetchClientValues('guilds.cache.size'),
         client.shard.broadcastEval('this.guilds.cache.reduce((prev, guild) => prev + guild.memberCount, 0)'),
@@ -378,8 +378,8 @@ client.once('ready', async () => {
       .catch(console.error);
     }
     if (process.env.VALIDATION  == undefined) {
-      myTimer()
-      var myVar = setInterval(myTimer, 600000)
+      statsTimeout()
+      var myVar = setInterval(statsTimeout, 600000)
     }
     
     /* fs.readdir("./cmds", function(err, files) {
