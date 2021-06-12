@@ -32,13 +32,9 @@ module.exports = {
     exerraServiceEmbed.setTimestamp()
     exerraServiceEmbed.setFooter(`With ❤️ from ${config.creator}`, config.logo)
     if (apiExerra.services.length != 1) {
-      var sname
-      var s
-      for (i in apiExerra.services) {
-          sname = apiExerra.services[i].name
-          s = apiExerra.services[i].description
-          exerraServiceEmbed.addField(`${sname}`, s)
-      }
+      apiExerra.services.forEach(element => {
+        exerraServiceEmbed.addField(`${element.name}`, element.description)
+      });
     }
     else {
       exerraServiceEmbed.addField(apiExerra.services[0].name, apiExerra.services[0].description)
@@ -50,24 +46,17 @@ module.exports = {
     exerraExperienceEmbed.setTimestamp()
     exerraExperienceEmbed.setFooter(`With ❤️ from ${config.creator}`, config.logo)
     if (apiExerra.experience.length != 1) {
-        var eactive
-        var eyear
-        var ename
-        var e
-        for (i in apiExerra.experience) {
-            eactive = apiExerra.experience[i].active
-            eyear = apiExerra.experience[i].year
-            ename = apiExerra.experience[i].name
-            e = apiExerra.experience[i].description
-            exerraExperienceEmbed.addField(`${eyear} - ${ename}`, e)
-        }
+      apiExerra.experience.forEach(element => {
+        console.log(element)
+        exerraExperienceEmbed.addField(`${element.year} - ${element.name}`, element.description)
+      });
     }
     else {
       exerraExperienceEmbed.addField(`${apiExerra.experience[0].year} - ${apiExerra.experience[0].name}`, apiExerra.experience[0].description)
     }
 
     // Sends embeds
-    msg.channel.send(exerraLanguageEmbed && exerraServiceEmbed && exerraExperienceEmbed)
+    msg.channel.send(exerraLanguageEmbed)
     msg.channel.send(exerraServiceEmbed)
     msg.channel.send(exerraExperienceEmbed)
   }
