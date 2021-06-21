@@ -3,10 +3,11 @@ const Discord = require('discord.js')
 module.exports = {
   name: 'esostatus',
   description: 'Gets server status of The Elder Scrolls Online game',
-  type: 'Utility',
   args: false,
   usage: 'esostatus',
   example: '',
+  type: 'Private',
+  permissionsLevel: 'Bot Owner',
   execute(client, msg, args) {
     const app = require('../bot.js');
     let config = app.config;
