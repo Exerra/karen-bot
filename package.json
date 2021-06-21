@@ -14,6 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "@discordjs/opus": "^0.3.3",
+    "@dov118/eso-status": "^1.2.4",
     "anilist-node": "^1.6.1",
     "ascii-table": "0.0.9",
     "axios": "^0.21.1",
