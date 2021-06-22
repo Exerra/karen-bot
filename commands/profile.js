@@ -279,7 +279,7 @@ module.exports = {
                 // If profile succesefully got deleted, tell the user
                 console.log(4)
                 embed.setTitle("Profile command: Success");
-                embed.setDescription(`Damn you really had to delete your profile`);
+                embed.setDescription(`Damn you really had to delete your profile :pensiveaf:`);
                 embed.setFooter(`With ❤️ from ${config.creator}`, config.logo)
                 msg.channel.send(embed);
             }, error => {
