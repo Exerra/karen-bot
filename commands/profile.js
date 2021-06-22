@@ -125,9 +125,6 @@ module.exports = {
         msg.channel.send(embed)
     }
 
-    // Just for testing
-    msg.channel.send(serverErrorEmbed)
-
     if (args[0] == undefined) {
         // Tries to get profile from server
         axios({
@@ -256,10 +253,6 @@ module.exports = {
             }
         }).then((response) => {
             // If the user has a profile, go forward with the deletion process
-            console.log(2)
-
-            console.log(3)
-
             axios({
                 "method": "DELETE",
                 "url": `${process.env.API_SERVER}/karen/profile`,
@@ -277,19 +270,15 @@ module.exports = {
                 }
             }).then((response) => {
                 // If profile succesefully got deleted, tell the user
-                console.log(4)
                 embed.setTitle("Profile command: Success");
                 embed.setDescription(`Damn you really had to delete your profile :pensiveaf:\nHere have a cookie for all the work you spent on your profile that you just thanos snapped. [cookie](${response.data.congratulationsomgyoudidsowellimsoooooooproudofyou})`);
                 embed.setFooter(`With ❤️ from ${config.creator}`, config.logo)
                 msg.channel.send(embed);
             }, error => {
                 // If a server error happened, return an error
-                console.log(4.5)
                 if (error.response.status >= 500) return msg.channel.send(serverErrorEmbed)
-                console.log(error.response.data.error)
             })
         }, (error) => {
-            console.log(1)
             // If server returns an error (aka user does not have a profile), send an error message stating that they do not have a profile
             embed.setTitle("Profile command: error");
             embed.setDescription(`You do not have a profile! You can create one with "${config.prefix}profile create"!`);
