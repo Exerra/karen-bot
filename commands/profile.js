@@ -285,7 +285,7 @@ module.exports = {
             }, error => {
                 // If a server error happened, return an error
                 console.log(4.5)
-                if (error.response.status > 500) return msg.channel.send(serverErrorEmbed)
+                if (error.response.status >= 500) return msg.channel.send(serverErrorEmbed)
                 console.log(error.response.data.error)
             })
         }, (error) => {
