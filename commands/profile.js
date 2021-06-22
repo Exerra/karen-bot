@@ -13,6 +13,15 @@ module.exports = {
     let embed = new Discord.MessageEmbed()
         .setColor(config.color);
 
+    let serverErrorEmbed =  new Discord.MessageEmbed()
+        .setTitle(`Server error`)
+        .setThumbnail('https://img.icons8.com/bubbles/2x/error.png')
+        .setColor("ff3333")
+        .setDescription('Uh-oh! A wild error appeared!')
+        .addField('Possible cause', 'It is likely that Karen Bot while communicating with its central server that has all of the profiles, got flagged as something malicious by [Cloudflare](https://support.cloudflare.com/hc/en-us/articles/200172676-Understanding-Cloudflare-DDoS-protection) systems. It is also plausible that the server is either on maintenance or has just crashed.')
+        .addField('So.. what now?', 'Run the command a bit later. IF any outages have happened, [the status page](https://status.exerra.xyz) will have information.')
+        .setFooter(`With ❤️ from ${config.creator}`, config.logo)
+
     /**
      * 
      * @param {string} pronouns - The response body for the pronoum.db API call
@@ -116,6 +125,9 @@ module.exports = {
         msg.channel.send(embed)
     }
 
+    // Just for testing
+    msg.channel.send(serverErrorEmbed)
+
     if (args[0] == undefined) {
         // Tries to get profile from server
         axios({
@@ -164,14 +176,6 @@ module.exports = {
                 embed.setDescription(`You do not have a profile!\nDo ${config.prefix}profile create to create an empty profile(cross-server)`);
                 msg.channel.send(embed);
             } else {
-                let serverErrorEmbed =  new Discord.MessageEmbed()
-                    .setTitle(`Server error`)
-                    .setThumbnail('https://img.icons8.com/bubbles/2x/error.png')
-                    .setColor("ff3333")
-                    .setDescription('Uh-oh! A wild error appeared!')
-                    .addField('Possible cause', 'It is likely that Karen Bot while communicating with its central server that has all of the profiles, got flagged as something malicious by [Cloudflare](https://support.cloudflare.com/hc/en-us/articles/200172676-Understanding-Cloudflare-DDoS-protection) systems. It is also plausible that the server is either on maintenance or has just crashed.')
-                    .addField('So.. what now?', 'Run the command a bit later. IF any outages have happened, the maintainer of Karen Bot has been notified and is on the case already :)')
-                    .setFooter(`With ❤️ from ${config.creator}`, config.logo)
                 msg.channel.send(serverErrorEmbed)
             }
         });
@@ -232,6 +236,66 @@ module.exports = {
             embed.setFooter(`With ❤️ from ${config.creator}`, config.logo)
             msg.channel.send(embed);
         });
+    }
+    else if (args[0].toLowerCase() == "delete") {
+        // Try to get a profile for the user
+        axios({
+            "method": "POST",
+            "url": `${process.env.API_SERVER}/karen/profile/get/`,
+            "headers": {
+                "Authorization": process.env.AUTH_B64,
+                "Content-Type": "application/json; charset=utf-8",
+                'User-Agent': process.env.AUTH_USERAGENT
+            },
+            "auth": {
+                "username": process.env.AUTH_USER,
+                "password": process.env.AUTH_PASS
+            },
+            "data": {
+                "id": msg.author.id
+            }
+        }).then((response) => {
+            // If the user has a profile, go forward with the deletion process
+            console.log(2)
+
+            console.log(3)
+
+            axios({
+                "method": "DELETE",
+                "url": `${process.env.API_SERVER}/karen/profile`,
+                "headers": {
+                    "Authorization": process.env.AUTH_B64,
+                    "Content-Type": "application/json; charset=utf-8",
+                    'User-Agent': process.env.AUTH_USERAGENT
+                },
+                "auth": {
+                    "username": process.env.AUTH_USER,
+                    "password": process.env.AUTH_PASS
+                },
+                "params": {
+                    "id": msg.author.id
+                }
+            }).then((response) => {
+                // If profile succesefully got deleted, tell the user
+                console.log(4)
+                embed.setTitle("Profile command: Success");
+                embed.setDescription(`Damn you really had to delete your profile`);
+                embed.setFooter(`With ❤️ from ${config.creator}`, config.logo)
+                msg.channel.send(embed);
+            }, error => {
+                // If a server error happened, return an error
+                console.log(4.5)
+                if (error.response.status > 500) return msg.channel.send(serverErrorEmbed)
+                console.log(error.response.data.error)
+            })
+        }, (error) => {
+            console.log(1)
+            // If server returns an error (aka user does not have a profile), send an error message stating that they do not have a profile
+            embed.setTitle("Profile command: error");
+            embed.setDescription(`You do not have a profile! You can create one with "${config.prefix}profile create"!`);
+            embed.setFooter(`With ❤️ from ${config.creator}`, config.logo)
+            msg.channel.send(embed);
+        })
     }
     else if (args[0].toLowerCase() == "set") {
         let profile = {};
@@ -423,15 +487,7 @@ module.exports = {
                 embed.setTitle("Profile command: error");
                 embed.setDescription(`This person does not have a profile.`);
                 msg.channel.send(embed);
-            } else {
-                let serverErrorEmbed =  new Discord.MessageEmbed()
-                    .setTitle(`Server error`)
-                    .setThumbnail('https://img.icons8.com/bubbles/2x/error.png')
-                    .setColor("ff3333")
-                    .setDescription('Uh-oh! A wild error appeared!')
-                    .addField('Possible cause', 'It is likely that Karen Bot while communicating with its central server that has all of the profiles, got flagged as something malicious by [Cloudflare](https://support.cloudflare.com/hc/en-us/articles/200172676-Understanding-Cloudflare-DDoS-protection) systems. It is also plausible that the server is either on maintenance or has just crashed.')
-                    .addField('So.. what now?', 'Run the command a bit later. IF any outages have happened, the maintainer of Karen Bot has been notified and is on the case already :)')
-                    .setFooter(`With ❤️ from ${config.creator}`, config.logo)
+            } else {     
                 msg.channel.send(serverErrorEmbed)
             }
         });
