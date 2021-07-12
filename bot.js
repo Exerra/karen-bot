@@ -1,4 +1,4 @@
-// Dependancies
+// Dependencies
 const Discord = require('discord.js');
 const fs = require('fs');
 require('discord-reply');
@@ -161,6 +161,7 @@ const serverFunc = {
       welcomeChannel: "",
       antiNSFW: false,
       autoSpotifyEmbed: false,
+      brewSearch: false,
       modLogSettingsBool: {
         memberJoined: false,
         memberLeft: false,
