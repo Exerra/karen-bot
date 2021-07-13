@@ -11,6 +11,9 @@ module.exports = {
     async execute(client, msg, args) {
         const app = require('../bot.js');
         let config = app.config;
+        
+        const ignoreError = () => { return true }
+        
         if (msg.member.hasPermission('BAN_MEMBERS')) {
 
             // Defines member
@@ -27,9 +30,9 @@ module.exports = {
             // If reason is undefined, make the reason to that
             if (!reason) reason = "No reason provided";
 
-            await member.send(`onmg AHahaHAHahaAHAHAHAHA im wheezing rn you got banned from ${msg.guild.name} (id: ${msg.guild.id}) for ${reason}. excuse me how the hell did u get banend?? aaaaaanyway... thats what you get you devil! REPEL THE DEMONS! UNBLOW!!! YOU ARE DESTROYED FOREVER!!! AND YOU WILL NEVER BE BACK!!!! thank you god... let it happen... cause it to happen`)
-            await member.send('https://static.independent.co.uk/s3fs-public/thumbnails/image/2020/04/05/16/kenneth-copeland-blow-coronavirus.png?width=1200')
-            await member.send('oh and btw 5g causes corona cancer and reptiliioans are hacking our brrains from mars while probing our pets so like you should be saying thanks for getting educated 😒')
+            await member.send(`onmg AHahaHAHahaAHAHAHAHA im wheezing rn you got banned from ${msg.guild.name} (id: ${msg.guild.id}) for ${reason}. excuse me how the hell did u get banend?? aaaaaanyway... thats what you get you devil! REPEL THE DEMONS! UNBLOW!!! YOU ARE DESTROYED FOREVER!!! AND YOU WILL NEVER BE BACK!!!! thank you god... let it happen... cause it to happen`).catch(() => ignoreError())
+            await member.send('https://static.independent.co.uk/s3fs-public/thumbnails/image/2020/04/05/16/kenneth-copeland-blow-coronavirus.png?width=1200').catch(() => ignoreError())
+            await member.send('oh and btw 5g causes corona cancer and reptiliioans are hacking our brrains from mars while probing our pets so like you should be saying thanks for getting educated 😒').catch(() => ignoreError())
 
             // Time for public humiliation
             await member.ban({reason}).catch(error => msg.reply(`Sorry ${msg.author} I couldn't ban because of : ${error}`));

@@ -11,6 +11,9 @@ module.exports = {
     async execute(client, msg, args) {
         const app = require('../bot.js');
         let config = app.config;
+
+        const ignoreError = () => { return true }
+
         if (msg.member.hasPermission('KICK_MEMBERS')) {
 
             let member = msg.mentions.members.first() || msg.guild.members.cache.get(args[0]);
@@ -24,8 +27,8 @@ module.exports = {
             let reason = args.slice(1).join(' ');
             if (!reason) reason = "No reason provided";
 
-            await member.send(`onmg AHahaHAHahaAHAHAHAHA im wheezing rn you got kicked from ${msg.guild.name} (id: ${msg.guild.id}) for ${reason}. thats what you get you devil! REPEL THE DEMONS! UNBLOW!!! YOU ARE DESTROYED FOREVER!!! AND YOU WILL NEVER BE BACK!!!! thank you god... let it happen... cause it to happen`)
-            await member.send('https://static.independent.co.uk/s3fs-public/thumbnails/image/2020/04/05/16/kenneth-copeland-blow-coronavirus.png?width=1200')
+            await member.send(`onmg AHahaHAHahaAHAHAHAHA im wheezing rn you got kicked from ${msg.guild.name} (id: ${msg.guild.id}) for ${reason}. thats what you get you devil! REPEL THE DEMONS! UNBLOW!!! YOU ARE DESTROYED FOREVER!!! AND YOU WILL NEVER BE BACK!!!! thank you god... let it happen... cause it to happen`).catch(() => ignoreError())
+            await member.send('https://static.independent.co.uk/s3fs-public/thumbnails/image/2020/04/05/16/kenneth-copeland-blow-coronavirus.png?width=1200').catch(() => ignoreError())
 
             await member.kick(reason)
                 .catch(error => msg.reply(`Sorry ${msg.author} I couldn't kick because of : ${error}`));
