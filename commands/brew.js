@@ -105,7 +105,7 @@ module.exports = {
         msg.channel.send(embed)
     }, error => {
       // just return
-      return
+      return msg.channel.send('Um, u sure about that? Are you like 100% sure that that formulae exists? Maaaybe you confused it with a cask package? No? Well then either you misspelled or more likely your dumbass is remembering wrong')
     })
   }
 }
