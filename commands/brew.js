@@ -2,11 +2,12 @@ const Discord = require('discord.js')
 
 module.exports = {
   name: 'brew',
-  description: '',
-  type: '',
+  description: 'Search brew.sh',
+  type: 'search',
   args: false,
-  usage: '',
-  example: '',
+  usage: '[formulae]',
+  example: 'cask',
+  aliases: [ 'formulae' ],
   execute(client, msg, args) {
     const app = require('../bot.js');
     let config = app.config;
