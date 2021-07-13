@@ -121,9 +121,9 @@ module.exports = {
         embed.addField("Description", description)
         
         // Adds the contact info fields
-        if (website != "") embed.addField('Website', website, true); topLineFieldAmount++
+        if (website != "") embed.addField('Website', `[${website.replace(/(^\w+:|^)\/\//, '')}](${website} '${msg.author.username}'s website')`, true); topLineFieldAmount++
         if (email != "") embed.addField('Email', `[${email}](mailto:${email})`, true); topLineFieldAmount++
-        if (twitter != "") embed.addField('Twitter', `[@${twitter}](https://twitter.com/${twitter})`, true); topLineFieldAmount++
+        if (twitter != "") embed.addField('Twitter', `[@${twitter}](https://twitter.com/${twitter} '${msg.author.username}'s twitter')`, true); topLineFieldAmount++
         // Switch statement to determine how much spacers to use
         // If topLineFieldAmount is 0 (aka no contact fields), then do nothing
         // If it is 1, then add 2 spacers
@@ -156,8 +156,9 @@ module.exports = {
         if (rank != "") embed.addField("Flowered?", rank, true);
         embed.addField('\u200B', '\u200B', true)
 
-        embed.addField(`Account created at`, createdAt)
-        embed.setFooter(`With ❤️ from ${config.creator}`, config.logo)
+        //embed.addField(`Account created at`, createdAt)
+        embed.setFooter(`Account created at`)
+        embed.setTimestamp(createdAt)
         msg.channel.send(embed)
     }
 
