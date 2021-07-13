@@ -13,7 +13,7 @@ module.exports = {
     let config = app.config;
     const axios = require('axios')
 
-    axios.get(`https://formulae.brew.sh/api/formula/${args[0]}.json`).then(res => {
+    axios.get(`https://formulae.brew.sh/api/formula/${args[0].toLowerCase()}.json`).then(res => {
       let data = res.data
 
       const embed = new Discord.MessageEmbed()

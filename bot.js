@@ -546,7 +546,7 @@ client.on('message', async msg => {
     curMatch;
 
   while( curMatch = rxp.exec( str ) ) {
-    found.push( curMatch[1] );
+    found.push( curMatch[1].toLowerCase() );
   }
 
   const spotargs = msg.content.split(" ");
