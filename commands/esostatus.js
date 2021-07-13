@@ -4,7 +4,7 @@ module.exports = {
   name: 'esostatus',
   description: 'Gets server status of The Elder Scrolls Online game',
   args: false,
-  usage: 'esostatus',
+  usage: '',
   example: '',
   type: 'Private',
   permissionsLevel: 'Bot Owner',
