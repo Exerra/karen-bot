@@ -107,20 +107,56 @@ module.exports = {
      * @param {string} country - Users country set in the profile
      * @param {string} rank - Users rank (aka flower)
      * @param {string} languages - Users languages set in the profile
+     * @param {string} email - Users email
+     * @param {string} website - Users website (domain)
+     * @param {string} twitter - Users twitter handle
      */
-    const sendProfile = (username, avatarURL, description, pronouns, birthday, createdAt, gender, country, rank, languages) => {
+    const sendProfile = (username, avatarURL, description, pronouns, birthday, createdAt, gender, country, rank, languages, email, website, twitter) => {
+        // Variable to check how much fields the top line has
+        // Useful for adding spacers
+        let topLineFieldAmount = 0
+
         embed.setTitle(`${username}'s profile`);
         embed.setThumbnail(avatarURL);
         embed.addField("Description", description)
-        if (pronouns == '' || pronouns == undefined) embed.addField("Pronouns", 'Not added. [Add them here](https://pronoundb.org/me)')
-        else embed.addField("Pronouns", pronouns)
+        
+        // Adds the contact info fields
+        if (website != "") embed.addField('Website', website, true); topLineFieldAmount++
+        if (email != "") embed.addField('Email', `[${email}](mailto:${email})`, true); topLineFieldAmount++
+        if (twitter != "") embed.addField('Twitter', `[@${twitter}](https://twitter.com/${twitter})`, true); topLineFieldAmount++
+        // Switch statement to determine how much spacers to use
+        // If topLineFieldAmount is 0 (aka no contact fields), then do nothing
+        // If it is 1, then add 2 spacers
+        // If it is 2, then add 1 spacer
+        // If it is 3 then do nothing
+        switch (topLineFieldAmount) {
+            case 0:
+                break;
+            case 1:
+                embed.addField('\u200B', '\u200B', true)
+                embed.addField('\u200B', '\u200B', true)
+                break;
+            case 2:
+                embed.addField('\u200B', '\u200B', true)
+                break;
+            case 3:
+                break;
+        }
+
         embed.addField(`Birthday`, birthday)
-        embed.addField(`Created at`, createdAt)
-        embed.addField("Gender", gender)
-        embed.addField("Country", country);
-        embed.setFooter(`With ❤️ from ${config.creator}`, config.logo)
-        if (rank != "") embed.addField("Flowered?", rank);
-        embed.addField("Languages", languages);
+
+        // If there are no pronouns, notify the person that, well, there are no pronouns
+        // else, display the pronouns
+        if (pronouns == '' || pronouns == undefined) embed.addField("Pronouns", 'Not added. [Add them here](https://pronoundb.org/me)', true)
+        else embed.addField("Pronouns", pronouns, true)
+        embed.addField("Gender", gender, true)
+        embed.addField("Country", country, true)
+
+        embed.addField("Languages", languages, true);
+        if (rank != "") embed.addField("Flowered?", rank, true);
+        embed.addField('\u200B', '\u200B', true)
+
+        embed.addField(`Account created at`, createdAt)
         embed.setFooter(`With ❤️ from ${config.creator}`, config.logo)
         msg.channel.send(embed)
     }
@@ -163,8 +199,12 @@ module.exports = {
                     response.data.profile.gender,
                     response.data.profile.country,
                     response.data.profile.rank,
-                    response.data.profile.languages
+                    response.data.profile.languages,
+                    response.data.profile.email,
+                    response.data.profile.website,
+                    response.data.profile.twitter
                 )
+                console.log(response.data.profile)
             }, error => sendProfile(msg.author.username, msg.author.avatarURL({ dynamic: true }), response.data.profile.description, pronoun, response.data.profile.birthday, msg.author.createdAt, response.data.profile.gender, response.data.profile.country, response.data.profile.rank, response.data.profile.languages))
         }, (error) => {
             // If error (which means person doesn't have a profile), return error
@@ -206,9 +246,12 @@ module.exports = {
                 description: "None",
                 gender: "Not specified",
                 birthday: "Not specified",
-                country: "None",
+                country: "International waters",
                 rank: "",
-                languages: "None"
+                languages: "None",
+                email: "",
+                website: "",
+                twitter: ""
             }
             embed.setTitle("Profile creation");
             embed.setDescription(`Profile has been created successfully.\nDo ${config.prefix}profile to show your profile(cross-server)`);
@@ -468,7 +511,10 @@ module.exports = {
                     response.data.profile.gender,
                     response.data.profile.country,
                     response.data.profile.rank,
-                    response.data.profile.languages
+                    response.data.profile.languages,
+                    response.data.profile.email,
+                    response.data.profile.website,
+                    response.data.profile.twitter
                 )
             }, error => sendProfile(member.username, member.avatarURL({ dynamic: true }), response.data.profile.description, pronoun, response.data.profile.birthday, member.createdAt, response.data.profile.gender, response.data.profile.country, response.data.profile.rank, response.data.profile.languages))
         }, (error) => {
