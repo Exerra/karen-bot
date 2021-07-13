@@ -850,6 +850,7 @@ client.on('message', async msg => {
         "avatar_url": "https://karen.exerra.xyz/assets/BotLogoNoOutline.png"
       })
       msg.reply('there was an error trying to execute that command.')
+      msg.channel.stopTyping()
     }
   }
 
