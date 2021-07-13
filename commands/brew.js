@@ -3,7 +3,7 @@ const Discord = require('discord.js')
 module.exports = {
   name: 'brew',
   description: 'Search brew.sh',
-  type: 'search',
+  type: 'Search',
   args: false,
   usage: '[formulae]',
   example: 'cask',
