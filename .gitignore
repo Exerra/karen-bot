@@ -119,6 +119,7 @@ log
 *.conf
 help*
 improve*
+github.js
 
 
 
