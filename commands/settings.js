@@ -49,6 +49,9 @@ module.exports = {
             if (settingsmap.get(msg.guild.id).guildPrefix == "") settingsInfoEmbed.addField('Prefix', `A custom prefix for this guild\n**Currently disabled**`, true)
             else settingsInfoEmbed.addField('Prefix', `A custom prefix for this guild\n**Currently "${settingsmap.get(msg.guild.id).guildPrefix}"**`, true)
 
+            if (settingsmap.get(msg.guild.id).brewSearch == false) settingsInfoEmbed.addField('BrewSearch', `Automatically sends an embed with brew.sh formulae info if triggered by {{formulae}}\n**Currently Disabled**`, true)
+            else settingsInfoEmbed.addField('BrewSearch', `Automatically sends an embed with brew.sh formulae info if triggered by {{formulae}}\n**Currently Enabled**`, true)
+
             // Empty, just like my emotions - Amelia
             settingsInfoEmbed.addField('\u200B', '\u200B', true)
             settingsInfoEmbed.addField('\u200B', '\u200B', true)
@@ -139,6 +142,51 @@ module.exports = {
                     settingsmap.set(msg.guild.id, {...settingsmap.get(msg.guild.id), antiNSFW: false})
                     app.serverFunc.updateGuildSettings(settingsmap)
                     msg.channel.send(`AntiNSFW setting confirmed: ${args[2].toLowerCase()}`);
+                    return //refreshMap()
+                }
+                msg.channel.send('Wrong input! Options: True, False')
+            }
+
+            // ---------------------------------
+
+            if (args[1].toLowerCase() == 'brewsearch' && args[2] == undefined) {
+                msg.channel
+                .send("What do you want to set it to? Options: True, False")
+                .then(() => {
+                    msg.channel
+                        .awaitMessages(filter, {
+                            max: 1,
+                            time: 15000
+                        })
+                        .then(collected => {
+                            if (collected) {
+                                brewSearchCollected = collected.first().content;
+                                if (brewSearchCollected.toLowerCase() == 'true') {
+                                    settingsmap.set(msg.guild.id, {...settingsmap.get(msg.guild.id), brewSearch: true})
+                                    app.serverFunc.updateGuildSettings(settingsmap)
+                                    msg.channel.send(`brewSearch setting confirmed: ${brewSearchCollected}`);
+                                    return //refreshMap()
+                                } else if (brewSearchCollected.toLowerCase() == 'false') {
+                                    settingsmap.set(msg.guild.id, {...settingsmap.get(msg.guild.id), brewSearch: false})
+                                    app.serverFunc.updateGuildSettings(settingsmap)
+                                    msg.channel.send(`brewSearch setting confirmed: ${brewSearchCollected}`);
+                                    return //refreshMap()
+                                }
+                                msg.channel.send('Wrong input! Options: True, False')
+                            }
+                        })
+                })
+            } else if (args[1].toLowerCase() == 'brewsearch') {
+                // * OTHERWISE check if args[2] is a valid response and set the setting accordingly :)
+                if (args[2].toLowerCase() == 'true') {
+                    settingsmap.set(msg.guild.id, {...settingsmap.get(msg.guild.id), brewSearch: true})
+                    app.serverFunc.updateGuildSettings(settingsmap)
+                    msg.channel.send(`brewSearch setting confirmed: ${args[2].toLowerCase()}`);
+                    return //refreshMap()
+                } else if (args[2].toLowerCase() == 'false') {
+                    settingsmap.set(msg.guild.id, {...settingsmap.get(msg.guild.id), brewSearch: false})
+                    app.serverFunc.updateGuildSettings(settingsmap)
+                    msg.channel.send(`brewSearch setting confirmed: ${args[2].toLowerCase()}`);
                     return //refreshMap()
                 }
                 msg.channel.send('Wrong input! Options: True, False')
