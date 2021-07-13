@@ -511,6 +511,7 @@ client.on('message', async msg => {
     if (settingsmap.get(msg.guild.id).brewSearch == undefined) {
       await settingsmap.set(msg.guild.id, {...settingsmap.get(msg.guild.id), brewSearch: false})
       serverFunc.updateGuildSettings(settingsmap)
+      console.log(msg.guild.id)
     }
   } catch (err) {
     serverFunc.createGuildSettings(msg.guild.id)
@@ -761,7 +762,6 @@ client.on('message', async msg => {
   if (msg.attachments.size > 0) {
     if (msg.attachments.every(attachIsImage)){
       //something
-      console.log('hm')
     }
   }
           
