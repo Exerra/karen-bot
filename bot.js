@@ -343,7 +343,7 @@ client.once('ready', async () => {
   /* client.user.setActivity(`${client.guilds.cache.size} servers | ` + config.prefix +`help`, { type: "WATCHING" }); */
   let why = statusQuotes[Math.floor(Math.random()*statusQuotes.length)];
   // emergency status
-  why = "⚠️ WELCOME FUNCTIONALITY DISABLED ⚠️"
+  //why = "⚠️ WELCOME FUNCTIONALITY DISABLED ⚠️"
   client.user.setActivity(config.prefix +`help | ${why}`, { type: "WATCHING" });
 
   let statsTimeout = () => {
@@ -396,7 +396,7 @@ client.once('reconnecting', async () => {
   })
   let why = statusQuotes[Math.floor(Math.random()*statusQuotes.length)];
   // emergency status
-  why = "⚠️ WELCOME FUNCTIONALITY DISABLED ⚠️"
+  //why = "⚠️ WELCOME FUNCTIONALITY DISABLED ⚠️"
   client.user.setActivity(config.prefix +`help | ${why}`, { type: "WATCHING" });
 });
 client.once('disconnect', async () => {
@@ -406,7 +406,7 @@ client.once('disconnect', async () => {
   })
   let why = statusQuotes[Math.floor(Math.random()*statusQuotes.length)];
   // emergency status
-  why = "⚠️ WELCOME FUNCTIONALITY DISABLED ⚠️"
+  //why = "⚠️ WELCOME FUNCTIONALITY DISABLED ⚠️"
   client.user.setActivity(config.prefix +`help | ${why}`, { type: "WATCHING" });
 });
 
