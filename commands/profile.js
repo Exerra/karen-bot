@@ -136,6 +136,8 @@ module.exports = {
         if (!empty(website)) embed.addField('Website', `[${website.replace(/(^\w+:|^)\/\//, '')}](${website} '${msg.author.username}'s website')`, true); topLineFieldAmount++
         if (!empty(email)) embed.addField('Email', `[${email}](mailto:${email})`, true); topLineFieldAmount++
         if (!empty(twitter)) embed.addField('Twitter', `[@${twitter}](https://twitter.com/${twitter} '${msg.author.username}'s twitter')`, true); topLineFieldAmount++
+
+        console.log(topLineFieldAmount)
         // Switch statement to determine how much spacers to use
         // If topLineFieldAmount is 0 (aka no contact fields), then do nothing
         // If it is 1, then add 2 spacers
@@ -171,6 +173,7 @@ module.exports = {
         //embed.addField(`Account created at`, createdAt)
         embed.setFooter(`Account created at`)
         embed.setTimestamp(createdAt)
+        console.log(embed.fields)
         msg.channel.send(embed)
     }
 
@@ -528,7 +531,7 @@ module.exports = {
                     response.data.profile.website,
                     response.data.profile.twitter
                 )
-            }, error => sendProfile(member.username, member.avatarURL({ dynamic: true }), response.data.profile.description, pronoun, response.data.profile.birthday, member.createdAt, response.data.profile.gender, response.data.profile.country, response.data.profile.rank, response.data.profile.languages))
+            }, error => sendProfile(member.username, member.avatarURL({ dynamic: true }), response.data.profile.description, pronoun, response.data.profile.birthday, member.createdAt, response.data.profile.gender, response.data.profile.country, response.data.profile.rank, response.data.profile.languages, response.data.profile.email, response.data.profile.website, response.data.profile.twitter))
         }, (error) => {
             if (error.response.status === 404) {
                 embed.setTitle("Profile command: error");

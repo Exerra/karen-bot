@@ -296,7 +296,7 @@ module.exports = {
                     response.data.profile.website,
                     response.data.profile.twitter
                 )
-            }, error => sendProfile(member.username, member.avatarURL({ dynamic: true }), response.data.profile.description, pronoun, response.data.profile.birthday, member.createdAt, response.data.profile.gender, response.data.profile.country, response.data.profile.rank, response.data.profile.languages))
+            }, error => sendProfile(member.username, member.avatarURL({ dynamic: true }), response.data.profile.description, pronoun, response.data.profile.birthday, member.createdAt, response.data.profile.gender, response.data.profile.country, response.data.profile.rank, response.data.profile.languages, response.data.profile.email, response.data.profile.website, response.data.profile.twitter))
         }, (error) => {
             if (error.response.status === 404) {
                 embed.setTitle("Profile command: error");
