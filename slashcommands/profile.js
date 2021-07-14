@@ -139,6 +139,10 @@ module.exports = {
         embed.setThumbnail(avatarURL);
         embed.addField("Description", description)
 
+        console.log(website)
+        console.log(twitter)
+        console.log(email)
+
         // Adds the contact info fields
         if (!empty(website)) embed.addField('Website', `[${website.replace(/(^\w+:|^)\/\//, '')}](${website} '${author.username}'s website')`, true); topLineFieldAmount++
         if (!empty(email)) embed.addField('Email', `[${email}](mailto:${email})`, true); topLineFieldAmount++
