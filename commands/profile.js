@@ -121,9 +121,9 @@ module.exports = {
         embed.addField("Description", description)
         
         // Adds the contact info fields
-        if (website != "") embed.addField('Website', `[${website.replace(/(^\w+:|^)\/\//, '')}](${website} '${msg.author.username}'s website')`, true); topLineFieldAmount++
-        if (email != "") embed.addField('Email', `[${email}](mailto:${email})`, true); topLineFieldAmount++
-        if (twitter != "") embed.addField('Twitter', `[@${twitter}](https://twitter.com/${twitter} '${msg.author.username}'s twitter')`, true); topLineFieldAmount++
+        if (website != "" || website != undefined) embed.addField('Website', `[${website.replace(/(^\w+:|^)\/\//, '')}](${website} '${msg.author.username}'s website')`, true); topLineFieldAmount++
+        if (email != "" || email != undefined) embed.addField('Email', `[${email}](mailto:${email})`, true); topLineFieldAmount++
+        if (twitter != "" || twitter != undefined) embed.addField('Twitter', `[@${twitter}](https://twitter.com/${twitter} '${msg.author.username}'s twitter')`, true); topLineFieldAmount++
         // Switch statement to determine how much spacers to use
         // If topLineFieldAmount is 0 (aka no contact fields), then do nothing
         // If it is 1, then add 2 spacers
