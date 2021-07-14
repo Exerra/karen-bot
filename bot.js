@@ -422,8 +422,12 @@ client.once('ready', async () => {
     var myVar = setInterval(statsTimeout, 600000)
   }
 
+  // ------------- Slash commands -------------
+
+  // Puts the slash commands in ./slashcommands/ in an array
   let slashCommandsArr = client.slashcommands.array()
 
+  // For each command, create a slash command
   for(const command of slashCommandsArr) {
     client.api.applications(client.user.id).guilds('701064832136249355').commands.post({data: {
       "name": command.name,
@@ -432,13 +436,16 @@ client.once('ready', async () => {
     }})
   }
 
+  // When a slash command is triggered
   client.ws.on('INTERACTION_CREATE', async interaction => {
 
+    // Get the slash command that was triggered and  assign it to command
     var slashCommandName = interaction.data.name
     let command = client.slashcommands.get(slashCommandName)
         || client.slashcommands.find(c => c.aliases && c.aliases.includes(slashCommandName))
 
 
+    // Execute command
     await command.execute(client, interaction)
   })
 });
