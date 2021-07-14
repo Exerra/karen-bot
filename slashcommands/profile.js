@@ -188,7 +188,6 @@ module.exports = {
 
     if (interaction.data.options == undefined) {
         var author = client.users.cache.find(user => user.id === interaction.member.user.id)
-        console.log(author)
         // Tries to get profile from server
         axios({
             "method": "POST",
@@ -231,7 +230,6 @@ module.exports = {
                     response.data.profile.website,
                     response.data.profile.twitter
                 )
-                console.log(response.data.profile)
             }, error => sendProfile(author.username, author.avatarURL({ dynamic: true }), response.data.profile.description, pronoun, response.data.profile.birthday, author.createdAt, response.data.profile.gender, response.data.profile.country, response.data.profile.rank, response.data.profile.languages))
         }, (error) => {
             // If error (which means person doesn't have a profile), return error
