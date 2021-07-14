@@ -429,7 +429,8 @@ client.once('ready', async () => {
 
   // For each command, create a slash command
   for(const command of slashCommandsArr) {
-    client.api.applications(client.user.id).guilds('701064832136249355').commands.post({data: {
+    //                                            Only used for testing
+    client.api.applications(client.user.id)/* .guilds('701064832136249355') */.commands.post({data: {
       "name": command.name,
       "description": command.description,
       "options": command.options
