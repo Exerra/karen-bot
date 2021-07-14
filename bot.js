@@ -446,7 +446,34 @@ client.once('ready', async () => {
 
 
     // Execute command
-    await command.execute(client, interaction)
+    try {
+      await command.execute(client, interaction)
+    } catch (error) {
+      console.error(error)
+      axios({
+        "method": "POST",
+        "url": `${process.env.API_SERVER}/karen/logs/`,
+        "headers": {
+          "Authorization": process.env.AUTH_B64,
+          "Content-Type": "application/json; charset=utf-8",
+          'User-Agent': process.env.AUTH_USERAGENT
+        },
+        "auth": {
+          "username": process.env.AUTH_USER,
+          "password": process.env.AUTH_PASS
+        },
+        "data": {
+          "content": `Slash command "${command.name}" by ${interaction.member.user.id} - ${error}`,
+          "type": "error"
+        }
+      })
+      axios.post(process.env.REGULAR_WEBHOOK, {
+        "content": `Slash command "${command.name}" by ${interaction.member.user.id} - ${error}`,
+        "embeds": null,
+        "username": 'Karen Bot Error (Slash)',
+        "avatar_url": "https://karen.exerra.xyz/assets/BotLogoNoOutline.png"
+      })
+    }
   })
 });
 client.once('reconnecting', async () => {
