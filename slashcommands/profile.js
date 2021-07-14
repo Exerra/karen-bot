@@ -230,7 +230,7 @@ module.exports = {
                     response.data.profile.website,
                     response.data.profile.twitter
                 )
-            }, error => sendProfile(author.username, author.avatarURL({ dynamic: true }), response.data.profile.description, pronoun, response.data.profile.birthday, author.createdAt, response.data.profile.gender, response.data.profile.country, response.data.profile.rank, response.data.profile.languages))
+            }, error => sendProfile(author.username, author.avatarURL({ dynamic: true }), response.data.profile.description, pronoun, response.data.profile.birthday, author.createdAt, response.data.profile.gender, response.data.profile.country, response.data.profile.rank, response.data.profile.languages, response.data.profile.email, response.data.profile.website, response.data.profile.twitter))
         }, (error) => {
             // If error (which means person doesn't have a profile), return error
             if (error.response.status === 404) {
