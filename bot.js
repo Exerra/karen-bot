@@ -657,7 +657,6 @@ client.on('message', async msg => {
   
   // If it found something, continue
   if (found !== []) {
-    console.log(found)
     // If the brewSearch setting is turned off, return
     if (!settingsmap.get(msg.guild.id).brewSearch) return
 
