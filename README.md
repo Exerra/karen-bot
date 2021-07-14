@@ -20,7 +20,7 @@ TODO: finish readme later
 
 [Status page](https://status.exerra.xyz)
 
-[Invite link](https://discord.com/api/oauth2/authorize?client_id=599289687743397889&permissions=8&scope=bot)
+[Invite link](https://discord.com/oauth2/authorize?client_id=599289687743397889&scope=applications.commands%20bot&permissions=8)
 
 ## Commit etiquette
 
