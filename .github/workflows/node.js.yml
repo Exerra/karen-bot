@@ -24,6 +24,4 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - uses: borales/actions-yarn@v2.3.0
-      with:
-        cmd: install --frozen-lockfile # will run `yarn install --frozen-lockfile` command
+    - run: yarn install --frozen-lockfile
