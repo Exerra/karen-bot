@@ -19,6 +19,7 @@ var nsfai = new NSFAI(process.env.NSFAI_KEY);
 
 // commands stuff
 let commands = {}; 
+let slashCommands = {}
 
 // mobile status
 const Constants = require('./node_modules/discord.js/src/util/Constants.js') // skipcq: JS-0260
@@ -72,6 +73,44 @@ for(const file of commandFiles) {
       },
       "data": {
         "content": `Error while loading command: ${file.split('0')[0]}: ${e}`,
+        "type": "error"
+      }
+    })
+	}
+}
+
+
+// Slash Commands
+client.slashcommands = new Discord.Collection()
+client.slashFailedCommands = []
+client.slashFailedEvents = []
+let slashCmdAlpha = {}
+const slashCommandFiles = fs.readdirSync('./slashcommands').filter(file => file.endsWith('.js'))
+console.log(chalk.magenta('[Karen Bot]'), chalk.yellow(`[SlashCommand]`), chalk.white('[Load]'), `Loading a total of ${slashCommandFiles.length} commands`)
+for(const file of slashCommandFiles) {
+	try{
+		const slashCommand = require(`./slashcommands/${file}`)
+		if(!slashCmdAlpha[slashCommand.name.charAt(0)]) {
+			slashCmdAlpha[slashCommand.name.charAt(0)] = true
+		}
+		client.slashcommands.set(slashCommand.name, slashCommand)
+	} catch(e) {
+		client.slashFailedCommands.push([file.split('.')[0], e.toString()])
+		console.error(`Error while loading command: ${file.split('.')[0]}`, e)
+    axios({
+      "method": "POST",
+      "url": `${process.env.API_SERVER}/karen/logs/`,
+      "headers": {
+        "Authorization": process.env.AUTH_B64,
+        "Content-Type": "application/json; charset=utf-8",
+        'User-Agent': process.env.AUTH_USERAGENT
+      },
+      "auth": {
+        "username": process.env.AUTH_USER,
+        "password": process.env.AUTH_PASS
+      },
+      "data": {
+        "content": `Error while loading slash command: ${file.split('0')[0]}: ${e}`,
         "type": "error"
       }
     })
@@ -382,12 +421,26 @@ client.once('ready', async () => {
     statsTimeout()
     var myVar = setInterval(statsTimeout, 600000)
   }
-  
-  /* fs.readdir("./cmds", function(err, files) {
-      files.forEach(function(name) {
-          commands[name.split(".")[0]] = require("./cmds/" + name);
-      });
-  }); */
+
+  let slashCommandsArr = client.slashcommands.array()
+
+  for(const command of slashCommandsArr) {
+    client.api.applications(client.user.id).guilds('701064832136249355').commands.post({data: {
+      "name": command.name,
+      "description": command.description,
+      "options": command.options
+    }})
+  }
+
+  client.ws.on('INTERACTION_CREATE', async interaction => {
+
+    var slashCommandName = interaction.data.name
+    let command = client.slashcommands.get(slashCommandName)
+        || client.slashcommands.find(c => c.aliases && c.aliases.includes(slashCommandName))
+
+
+    await command.execute(client, interaction)
+  })
 });
 client.once('reconnecting', async () => {
   axios.post(`${process.env.API_SERVER}/karen/logs/`, {
