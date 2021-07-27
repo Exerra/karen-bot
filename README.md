@@ -34,6 +34,26 @@ TODO: finish readme later
 * Keep commit titles short and then explain them in the description of the commit.
 * **DO NOT PUSH TO MASTER BRANCH!** Push to a new branch (e.g username-whatyouchanged and create a PR)
 
+## Setup instructions
+So, Karen Bot is quite tightly integrated with my *private* API, which is good & bad news. Good news is that a lot of strain is taken off of Karen and put on my API, while the bad news is that someone without API access can't really run Karen that good. Fortunately, I have designed a lot of the API to have as little server side processing as possible, ensuring a ~~tedious~~ simple transition to your own API or just saving files on your computer!
+So this section will walk you through the necessary things to get Karen Bot atleast slightly functional :)
+
+### Discord token
+This is going to be super simple
+First, go to [discord.com/developers/applications](https://discord.com/developers/applications) and click on the button "New application"
+![How to create new application](https://cdn.exerra.xyz/files/png/tutorials/discord_bot_token/create_application.png)
+
+Then, name your application
+![How to name application](https://cdn.exerra.xyz/files/png/tutorials/discord_bot_token/name_application.png)
+
+Great! Now you have an application, but not a bot! To get a bot, create on the "Bot" tab on the sidebar, then when it asks you if you *really* want to create a bot, just say yes!
+![How to create bot](https://cdn.exerra.xyz/files/png/tutorials/discord_bot_token/click_on_bot.png)
+
+Wow, you can follow simple instructions, great! To get the token, click on "Copy" under the token while on the Bot tab. Now, be careful where you put it since tokens are basically like usernames and passwords for bots.
+![How to copy token](https://cdn.exerra.xyz/files/png/tutorials/discord_bot_token/copy_token.png)
+
+Aaand you're done with the token part, congratz! 🎉
+
 ## Special thanks to
 
 [@Salint](https://github.com/Salint) for helping out in general
