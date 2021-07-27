@@ -65,6 +65,18 @@ Now you have a shiny Spotify application, great! So next, click on "Show client 
 
 Oh hey, already at the end of this section! Good job, go pat yourself on the back 🥳
 
+### Genius OAuth token
+First, go to [genius.com/developers/](https://genius.com/developers/). Then create on the biggest button you can find, aka "Create an API client"
+![How to navigate the startpage](https://cdn.exerra.xyz/files/png/tutorials/genius_oauth/startpage.png)
+
+Then log in/sign up and you will be presented the API client creation screen. Fill in the name and if you want, the rest of the fields, then click "Save"
+![How to create an API client](https://cdn.exerra.xyz/files/png/tutorials/genius_oauth/create_api_client.png)
+
+Now you will get to the "All API Clients" screen, great! Save the client ID and client secret (again, secret so shh don't leak it)
+![How to copy OAuth token](https://cdn.exerra.xyz/files/png/tutorials/genius_oauth/get_tokens.png)
+
+HOORAY! YOU HAVE DEMONSTRATED AN EXCEPTIONAL ABILITY TO FOLLOW SIMPLE INSTRUCTIONS, WAY TO GO! ONLY A FEW LEFT 🥳🎉
+
 ## Special thanks to
 
 [@Salint](https://github.com/Salint) for helping out in general
