@@ -592,8 +592,6 @@ client.on('guildMemberAdd', async member => {
 
 client.on('message', async msg => {
 
-  if (msg.guild.id == '793297057216856085') console.log(msg.content)
-
   // We do a little trolling
   if (msg.author.id == "867057530891272262") {
     if (msg.embeds.length) {
@@ -604,16 +602,11 @@ client.on('message', async msg => {
 
   if(msg.content.includes(process.env.DISCORD_TOKEN)) return msg.delete()
   if(msg.author.bot || msg.webhookID || !msg.author) return
-
-  if (msg.guild.id == '793297057216856085') console.log(1)
   // Tbh idk why I did this, I wrote this at like 04:00
   try {
-    if (msg.guild.id == '793297057216856085') console.log(1.1)
     let guildPrefixLet = settingsmap.get(msg.guild.id).guildPrefix // skipcq: JS-0128
     if (settingsmap.get(msg.guild.id).brewSearch == undefined) {
-      if (msg.guild.id == '793297057216856085') console.log("1.1.1")
       await settingsmap.set(msg.guild.id, {...settingsmap.get(msg.guild.id), brewSearch: false})
-      if (msg.guild.id == '793297057216856085') console.log("1.1.1")
       serverFunc.updateGuildSettings(settingsmap)
       console.log(msg.guild.id)
     }
@@ -621,8 +614,6 @@ client.on('message', async msg => {
     if (msg.guild.id == '793297057216856085') console.log(1.2)
     serverFunc.createGuildSettings(msg.guild.id)
   }
-
-  console.log("after try guild prefix")
 
 
   const autoEmbeds = () => {
@@ -871,8 +862,6 @@ client.on('message', async msg => {
 
   autoEmbeds()
 
-  console.log("after spotify/brew embeds")
-
 
 
   if (msg.attachments.size > 0) {
@@ -901,7 +890,6 @@ client.on('message', async msg => {
   }
 
   const executeCommand = async (prefix) => {
-    if (msg.guild.id == '793297057216856085') console.log(2)
     var args = msg.content.slice(prefix.length).split(/\s+/)
     
     var commandName = args.shift().toLowerCase()
@@ -914,7 +902,6 @@ client.on('message', async msg => {
     if(level < client.levelCache[command.permissionsLevel || "User"]) {
       return msg.channel.send(`Shut up, you're not my mom 😒🙄`)
     }
-    if (msg.guild.id == '793297057216856085') console.log(3)
 
     msg.author.permLevel = level
     msg.member.user.permLevel = level
