@@ -12,6 +12,8 @@
 ![License](https://img.shields.io/github/license/exerra-discord/karen-bot)
 [![Discord Bots](https://top.gg/api/widget/status/599289687743397889.svg)](https://top.gg/bot/599289687743397889)
 
+![Repository size](https://img.shields.io/github/repo-size/exerra-discord/karen-bot)
+
 Karen Bot is a multi-purpose bot
 
 TODO: finish readme later
