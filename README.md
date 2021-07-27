@@ -72,10 +72,38 @@ First, go to [genius.com/developers/](https://genius.com/developers/). Then crea
 Then log in/sign up and you will be presented the API client creation screen. Fill in the name and if you want, the rest of the fields, then click "Save"
 ![How to create an API client](https://cdn.exerra.xyz/files/png/tutorials/genius_oauth/create_api_client.png)
 
-Now you will get to the "All API Clients" screen, great! Save the client ID and client secret (again, secret so shh don't leak it)
+Now you will get to the "All API Clients" screen, great! Click "Generate Access Token" and save it! (Again, keep it super super private)
 ![How to copy OAuth token](https://cdn.exerra.xyz/files/png/tutorials/genius_oauth/get_tokens.png)
 
 HOORAY! YOU HAVE DEMONSTRATED AN EXCEPTIONAL ABILITY TO FOLLOW SIMPLE INSTRUCTIONS, WAY TO GO! ONLY A FEW LEFT 🥳🎉
+
+### Clarifai AI Key
+Now now now, this is the last one (for now)! Pat yourself on the back before proceeding.
+
+You done? Good. First, go to [link](link) and sign up
+![How to sign up](https://cdn.exerra.xyz/files/png/tutorials/clarifai_key/homepage.png)
+
+When you have signed up, click on "Create application" and set up the fields. BUT BEFORE YOU CONTINUE, YOU WILL NEED TO SET THE WORKFLOW TYPE TO **MODERATION**! IT IS VERY VERY IMPORTANT
+![How to create application](https://cdn.exerra.xyz/files/png/tutorials/clarifai_key/create_app.png)
+![SET WORKFLOW TYPE](https://cdn.exerra.xyz/files/png/tutorials/clarifai_key/set_workflow.png)
+
+Now, just copy the key and you're done!
+![How to copy key](https://cdn.exerra.xyz/files/png/tutorials/clarifai_key/copy_key.png)
+
+### Putting that all in .env
+So, clone/fork the repo and create an .env file.
+
+For each field, add the content to it in the .env file after the = (Remember, no spaces)
+
+| Field              | Content             |
+|--------------------|---------------------|
+| DISCORD_TOKEN      | Discord token       |
+| SPOTIFY_ID         | Spotify ID          |
+| SPOTIFY_SECRET     | Spotify secret      |
+| GENIUS_ACCESSTOKEN | Genius access token |
+| NSFAI_KEY          | Clarifai key        |
+
+
 
 ## Special thanks to
 
