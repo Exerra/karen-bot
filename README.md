@@ -112,3 +112,5 @@ For each field, add the content to it in the .env file after the = (Remember, no
 [@levichlev](https://github.com/levichlev) for helping out with the Spotify command
 
 [@Julz4455](https://github.com/Julz4455) for not getting angry that I borrowed some code
+
+[@Luki120](https://github.com/Luki120) for proofreading
