@@ -625,7 +625,7 @@ client.on('message', async msg => {
   console.log("after try guild prefix")
 
 
-  try {
+  const autoEmbeds = () => {
     // GARBAGE CODE
     const spotify = new Spotify({
       id: process.env.SPOTIFY_ID,
@@ -866,10 +866,10 @@ client.on('message', async msg => {
         })
       }
     }
-  } catch (error) {
-    console.log(error)
   }
   // garbage code end
+
+  autoEmbeds()
 
   console.log("after spotify/brew embeds")
 
