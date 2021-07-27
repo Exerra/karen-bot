@@ -611,6 +611,7 @@ client.on('message', async msg => {
     if (msg.guild.id == '793297057216856085') console.log(1.1)
     let guildPrefixLet = settingsmap.get(msg.guild.id).guildPrefix // skipcq: JS-0128
     if (settingsmap.get(msg.guild.id).brewSearch == undefined) {
+      if (msg.guild.id == '793297057216856085') console.log("1.1.1")
       await settingsmap.set(msg.guild.id, {...settingsmap.get(msg.guild.id), brewSearch: false})
       if (msg.guild.id == '793297057216856085') console.log("1.1.1")
       serverFunc.updateGuildSettings(settingsmap)
