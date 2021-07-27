@@ -622,6 +622,8 @@ client.on('message', async msg => {
     serverFunc.createGuildSettings(msg.guild.id)
   }
 
+  console.log("after try guild prefix")
+
 
   // GARBAGE CODE
   const spotify = new Spotify({
@@ -864,6 +866,8 @@ client.on('message', async msg => {
     }
   }
   // garbage code end
+
+  console.log("after spotify/brew embeds")
 
 
 
