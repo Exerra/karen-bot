@@ -80,7 +80,7 @@ HOORAY! YOU HAVE DEMONSTRATED AN EXCEPTIONAL ABILITY TO FOLLOW SIMPLE INSTRUCTIO
 ### Clarifai AI Key
 Now now now, this is the last one (for now)! Pat yourself on the back before proceeding.
 
-You done? Good. First, go to [link](link) and sign up
+You done? Good. First, go to [clarifai.com](https://clarifai.com) and sign up
 ![How to sign up](https://cdn.exerra.xyz/files/png/tutorials/clarifai_key/homepage.png)
 
 When you have signed up, click on "Create application" and set up the fields. BUT BEFORE YOU CONTINUE, YOU WILL NEED TO SET THE WORKFLOW TYPE TO **MODERATION**! IT IS VERY VERY IMPORTANT
