@@ -54,6 +54,17 @@ Wow, you can follow simple instructions, great! To get the token, click on "Copy
 
 Aaand you're done with the token part, congratz! 🎉
 
+### Spotify OAuth token
+First, go to [developer.spotify.com/dashboard/applications](https://developer.spotify.com/dashboard/applications) and log in/sign up (if you don't have a spotify account for some god awful reason)
+
+Then, click on the big green "Create application" button and give it a name & description
+![How to create app](https://cdn.exerra.xyz/files/png/tutorials/spotify_oauth/create_app.png)
+
+Now you have a shiny Spotify application, great! So next, click on "Show client secret". Make sure not to leak the secret since it is, well, a secret!
+![How to get OAuth token](https://cdn.exerra.xyz/files/png/tutorials/spotify_oauth/get_token.png)
+
+Oh hey, already at the end of this section! Good job, go pat yourself on the back 🥳
+
 ## Special thanks to
 
 [@Salint](https://github.com/Salint) for helping out in general
