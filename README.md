@@ -35,7 +35,7 @@ TODO: finish readme later
 * **DO NOT PUSH TO MASTER BRANCH!** Push to a new branch (e.g username-whatyouchanged and create a PR)
 
 ## Setup instructions
-Setup instructions can be viewed at [docs.karen.exerra.xyz/#/setupguide](https://docs.karen.exerra.xyz/#/setupguide)
+Setup instructions can be viewed at [docs.karen.exerra.xyz/#/development/setupguide](https://docs.karen.exerra.xyz/#/development/setupguide)
 
 
 
