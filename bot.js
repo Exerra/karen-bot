@@ -592,14 +592,6 @@ client.on('guildMemberAdd', async member => {
 
 client.on('message', async msg => {
 
-  // We do a little trolling
-  if (msg.author.id == "867057530891272262") {
-    if (msg.embeds.length) {
-      return
-    }
-    msg.delete()
-  }
-
   if(msg.content.includes(process.env.DISCORD_TOKEN)) return msg.delete()
   if(msg.author.bot || msg.webhookID || !msg.author) return
   // Tbh idk why I did this, I wrote this at like 04:00
