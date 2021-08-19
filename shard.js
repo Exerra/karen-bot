@@ -8,20 +8,6 @@ const fs = require('fs')
 const { throwError } = require('./modules/throwError')
 const exec = require('child_process').execSync
 
-// Checks if it is running on Heroku because Heroku doesn't make a .env file
-if (process.env.IS_HEROKU == false) {
-  // Checks if .env exists because it is NEEDED for Karen Bot
-  // The access method can check for various things but this method with "fs.F_OK" just checks if the file is there
-  fs.access('.env', fs.F_OK, (err) => {
-    if (err) {
-      throwError(".env does not exist", "fileDoesntExist")
-      return
-    }
-  })
-}
-
-if (process.env.DISCORD_TOKEN == undefined) return throwError("DISCORD_TOKEN", "envVarDoesntExist")
-
 const manager = new ShardingManager('./bot.js', {
   token: process.env.DISCORD_TOKEN,
   totalShards: 'auto',
@@ -69,4 +55,20 @@ manager.on('shardCreate', shard => {
   })
 })
 
-manager.spawn(this.totalShards, 9000, 40000)
+
+fs.access('.env', fs.F_OK, (err) => {
+  // Checks if it is running on Heroku because Heroku doesn't make a .env file
+  // If .env doesn't exist, but it is still true then it is probably hosted on Heroku
+  if (process.env.IS_HEROKU == true) return
+
+  if (err) {
+    throwError(".env does not exist", "fileDoesntExist")
+    return
+  }
+
+  // If env variable is undefined or null, then throw error
+  // I will probbaly implement a better system because there are a lot of .env variables, but this works for now
+  if (process.env.DISCORD_TOKEN == undefined || 'null') return throwError("DISCORD_TOKEN", "envVarDoesntExist")
+
+  manager.spawn(this.totalShards, 9000, 40000)
+})
