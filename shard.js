@@ -8,14 +8,17 @@ const fs = require('fs')
 const { throwError } = require('./modules/throwError')
 const exec = require('child_process').execSync
 
-// Checks if .env exists because it is NEEDED for Karen Bot
-// The access method can check for various things but this method with "fs.F_OK" just checks if the file is there
-fs.access('.env', fs.F_OK, (err) => {
-  if (err) {
-    throwError(".env does not exist", "fileDoesntExist")
-    return
-  }
-})
+// HEROKU DIDNT LIKE THIS SO HOTFIX
+if (process.env.VALIDATION !== undefined) {
+  // Checks if .env exists because it is NEEDED for Karen Bot
+  // The access method can check for various things but this method with "fs.F_OK" just checks if the file is there
+  fs.access('.env', fs.F_OK, (err) => {
+    if (err) {
+      throwError(".env does not exist", "fileDoesntExist")
+      return
+    }
+  })
+}
 
 if (process.env.DISCORD_TOKEN == undefined) return throwError("DISCORD_TOKEN", "envVarDoesntExist")
 
