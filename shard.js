@@ -1,15 +1,30 @@
+// Dependencies
 const { ShardingManager } = require('discord.js')
 const config = require('./advanced_config.js')
+require('dotenv').config()
 const chalk = require('chalk')
 const axios = require('axios')
-require('dotenv').config()
+const fs = require('fs')
+const { throwError } = require('./modules/throwError')
+const exec = require('child_process').execSync
+
+// Checks if .env exists because it is NEEDED for Karen Bot
+// The access method can check for various things but this method with "fs.F_OK" just checks if the file is there
+fs.access('.env', fs.F_OK, (err) => {
+  if (err) {
+    throwError(".env does not exist", "fileDoesntExist")
+    return
+  }
+})
+
+if (process.env.DISCORD_TOKEN == undefined) return throwError("DISCORD_TOKEN", "envVarDoesntExist")
+
 const manager = new ShardingManager('./bot.js', {
   token: process.env.DISCORD_TOKEN,
   totalShards: 'auto',
   respawn: true,
   mode: "process"
 })
-const exec = require('child_process').execSync
 
 // These handlers are safe here
 manager.on('shardCreate', shard => {
