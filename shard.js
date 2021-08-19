@@ -8,8 +8,8 @@ const fs = require('fs')
 const { throwError } = require('./modules/throwError')
 const exec = require('child_process').execSync
 
-// HEROKU DIDNT LIKE THIS SO HOTFIX
-if (process.env.VALIDATION !== undefined) {
+// Checks if it is running on Heroku because Heroku doesn't make a .env file
+if (process.env.IS_HEROKU == false) {
   // Checks if .env exists because it is NEEDED for Karen Bot
   // The access method can check for various things but this method with "fs.F_OK" just checks if the file is there
   fs.access('.env', fs.F_OK, (err) => {
