@@ -2,6 +2,7 @@ const axios = require('axios')
 require('dotenv').config()
 const app = require("../bot.js");
 const chalk = require("chalk")
+const figlet = require('figlet');
 
 let statusQuotes = [
   "5G causes corona cancer",
