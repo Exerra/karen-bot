@@ -8,6 +8,16 @@ const fs = require('fs')
 const { throwError } = require('./modules/throwError')
 const exec = require('child_process').execSync
 
+const figlet = require('figlet');
+
+figlet('Karen Bot', (err, data) => {
+  if (err) {
+    // Idk?
+  }
+
+  console.log(chalk.magenta(data))
+})
+
 const manager = new ShardingManager('./bot.js', {
   token: process.env.DISCORD_TOKEN,
   totalShards: 'auto',
