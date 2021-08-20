@@ -153,6 +153,8 @@ for(const ev of eventFiles) {
 	}
 }
 
+require('./server.js')
+
 // Gets settingsmap
 axios({
 	"method": "GET",
