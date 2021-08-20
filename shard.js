@@ -69,7 +69,12 @@ manager.on('shardCreate', shard => {
 fs.access('.env', fs.F_OK, (err) => {
   // Checks if it is running on Heroku because Heroku doesn't make a .env file
   // If .env doesn't exist, but it is still true then it is probably hosted on Heroku
-  if (process.env.IS_HEROKU == true || "true") return manager.spawn(this.totalShards, 9000, 40000)
+  console.log(process.env.IS_HEROKU)
+  if (process.env.IS_HEROKU == "true") {
+    if (process.env.DISCORD_TOKEN == undefined || 'null') return throwError("DISCORD_TOKEN", "envVarDoesntExist")
+    manager.spawn(this.totalShards, 9000, 40000)
+    return
+  }
 
   if (err) {
     throwError(".env does not exist", "fileDoesntExist")
