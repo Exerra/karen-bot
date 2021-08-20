@@ -2,9 +2,9 @@
   "name": "karen-bot",
   "version": "7.1.1",
   "description": "The marvelous Karen brought to Discord!",
-  "main": "shard.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node shard.js",
+    "start": "node app.js",
     "test": "pm2 start shard.js --name karen"
   },
   "engines": {
