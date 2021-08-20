@@ -1,3 +1,16 @@
+/*
+  This module defines various functions related to the Karen Bot API
+  It includes stuff like:
+    - Creating settings for guilds
+    - Updating settings for guilds
+    - Fetching settings
+    - Creating guild profile (shh)
+    - Updating guild profile (again, shh)
+    - Getting guild profile (I think you get the idea by now, shh)
+
+  - Written on 2021-08-20 by Exerra
+*/
+
 const axios = require('axios')
 const serverFunc = {
   /**

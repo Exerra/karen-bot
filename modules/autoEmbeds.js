@@ -1,3 +1,20 @@
+/*
+  This module features code required to serve auto embeds.
+  Currently it offers two service embeds
+
+  1) Spotify
+    - Songs
+    - Albums
+    - Playlists
+
+  2) Brew.sh
+    - Formulae
+
+  TODO: Add Albums to Spotify and add Casks to Brew.sh
+  
+  - Written on 2021-08-20 by Exerra
+*/
+
 const Spotify = require('node-spotify-api')
 const { matchRegex } = require('./regex.js')
 const axios = require('axios')

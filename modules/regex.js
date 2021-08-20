@@ -1,7 +1,8 @@
 /*
 	This module is made to make regex matching easier and so there is less code copy pasted everywhere
 	This module will be mostly used for auto embeds, but it can be used elsewhere, just import it and you're good to go
-	- Exerra
+	
+	- Written on 2021-08-20 by Exerra
 */
 
 const matchRegex = (regex, message) => {

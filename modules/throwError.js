@@ -1,3 +1,15 @@
+/*
+  This module provides a boilerplate for Error handling.
+  It currently features these errors:
+    - File doesn't exist
+    - Environment variable doesn't exist
+
+  It can (and will) be expanded with more errors and better logging, eventually sending (some) errors to the Karen Bot API for debugging purposes.
+
+  - Written on 2021-08-20 by Exerra
+*/
+
+
 const chalk = require('chalk')
 
 const throwError = (message, type) => {
