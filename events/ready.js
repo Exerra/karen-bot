@@ -3,6 +3,7 @@ require('dotenv').config()
 const app = require("../bot.js");
 const chalk = require("chalk")
 const figlet = require('figlet');
+const Discord = require('discord.js')
 
 let statusQuotes = [
   "5G causes corona cancer",
