@@ -549,23 +549,23 @@ client.on('message', async msg => {
 
   // Literally the first lines of code in this project (back in 2019 or something). I find it funny how this has sorta became my "author check"
   if(message === '> >run ping') {
-      msg.channel.send(`**Running Ping.exe...**`).then((msg)=> {
+    msg.channel.send(`**Running Ping.exe...**`).then((msg)=> {
+      setTimeout(() => {
+        msg.edit('**Running Ping.exe...**\n**Found subroutine named "Ping Pong"**').then((msg)=> {
           setTimeout(() => {
-            msg.edit('**Running Ping.exe...**\n**Found subroutine named "Ping Pong"**').then((msg)=> {
+            msg.edit('**Running Ping.exe...**\n**Found subroutine named "Ping Pong"**\n> >run Ping Pong').then((msg)=> {
               setTimeout(() => {
-                msg.edit('**Running Ping.exe...**\n**Found subroutine named "Ping Pong"**\n> >run Ping Pong').then((msg)=> {
+                msg.edit('**Running Ping.exe...**\n**Found subroutine named "Ping Pong"**\n> >run Ping Pong \n**Running Ping Pong subroutine**').then((msg)=> {
                   setTimeout(() => {
-                    msg.edit('**Running Ping.exe...**\n**Found subroutine named "Ping Pong"**\n> >run Ping Pong \n**Running Ping Pong subroutine**').then((msg)=> {
-                      setTimeout(() => {
-                          msg.edit('**Running Ping.exe...**\n**Found subroutine named "Ping Pong"**\n> >run Ping Pong \n**Running Ping Pong subroutine**\n**Error:** Subroutine corrupted, cancelling.');
-                      }, 2000)
-                    });
+                      msg.edit('**Running Ping.exe...**\n**Found subroutine named "Ping Pong"**\n> >run Ping Pong \n**Running Ping Pong subroutine**\n**Error:** Subroutine corrupted, cancelling.');
                   }, 2000)
                 });
               }, 2000)
             });
           }, 2000)
         });
+      }, 2000)
+    });
   }
 });
 
