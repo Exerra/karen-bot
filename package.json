@@ -1,6 +1,6 @@
 {
   "name": "karen-bot",
-  "version": "7.1.0",
+  "version": "7.1.1",
   "description": "The marvelous Karen brought to Discord!",
   "main": "shard.js",
   "scripts": {

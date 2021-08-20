@@ -200,6 +200,8 @@ client.on('message', async msg => {
     serverFunc.createGuildSettings(msg.guild.id)
   }
 
+  const { matchRegex } = require('./modules/regex.js')
+
 
   const autoEmbeds = () => {
     // GARBAGE CODE
@@ -207,20 +209,6 @@ client.on('message', async msg => {
       id: process.env.SPOTIFY_ID,
       secret: process.env.SPOTIFY_SECRET
     });
-    const matchSpotifyTrackUrl = (url) => {
-      var p = /https:\/\/open\.spotify\.com\/track\//;
-      return (url.match(p)) ? true : false ;
-    }
-
-    const matchSpotifyArtistUrl = (url) => {
-      var p = /https:\/\/open\.spotify\.com\/artist\//;
-      return (url.match(p)) ? true : false ;
-    }
-
-    const matchSpotifyPlaylistUrl = (url) => {
-      var p = /https:\/\/open\.spotify\.com\/playlist\//;
-      return (url.match(p)) ? true : false ;
-    }
 
     // Args thing for the {{thing}}
     const foundargs = msg.content.split(" ")
@@ -235,7 +223,7 @@ client.on('message', async msg => {
 
     const spotargs = msg.content.split(" ");
 
-    if (matchSpotifyTrackUrl(spotargs[0])) {
+    if (matchRegex(/https:\/\/open\.spotify\.com\/track\//, spotargs[0])) {
       if (!settingsmap.get(msg.guild.id).autoSpotifyEmbed) return
       spotify
         .request(`https://api.spotify.com/v1/tracks/${spotargs[0].substr(31)}`)
@@ -272,7 +260,7 @@ client.on('message', async msg => {
         .catch(function(err) {
           console.log('eror tiem' + err)
         });
-    } else if (matchSpotifyArtistUrl(spotargs[0])) {
+    } else if (matchRegex(/https:\/\/open\.spotify\.com\/artist\//, spotargs[0])) {
       if (!settingsmap.get(msg.guild.id).autoSpotifyEmbed) return
       spotify
         .request(`https://api.spotify.com/v1/artists/${spotargs[0].substr(32)}`)
@@ -310,7 +298,7 @@ client.on('message', async msg => {
         .catch(err => {
 
         })
-    } else if (matchSpotifyPlaylistUrl(spotargs[0])) {
+    } else if (matchRegex(/https:\/\/open\.spotify\.com\/playlist\//, spotargs[0])) {
       if (!settingsmap.get(msg.guild.id).autoSpotifyEmbed) return
       spotify
         .request(`https://api.spotify.com/v1/playlists/${spotargs[0].substr(34)}?total=1`)
