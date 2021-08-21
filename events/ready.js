@@ -88,7 +88,8 @@ module.exports = (client, guild) => {
     .then(results => {
       const totalGuilds = results[0].reduce((prev, guildCount) => prev + guildCount, 0);
       const totalMembers = results[1].reduce((prev, memberCount) => prev + memberCount, 0);
-      console.log(chalk.white(`${chalk.magenta.bold(`Karen Bot v${app.config.botversion}`)} started in ${chalk.yellow.bold(totalGuilds + " stores")} with ${chalk.yellow.bold(totalMembers + " retail employees")}\nIf you are contributing to Karen Bot, please refer to ${chalk.blue.underline('https://docs.karen.exerra.xyz/#/development/etiquette')} for commit etiquette.`))
+      console.log(chalk.white(`${chalk.magenta.bold(`[Karen Bot]`)} ${chalk.yellow(`[Bot]`)} [Started] Karen Bot has started in ${chalk.yellow.bold(totalGuilds + " stores")} with ${chalk.yellow.bold(totalMembers + " retail employees")}\n`))
+      console.log(`If you are contributing to Karen Bot, please refer to ${chalk.blue.underline('https://docs.karen.exerra.xyz/#/development/etiquette')} for commit etiquette.`)
       
     })
   if (process.env.VALIDATION == undefined) {
