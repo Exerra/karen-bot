@@ -118,7 +118,8 @@ module.exports = {
         client.api.interactions(interaction.id, interaction.token).callback.post({data: {
             type: 4,
             data: {
-            content: 'Um, u sure about that? Are you like 100% sure that that formulae exists? Maaaybe you confused it with a cask package? No? Well then either you misspelled or more likely your dumbass is remembering wrong'
+              content: 'Um, u sure about that? Are you like 100% sure that that formulae exists? Maaaybe you confused it with a cask package? No? Well then either you misspelled or more likely your dumbass is remembering wrong',
+              flags: 64
             }
         }})
     })
