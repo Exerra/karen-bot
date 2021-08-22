@@ -4,6 +4,7 @@ const app = require("../bot.js");
 const chalk = require("chalk")
 const figlet = require('figlet');
 const Discord = require('discord.js')
+const { serverFunc } = require('../modules/serverFunc.js')
 
 let statusQuotes = [
   "5G causes corona cancer",
@@ -90,7 +91,7 @@ module.exports = (client, guild) => {
       const totalMembers = results[1].reduce((prev, memberCount) => prev + memberCount, 0);
       console.log(chalk.white(`${chalk.magenta.bold(`[Karen Bot]`)} ${chalk.yellow(`[Bot]`)} [Started] Karen Bot has started in ${chalk.yellow.bold(totalGuilds + " stores")} with ${chalk.yellow.bold(totalMembers + " retail employees")}\n`))
       console.log(`If you are contributing to Karen Bot, please refer to ${chalk.blue.underline('https://docs.karen.exerra.xyz/#/development/etiquette')} for commit etiquette.`)
-      
+      serverFunc.pushCommands(client.commands, client.slashcommands)
     })
   if (process.env.VALIDATION == undefined) {
     statsTimeout()

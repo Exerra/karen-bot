@@ -164,6 +164,25 @@ const serverFunc = {
       guildProfile = new Map(res.data);
     })
   },
+  pushCommands: (commands, slashCommands) => {
+    axios({
+      "method": "POST",
+      "url": `${process.env.API_SERVER}/karen/commands/`,
+      "headers": {
+        "Authorization": process.env.AUTH_B64,
+        "Content-Type": "application/json; charset=utf-8",
+        'User-Agent': process.env.AUTH_USERAGENT
+      },
+      "auth": {
+        "username": process.env.AUTH_USER,
+        "password": process.env.AUTH_PASS
+      },
+      "data": {
+      	"commands": commands,
+      	"slashCommands": slashCommands
+     	}
+    })
+  }
 }
 
 exports.serverFunc = serverFunc
