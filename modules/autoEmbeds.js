@@ -53,7 +53,7 @@ const autoEmbeds = (msg) => {
         embed.setThumbnail(data.album.images[0].url)
         embed.setAuthor('Spotify Song', 'https://cdn.exerra.xyz/files/png/companies/spotify/240px-Spotify_logo_without_text.png')
         embed.setColor(app.config.color)
-        embed.addField('Monthly popularity', `${Math.trunc(data.popularity / 10)} / 10`)
+        embed.addField('Monthly popularity', `${data.popularity}%`)
         embed.addField('Album name', data.album.name)
         embed.addField('Album Type', data.album.album_type.capitalize())
         // thanks to @levichlev for making this thingy
@@ -91,7 +91,7 @@ const autoEmbeds = (msg) => {
         embed.setAuthor('Spotify Artist', 'https://cdn.exerra.xyz/files/png/companies/spotify/240px-Spotify_logo_without_text.png')
         embed.setColor(app.config.color)
         embed.addField('Followers', data.followers.total)
-        embed.addField('Monthly popularity', `${Math.trunc(data.popularity / 10)} / 10`)
+        embed.addField('Monthly popularity', `${data.popularity}%`)
         var aname = 'Genres'
         if (data.genres.length != 1) {
           var a = [];

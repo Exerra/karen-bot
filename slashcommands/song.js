@@ -52,7 +52,6 @@ module.exports = {
           embed.setThumbnail(response.tracks.items[0].album.images[0].url)
           embed.setAuthor('Spotify', 'https://cdn.exerra.xyz/files/png/companies/spotify/240px-Spotify_logo_without_text.png')
           embed.setColor(config.color)
-          embed.addField('Monthly popularity', `${Math.trunc(response.tracks.items[0].popularity / 10)} / 10`)
           embed.addField('Monthly popularity', `${response.tracks.items[0].popularity}%`)
           embed.addField('Album name', response.tracks.items[0].album.name)
           embed.addField('Album Type', response.tracks.items[0].album.album_type.capitalize())
