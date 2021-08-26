@@ -106,7 +106,7 @@ module.exports = (client, guild) => {
   // For each command, create a slash command
   for(const command of slashCommandsArr) {
     //                                            Only used for testing
-    client.api.applications(client.user.id).guilds('701064832136249355').commands.post({data: {
+    client.api.applications(client.user.id)/* .guilds('701064832136249355') */.commands.post({data: {
       "name": command.name,
       "description": command.description,
       "options": command.options
