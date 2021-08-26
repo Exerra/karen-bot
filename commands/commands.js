@@ -36,7 +36,7 @@ module.exports = {
         })
         .catch(err => {
           console.error(`Could not send help DM to ${msg.author.tag}.\n`, err)
-          msg.reply('It seems as though I couldn\'t DM you. Do you have DMs disabled?\Oh well, you can go to https://docs.karen.exerra.xyz/#/users/commands to view commands')
+          msg.reply('Your dumbass forgot to enable direct messages. 🙄\nOh well, you can go to https://docs.karen.exerra.xyz/#/users/commands to view commands')
         })
     }
     const name = args[0].toLowerCase()

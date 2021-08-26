@@ -66,7 +66,6 @@ module.exports = {
     let res
 
     let options = interaction.data.options
-    console.log(options[0])
 
     // Just for error handling
     if (options[0].type !== 1) return
@@ -102,8 +101,6 @@ module.exports = {
 		      }
 		    }})
       }
-
-	    console.log(interaction)
 
     	for (const post of posts) {
         if (post.data.over_18 === true && client.channels.cache.get(interaction.channel_id).nsfw === false) {
@@ -206,8 +203,6 @@ module.exports = {
 		      }
 		    }})
       }
-
-	    console.log(interaction)
 
     	for (const post of posts) {
         if (post.data.over_18 === true && client.channels.cache.get(interaction.channel_id).nsfw === false) {
