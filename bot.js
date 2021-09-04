@@ -31,6 +31,7 @@ Constants.DefaultOptions.ws.properties.$browser = 'Discord iOS' // Or Discord An
 
 // winston logger (hopefully gonna replace console.log with this)
 const winston = require('winston');
+const { log } = require('./modules/log');
 const logger = winston.createLogger({
 	transports: [
 		new winston.transports.Console(),
@@ -62,24 +63,7 @@ for(const file of commandFiles) {
 		client.commands.set(command.name, command)
 	} catch(e) {
 		client.failedCommands.push([file.split('.')[0], e.toString()])
-		console.error(`Error while loading command: ${file.split('.')[0]}`, e)
-    axios({
-      "method": "POST",
-      "url": `${process.env.API_SERVER}/karen/logs/`,
-      "headers": {
-        "Authorization": process.env.AUTH_B64,
-        "Content-Type": "application/json; charset=utf-8",
-        'User-Agent': process.env.AUTH_USERAGENT
-      },
-      "auth": {
-        "username": process.env.AUTH_USER,
-        "password": process.env.AUTH_PASS
-      },
-      "data": {
-        "content": `Error while loading command: ${file.split('0')[0]}: ${e}`,
-        "type": "error"
-      }
-    })
+    log(`Error while loading command: ${file.split('.')[0]}: ${e}`, "error")
 	}
 }
 
@@ -100,24 +84,7 @@ for(const file of slashCommandFiles) {
 		client.slashcommands.set(slashCommand.name, slashCommand)
 	} catch(e) {
 		client.slashFailedCommands.push([file.split('.')[0], e.toString()])
-		console.error(`Error while loading command: ${file.split('.')[0]}`, e)
-    axios({
-      "method": "POST",
-      "url": `${process.env.API_SERVER}/karen/logs/`,
-      "headers": {
-        "Authorization": process.env.AUTH_B64,
-        "Content-Type": "application/json; charset=utf-8",
-        'User-Agent': process.env.AUTH_USERAGENT
-      },
-      "auth": {
-        "username": process.env.AUTH_USER,
-        "password": process.env.AUTH_PASS
-      },
-      "data": {
-        "content": `Error while loading slash command: ${file.split('0')[0]}: ${e}`,
-        "type": "error"
-      }
-    })
+    log(`Error while loading slash command: ${file.split('.')[0]}: ${e}`, "error")
 	}
 }
 let evAlpha = {}
@@ -133,26 +100,11 @@ for(const ev of eventFiles) {
 		client.on(eventName, evx.bind(null, client))
 	} catch(e) {
 		client.failedEvents.push([eventName, e.toString()])
-		console.log(`Error while loading event: ${eventName}`, e)
-    axios({
-      "method": "POST",
-      "url": `${process.env.API_SERVER}/karen/logs/`,
-      "headers": {
-        "Authorization": process.env.AUTH_B64,
-        "Content-Type": "application/json; charset=utf-8",
-        'User-Agent': process.env.AUTH_USERAGENT
-      },
-      "auth": {
-        "username": process.env.AUTH_USER,
-        "password": process.env.AUTH_PASS
-      },
-      "data": {
-        "content": `Error while loading event: ${eventName}: ${e}`,
-        "type": "error"
-      }
-    })
+    log(`Error while loading event: ${eventName}: ${e}`, "error")
 	}
 }
+
+if (process.env.APIACCESS !== "true") console.log(chalk.magenta('[Karen Bot]'), chalk.yellow(`[API]`), chalk.red('[Warn]'), `Without API access many features are disabled`)
 
 require('./server.js')
 
