@@ -1,5 +1,5 @@
 /*
-	This module was made to standardize logging and effortlessy bring console logging *and* sending logs to API easier
+	This module was made to standardize logging and effortlessly bring console logging *and* sending logs to API easier
   If a developer does not have API access (either hasn't yet been assigned a user&pass or is an unafilliated entity) then it does not send to the API.
 	
 	- Written on 2021-09-05 by Exerra
@@ -18,7 +18,7 @@ require('dotenv').config()
  */
 const log = (message, type, serveronly = false) => {
 
-	if (message == undefined) return throwError('Parameter "message" in log() is missing.', "paramMissing")
+	if (message === undefined) return throwError('Parameter "message" in log() is missing.', "paramMissing")
 
 	if (process.env.APIACCESS === "true") {
 		if (type !== undefined) {
