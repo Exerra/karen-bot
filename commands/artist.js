@@ -40,9 +40,9 @@ module.exports = {
                 embed.setAuthor('Spotify', 'https://cdn.exerra.xyz/files/png/companies/spotify/240px-Spotify_logo_without_text.png')
                 embed.setColor(config.color)
                 embed.addField('Followers', response.artists.items[0].followers.total)
-                embed.addField('Monthly popularity', `${Math.trunc(response.artists.items[0].popularity / 10)} / 10`)
+                embed.addField('Monthly popularity', `${response.artists.items[0].popularity}%`)
                 var aname = 'Genres'
-                if (response.artists.items[0].genres.length != 1) {
+                if (response.artists.items[0].genres.length != 1 && response.artists.items[0].genres.length != 0) {
                     var a = [];
                     for (i in response.artists.items[0].genres) {
                         a[i] = response.artists.items[0].genres[i].toString().capitalize()
@@ -51,7 +51,11 @@ module.exports = {
                     embed.addField(aname, a.join('\n'))
                 }
                 else {
-                    embed.addField(aname, response.artists.items[0].album.genres[0])
+                    if (response.artists.items[0].genres.length == 0) {
+                        embed.addField(aname, 'Artist hasn\'t defined them yet')
+                    } else {
+                        embed.addField(aname, response.artists.items[0].album.genres[0])
+                    }
                 }
                 embed.setTimestamp()
                 return msg.channel.send(embed)
