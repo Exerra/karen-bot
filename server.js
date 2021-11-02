@@ -1,5 +1,6 @@
 const express = require('express')
-const chalk = require('chalk') 
+const chalk = require('chalk'); 
+const { log } = require('./modules/log');
 const app = express()
 const port = process.env.PORT || 80;
 
@@ -8,5 +9,5 @@ app.get('/', (req, res) => {
 })
 
 app.listen(port, () => {
-  console.log(chalk.magenta('[Karen Bot]'), chalk.yellow(`[API]`), chalk.white('[Load]'), `Started the API on port ${port}`)
+  console.log(chalk.magenta('[Karen Bot]'), chalk.yellow(`[Express]`), chalk.white('[Load]'), `Started an Express server on port ${port}`)
 })

@@ -4,7 +4,8 @@ const app = require("../bot.js");
 const chalk = require("chalk")
 const figlet = require('figlet');
 const Discord = require('discord.js')
-const { serverFunc } = require('../modules/serverFunc.js')
+const { serverFunc } = require('../modules/serverFunc.js');
+const { log } = require('../modules/log.js');
 
 let statusQuotes = [
   "5G causes corona cancer",
@@ -92,7 +93,7 @@ module.exports = (client, guild) => {
       console.log(chalk.white(`${chalk.magenta.bold(`[Karen Bot]`)} ${chalk.yellow(`[Bot]`)} [Started] Karen Bot has started in ${chalk.yellow.bold(totalGuilds + " stores")} with ${chalk.yellow.bold(totalMembers + " retail employees")}\n`))
       console.log(`If you are contributing to Karen Bot, please refer to ${chalk.blue.underline('https://docs.karen.exerra.xyz/#/development/etiquette')} for commit etiquette.`)
     })
-  if (process.env.VALIDATION == undefined) {
+  if (process.env.VALIDATION == undefined && process.env.APIACCESS == "true") {
     statsTimeout()
     var myVar = setInterval(statsTimeout, 600000)
     serverFunc.pushCommands(client.commands, client.slashcommands)
@@ -127,23 +128,9 @@ module.exports = (client, guild) => {
       await command.execute(client, interaction)
     } catch (error) {
       console.error(error)
-      axios({
-        "method": "POST",
-        "url": `${process.env.API_SERVER}/karen/logs/`,
-        "headers": {
-          "Authorization": process.env.AUTH_B64,
-          "Content-Type": "application/json; charset=utf-8",
-          'User-Agent': process.env.AUTH_USERAGENT
-        },
-        "auth": {
-          "username": process.env.AUTH_USER,
-          "password": process.env.AUTH_PASS
-        },
-        "data": {
-          "content": `Slash command "${command.name}" by ${interaction.member.user.id} - ${error}`,
-          "type": "error"
-        }
-      })
+
+      log(`Slash command "${command.name}" by ${interaction.member.user.id} - ${error}`, "error", true)
+
       axios.post(process.env.REGULAR_WEBHOOK, {
         "content": `Slash command "${command.name}" by ${interaction.member.user.id} - ${error}`,
         "embeds": null,

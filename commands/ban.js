@@ -1,4 +1,5 @@
 const Discord = require('discord.js')
+var nsfai = new NSFAI(process.env.NSFAI_KEY);
 
 module.exports = {
     name: 'ban',
@@ -42,9 +43,9 @@ module.exports = {
             const embed = {
                 title: `Member banned`,
                 description: `${member.user.tag} has been banned`,
-                thumbnail: {
+                /* thumbnail: {
                     url: member.user.avatarURL(),
-                },
+                }, */
                 color: `${config.colordecimal}`,
                 footer: {
                     text: `Author - ${config.creator}`,
@@ -58,7 +59,7 @@ module.exports = {
                     },
                     {
                         "name": `Moderator`,
-                        "value": `${msg.author.tag}`,
+                        "value": `<@${msg.author.tag}>`,
                         "inline": false
                     },
                     {
@@ -68,6 +69,22 @@ module.exports = {
                     }
                 ]
             };
+
+            const handleResult = (result) => {
+                if (result.sfw) {
+                    embed.thumbnail = {
+                        url: member.user.avatarURL()
+                    }
+                    return
+                } else {
+                    embed.thumbnail = {
+                        url: "https://media.istockphoto.com/vectors/under-18-sign-warning-symbol-over-18-only-censored-eighteen-age-older-vector-id1217456453?k=20&m=1217456453&s=170667a&w=0&h=Fjz5NovEEW75UON8b4c-roJFCwtYuwPL-EiqyDzbBCg="
+                    }
+                }
+            }
+
+            nsfai.predict(url).then(handleResult).catch(handleError);
+
             // Sends ban message in the channel where it got executed
             msg.channel.send({ embed });
             // Checks if modlog is enabled

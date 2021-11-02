@@ -51,7 +51,7 @@ module.exports = {
                     },
                     {
                         "name": `Moderator`,
-                        "value": `${msg.author.tag}`,
+                        "value": `<@${msg.author.tag}>`,
                         "inline": false
                     },
                     {
