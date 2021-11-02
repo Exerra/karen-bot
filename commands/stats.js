@@ -19,7 +19,7 @@ module.exports = {
 			.setTitle('Server Info')
 			.setAuthor(`NodeJS ${require('child_process').execSync('node -v').toString()}`, 'https://cdn.exerra.xyz/files/png/nodejs/1162x1280.png')
 			.addFields(
-        { name: 'CPU', value: `${os.cpus()[0].model}`, inline: false },
+        { name: 'CPU', value: `${os.cpus()[0].model == "DO-Regular" ? "Shared 1 vCPU" : os.cpus()[0].model}`, inline: false },
         { name: 'Mem Usage', value: `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(1)} MB`, inline: true },
         { name: 'Free Mem', value: `${(os.freemem() / 1024 / 1024).toFixed(1)} MB`, inline: true },
         { name: 'Uptime', value: `${moment.duration(client.uptime).format("D [days], H [hrs], m [mins], s [secs]")}`, inline: true },
@@ -28,7 +28,7 @@ module.exports = {
         { name: 'Channels', value: `${channelCount}`, inline: true },
         { name: 'Discord.js', value: Discord.version, inline: true },
         { name: 'Node', value: `${process.version}`, inline: true },
-        { name: 'OS', value: `${os.type()}`, inline: true },
+        { name: 'OS', value: `${os.version()}`, inline: true },
 			)
       .setThumbnail('https://cdn.exerra.xyz/files/png/nodejs/1162x1280.png')
 			.setFooter('Shard time', 'https://cdn.exerra.xyz/files/png/nodejs/1162x1280.png')
