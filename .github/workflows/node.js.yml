@@ -34,5 +34,46 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: What is this
-        run: ls -a && ls -a ../ 
+      - name: Add secrets to .env
+        env:
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+          SPOTIFY_ID: ${{ secrets.SPOTIFY_ID }}
+          SPOTIFY_SECRET: ${{ secrets.SPOTIFY_SECRET }}
+          GENIUS_ACCESSTOKEN: ${{ secrets.GENIUS_ACCESSTOKEN }}
+          NSFAI_KEY: ${{ secrets.NSFAI_KEY }}
+
+          # API stuff
+          API_SERVER: ${{ secrets.API_SERVER }}
+          AUTH_B64: ${{ secrets.AUTH_B64 }}
+          AUTH_USER: ${{ secrets.AUTH_USER }}
+          AUTH_PASS: ${{ secrets.AUTH_PASS }}
+          AUTH_USERAGENT: ${{ secrets.AUTH_USERAGENT }}
+
+          # Webhooks for stuff
+          SUGGESTION_WEBHOOK: ${{ secrets.SUGGESTION_WEBHOOK }}
+          REGULAR_WEBHOOK: ${{ secrets.REGULAR_WEBHOOK }}
+          IFTTT_WEBHOOK: ${{ secrets.IFTTT_WEBHOOK }}
+          SHARD_WEBHOOK: ${{ secrets.SHARD_WEBHOOK }}
+
+        run: |
+          echo "DISCORD_TOKEN=$DISCORD_TOKEN" >> .env
+          echo "SPOTIFY_ID=$SPOTIFY_ID" >> .env
+          echo "SPOTIFY_SECRET=$SPOTIFY_SECRET" >> .env
+          echo "GENIUS_ACCESSTOKEN=$GENIUS_ACCESSTOKEN" >> .env
+          echo "NSFAI_KEY=$NSFAI_KEY" >> .env
+          echo "API_SERVER=$API_SERVER" >> .env
+          echo "AUTH_B64=$AUTH_B64" >> .env
+          echo "AUTH_USER=$AUTH_USER" >> .env
+          echo "AUTH_PASS=$AUTH_PASS" >> .env
+          echo "AUTH_USERAGENT=$AUTH_USERAGENT" >> .env
+          echo "SUGGESTION_WEBHOOK=$SUGGESTION_WEBHOOK" >> .env
+          echo "REGULAR_WEBHOOK=$REGULAR_WEBHOOK" >> .env
+          echo "IFTTT_WEBHOOK=$IFTTT_WEBHOOK" >> .env
+          echo "SHARD_WEBHOOK=$SHARD_WEBHOOK" >> .env
+      
+      - name: Install dependancies
+        run: yarn
+      
+      - name: Run karen-bot
+        run: pm2 stop karen-bot
+        run: pm2 start karen-bot
