@@ -1,6 +1,7 @@
 const Discord = require('discord.js')
 const os = require('os')
 const moment = require('moment')
+const exec = require('child_process').execSync
 require('moment-duration-format')
 
 module.exports = {
@@ -28,7 +29,7 @@ module.exports = {
         { name: 'Channels', value: `${channelCount}`, inline: true },
         { name: 'Discord.js', value: Discord.version, inline: true },
         { name: 'Node', value: `${process.version}`, inline: true },
-        { name: 'OS', value: `${os.version()}`, inline: true },
+        { name: 'OS', value: `${exec("uname")}`, inline: true },
 			)
       .setThumbnail('https://cdn.exerra.xyz/files/png/nodejs/1162x1280.png')
 			.setFooter('Shard time', 'https://cdn.exerra.xyz/files/png/nodejs/1162x1280.png')
