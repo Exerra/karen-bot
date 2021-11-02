@@ -17,7 +17,7 @@ module.exports = {
     const info = new Discord.MessageEmbed()
 			.setColor(config.color)
 			.setTitle('Server Info')
-			.setAuthor(`NodeJS ${require('child_process').execSync('node -v').toString()}`, 'https://cdn2.iconfinder.com/data/icons/nodejs-1/128/nodejs-128.png')
+			.setAuthor(`NodeJS ${require('child_process').execSync('node -v').toString()}`, 'https://cdn.exerra.xyz/files/png/nodejs/1162x1280.png')
 			.addFields(
         { name: 'CPU', value: `${os.cpus()[0].model}`, inline: false },
         { name: 'Mem Usage', value: `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(1)} MB`, inline: true },
@@ -30,8 +30,8 @@ module.exports = {
         { name: 'Node', value: `${process.version}`, inline: true },
         { name: 'OS', value: `${os.type()}`, inline: true },
 			)
-      .setThumbnail('https://cdn2.iconfinder.com/data/icons/nodejs-1/128/nodejs-128.png')
-			.setFooter('Shard time', 'https://cdn2.iconfinder.com/data/icons/nodejs-1/128/nodejs-128.png')
+      .setThumbnail('https://cdn.exerra.xyz/files/png/nodejs/1162x1280.png')
+			.setFooter('Shard time', 'https://cdn.exerra.xyz/files/png/nodejs/1162x1280.png')
       .setTimestamp()
 		msg.channel.send(info)
     
