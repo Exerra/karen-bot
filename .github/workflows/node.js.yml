@@ -25,3 +25,14 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: yarn install --frozen-lockfile
+
+  deploy:
+
+    runs-on: [self-hosted, linux]
+
+    if: "!contains(github.event.head_commit.message, 'deploy')"
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: What is this
+        run: ls -a && ls -a ../
