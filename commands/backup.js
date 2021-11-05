@@ -37,7 +37,7 @@ module.exports = {
         },
         "data": bd
       })
-      msg.author.send(`:heavy_check_mark: Successfully saved a backup of **${msg.guild.name}**!`,
+      msg.author.send(`:heavy_check_mark: Backup of **${msg.guild.name}** saved!`,
         new Discord.MessageEmbed()
           .setAuthor(`${msg.guild.name} - Backup ${bd.id}`, msg.guild.iconURL({ dynamic:true, format: `png` }))
           .setColor(config.color)
@@ -53,7 +53,7 @@ module.exports = {
   				setTimeout(mxg => {
   					mxg.delete()
   				}, 15e3, mxg)
-          msg.channel.send(`:heavy_check_mark: Successfully saved a backup of **${msg.guild.name}**!`,
+          msg.channel.send(`:heavy_check_mark: Backup of **${msg.guild.name}** saved!`,
             new Discord.MessageEmbed()
               .setAuthor(`${msg.guild.name} - Backup ${bd.id}`, msg.guild.iconURL({ dynamic:true, format: `png` }))
               .setDescription(`Backup \`${bd.id}\` Saved!`)
