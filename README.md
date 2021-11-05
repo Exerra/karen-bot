@@ -10,7 +10,6 @@
 ![Users](https://img.shields.io/badge/dynamic/json?color=success&label=Users&query=users&url=https%3A%2F%2Fcdn.exerra.xyz%2Fkaren%2Fstats%2F)
 ![DiscordJS version](https://img.shields.io/badge/dynamic/json?color=informational&label=DiscordJS&prefix=v&query=DiscordJS&url=https%3A%2F%2Fcdn.exerra.xyz%2Fkaren%2Fstats%2F)
 ![License](https://img.shields.io/github/license/exerra-discord/karen-bot)
-[![Discord Bots](https://top.gg/api/widget/status/599289687743397889.svg)](https://top.gg/bot/599289687743397889)
 
 ![Repository size](https://img.shields.io/github/repo-size/exerra-discord/karen-bot)
 
