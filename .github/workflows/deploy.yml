@@ -1,22 +1,21 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Deploy to VPS
+
+name: Deploy to VPS # Name of your action
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main ] # Essentially it only triggers on push events on the main branch. Branches is an array
 
 jobs:
   deploy:
 
-    runs-on: [self-hosted, linux]
+    runs-on: [self-hosted, linux] # So these are the flags or whatever for your self hosted runner
 
-    if: "contains(github.event.head_commit.message, 'deploy')"
+    if: "contains(github.event.head_commit.message, '[deploy]')" # If the commit title contains "deploy" then proceed
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Add secrets to .env
+      - uses: actions/checkout@v2 # idk what this is used for tbh but it's needed I think
+      - name: Add secrets to .env # This whole section only adds env vars to a file
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
           SPOTIFY_ID: ${{ secrets.SPOTIFY_ID }}
