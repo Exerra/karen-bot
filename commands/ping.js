@@ -1,4 +1,5 @@
 const Discord = require('discord.js')
+const { config } = require('dotenv')
 
 module.exports = {
   name: 'ping',
@@ -6,6 +7,8 @@ module.exports = {
   type: 'Utility',
   execute(client, msg, args) {
     let start = new Date().getTime()
+    const app = require('../bot.js');
+    let config = app.config;
     let elapsed
     let sendElp
     msg.channel.send('pong!\n'+`\`${client.ws.ping}ms\` heartbeat ping`).then(mxg => {
@@ -17,7 +20,7 @@ module.exports = {
           mxg.delete()
           mzg.edit('\u200b', new Discord.MessageEmbed()
             .setTitle('Pong!')
-            .setColor(client.ws.ping > 1000 ? 'RED' : client.ws.ping > 800 ? 'ORANGE' : '#202225')
+            .setColor(client.ws.ping > 1000 ? 'RED' : client.ws.ping > 800 ? 'ORANGE' : config.color)
             .setAuthor(msg.author.username, msg.author.avatarURL({ type: 'png', dynamic: true }))
             .addField('Heartbeat', `\`${client.ws.ping}ms\``, true)
             .addField('API', `\`${sendElp}ms\``, true)
