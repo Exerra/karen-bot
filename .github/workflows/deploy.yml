@@ -11,7 +11,7 @@ jobs:
 
     runs-on: [self-hosted, linux] # So these are the flags or whatever for your self hosted runner
 
-    if: "contains(github.event.head_commit.message, '[deploy]')" # If the commit title contains "deploy" then proceed
+    if: "contains(github.event.head_commit.message, '[deploy]')" # If the commit title contains "[deploy]" then proceed
 
     steps:
       - uses: actions/checkout@v2 # idk what this is used for tbh but it's needed I think
