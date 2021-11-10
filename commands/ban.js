@@ -43,9 +43,9 @@ module.exports = {
             const embed = {
                 title: `Member banned`,
                 description: `${member.user.tag} has been banned`,
-                /* thumbnail: {
+                thumbnail: {
                     url: member.user.avatarURL(),
-                }, */
+                },
                 color: `${config.colordecimal}`,
                 footer: {
                     text: `Author - ${config.creator}`,
@@ -59,7 +59,7 @@ module.exports = {
                     },
                     {
                         "name": `Moderator`,
-                        "value": `<@${msg.author.tag}>`,
+                        "value": `<@${msg.author.id}>`,
                         "inline": false
                     },
                     {
