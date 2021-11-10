@@ -83,7 +83,7 @@ module.exports = {
                 }
             }
 
-            nsfai.predict(url).then(handleResult).catch(handleError);
+            //nsfai.predict(url).then(handleResult).catch(handleError);
 
             // Sends ban message in the channel where it got executed
             msg.channel.send({ embed });
