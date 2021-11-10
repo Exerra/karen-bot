@@ -1,5 +1,5 @@
 const Discord = require('discord.js')
-var nsfai = new NSFAI(process.env.NSFAI_KEY);
+//var nsfai = new NSFAI(process.env.NSFAI_KEY);
 
 module.exports = {
     name: 'ban',
@@ -70,6 +70,7 @@ module.exports = {
                 ]
             };
 
+            /*
             const handleResult = (result) => {
                 if (result.sfw) {
                     embed.thumbnail = {
@@ -82,7 +83,7 @@ module.exports = {
                     }
                 }
             }
-
+*/
             //nsfai.predict(url).then(handleResult).catch(handleError);
 
             // Sends ban message in the channel where it got executed
