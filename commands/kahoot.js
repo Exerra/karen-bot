@@ -33,7 +33,7 @@ module.exports = {
         }
       } catch(err) {console.log(err)}
     } else {
-      msg.channel.send('The Kahoot command is very resource intensive, so it is restricted. The creator personally selects people who she want\'s to allow this command')
+      msg.channel.send('Kahoot command bad for resources, so fuck you')
     }
   }
 }
