@@ -33,7 +33,7 @@ module.exports = {
 
             try {
                 await member.send(`onmg AHahaHAHahaAHAHAHAHA im wheezing rn you got banned from ${msg.guild.name} (id: ${msg.guild.id}) for ${reason}. excuse me how the hell did u get banend?? aaaaaanyway... thats what you get you devil! REPEL THE DEMONS! UNBLOW!!! YOU ARE DESTROYED FOREVER!!! AND YOU WILL NEVER BE BACK!!!! thank you god... let it happen... cause it to happen`).catch(() => ignoreError())
-                await member.send('https://static.independent.co.uk/s3fs-public/thumbnails/image/2020/04/05/16/kenneth-copeland-blow-coronavirus.png?width=1200').catch(() => ignoreError())
+                await member.send('https://cdn.exerra.xyz/files/png/kenneth_copeland.png').catch(() => ignoreError())
                 await member.send('oh and btw 5g causes corona cancer and reptiliioans are hacking our brrains from mars while probing our pets so like you should be saying thanks for getting educated 😒').catch(() => ignoreError())
             } catch (err) {
                 //
