@@ -19,7 +19,7 @@ module.exports = {
             let member = msg.mentions.members.first() || msg.guild.members.cache.get(args[0]);
 
             if (!member)
-                return msg.reply("Please mention a valid member of this server");
+                return msg.reply("Why can't no one mention a valid member of this guild??");
 
                 if (!member.kickable)
                 return msg.reply("I cannot kick this user! Do they have a higher role? Do I have kick permissions?");
