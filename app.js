@@ -13,6 +13,7 @@ const figlet = require('figlet');
 figlet('Karen Bot', (err, data) => {
   if (err) {
     // Idk?
+    return
   }
 
   console.log(chalk.magenta(data))
