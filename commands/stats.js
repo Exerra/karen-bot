@@ -4,6 +4,20 @@ const moment = require('moment')
 const exec = require('child_process').execSync
 require('moment-duration-format')
 
+const format = (seconds) => {
+    const pad = (s) => {
+        return (s < 10 ? '0' : '') + s;
+    }
+    var hours = Math.floor(seconds / (60*60));
+    var minutes = Math.floor(seconds % (60*60) / 60);
+    var seconds = Math.floor(seconds % 60);
+
+    return `${pad(hours)}hrs, ${pad(minutes)}min, ${pad(seconds)}s`
+
+    return pad(hours) + ':' + pad(minutes) + ':' + pad(seconds);
+}
+
+
 module.exports = {
   name: 'stats',
   description: '',
@@ -16,25 +30,25 @@ module.exports = {
     const memberCount = (await client.shard.broadcastEval('this.guilds.cache.reduce((prev, guild) => prev + guild.memberCount, 0)')).reduce((prev, val) => prev + val, 0)
     const channelCount = (await client.shard.broadcastEval('this.guilds.cache.reduce((prev, guild) => prev + guild.channels.cache.size, 0)')).reduce((prev, val) => prev + val, 0)
     const info = new Discord.MessageEmbed()
-			.setColor(config.color)
-			.setTitle('Server Info')
-			.setAuthor(`NodeJS ${require('child_process').execSync('node -v').toString()}`, 'https://cdn.exerra.xyz/files/png/nodejs/1162x1280.png')
-			.addFields(
-        { name: 'CPU', value: `${os.cpus()[0].model == "DO-Regular" ? "Shared 1 vCPU" : os.cpus()[0].model}`, inline: false },
-        { name: 'Mem Usage', value: `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(1)} MB`, inline: true },
-        { name: 'Free Mem', value: `${(os.freemem() / 1024 / 1024).toFixed(1)} MB`, inline: true },
-        { name: 'Uptime', value: `${moment.duration(client.uptime).format("D [days], H [hrs], m [mins], s [secs]")}`, inline: true },
-        { name: 'Users', value: `${memberCount}`, inline: true },
-        { name: 'Servers', value: `${guildCount}`, inline: true },
-        { name: 'Channels', value: `${channelCount}`, inline: true },
-        { name: 'Discord.js', value: Discord.version, inline: true },
-        { name: 'Node', value: `${process.version}`, inline: true },
-        { name: 'OS', value: `${exec("uname")}`, inline: true },
-			)
-      .setThumbnail('https://cdn.exerra.xyz/files/png/nodejs/1162x1280.png')
-			.setFooter('Shard time', 'https://cdn.exerra.xyz/files/png/nodejs/1162x1280.png')
-      .setTimestamp()
-		msg.channel.send(info)
-    
+        .setColor(config.color)
+        .setTitle('Server Info')
+        .setAuthor(`NodeJS ${require('child_process').execSync('node -v').toString()}`, 'https://cdn.exerra.xyz/files/png/nodejs/1162x1280.png')
+        .addFields(
+            { name: 'CPU', value: `${os.cpus()[0].model == "DO-Regular" ? "Shared 1 vCPU" : os.cpus()[0].model}`, inline: false },
+            { name: 'Mem Usage', value: `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(1)} MB`, inline: true },
+            { name: 'Free Mem', value: `${(os.freemem() / 1024 / 1024).toFixed(1)} MB`, inline: true },
+            { name: 'Uptime', value: `${moment.duration(client.uptime).format("D [days], H [hrs], m [mins], s [secs]")}`, inline: true },
+            { name: 'Users', value: `${memberCount}`, inline: true },
+            { name: 'Servers', value: `${guildCount}`, inline: true },
+            { name: 'Channels', value: `${channelCount}`, inline: true },
+            { name: 'Discord.js', value: Discord.version, inline: true },
+            { name: 'Node', value: `${process.version}`, inline: true },
+            { name: 'OS', value: `${exec("uname")}`, inline: true },
+        )
+        .setThumbnail('https://cdn.exerra.xyz/files/png/nodejs/1162x1280.png')
+        .setFooter(`Uptime - ${format(os.uptime())}`, 'https://cdn.exerra.xyz/files/png/nodejs/1162x1280.png')
+        .setTimestamp()
+      msg.channel.send(info)
+
   }
 }
