@@ -67,7 +67,7 @@ module.exports = {
             { name: 'OS', value: osName, inline: true },
         )
         .setThumbnail(osImageURL)
-        .setFooter(`Uptime - ${format(os.uptime())}`)
+        .setFooter(`Server uptime - ${format(os.uptime())}`)
         .setTimestamp()
 
 
