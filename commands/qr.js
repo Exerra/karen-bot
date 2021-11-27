@@ -15,6 +15,12 @@ module.exports = {
     let config = app.config;
     args[0] = args.join(' ')
     args[0] = args[0].substring(0)
-    QRCode.toFile(app.dir + "/qr/" + msg.author.id + ".png", args[0], function (err, url) {msg.channel.send('Here you go', { files: [app.dir + "/qr/" + msg.author.id + ".png"]})})
+    QRCode.toFile(app.dir + "/qr/" + msg.author.id + ".png", args[0], function (err, url) {
+      msg.channel.send('Here you go', {
+        files: [
+            app.dir + "/qr/" + msg.author.id + ".png"
+        ]
+      })
+    })
   }
 }
