@@ -18,6 +18,8 @@ const format = (seconds) => {
 }
 
 
+
+
 module.exports = {
   name: 'stats',
   description: '',
@@ -29,6 +31,25 @@ module.exports = {
     const guildCount = (await client.shard.fetchClientValues('guilds.cache.size')).reduce((prev, val) => prev + val, 0)
     const memberCount = (await client.shard.broadcastEval('this.guilds.cache.reduce((prev, guild) => prev + guild.memberCount, 0)')).reduce((prev, val) => prev + val, 0)
     const channelCount = (await client.shard.broadcastEval('this.guilds.cache.reduce((prev, guild) => prev + guild.channels.cache.size, 0)')).reduce((prev, val) => prev + val, 0)
+
+      let osImageURL = ""
+      let osName = exec("uname")
+
+      switch (true) {
+          case /Darwin/.test(osName):
+              osImageURL = "https://cdn.exerra.xyz/files/png/companies/apple/macOS.png"
+              break;
+          case /Ubuntu/.test(osName):
+              osImageURL = "https://cdn.exerra.xyz/files/png/companies/canonical/ubuntu_transparent.png"
+              break;
+          case /Linux/.test(osName):
+              osImageURL = "https://cdn.exerra.xyz/files/png/companies/linux/tux_transparent.png"
+              break;
+          case /Windows/.test(osName):
+              osImageURL = "https://cdn.exerra.xyz/files/png/companies/microsoft/windows_2012.png"
+              break;
+      }
+
     const info = new Discord.MessageEmbed()
         .setColor(config.color)
         .setTitle('Server Info')
@@ -43,12 +64,14 @@ module.exports = {
             { name: 'Channels', value: `${channelCount}`, inline: true },
             { name: 'Discord.js', value: Discord.version, inline: true },
             { name: 'Node', value: `${process.version}`, inline: true },
-            { name: 'OS', value: `${exec("uname")}`, inline: true },
+            { name: 'OS', value: osName, inline: true },
         )
-        .setThumbnail('https://cdn.exerra.xyz/files/png/nodejs/1162x1280.png')
-        .setFooter(`Uptime - ${format(os.uptime())}`, 'https://cdn.exerra.xyz/files/png/nodejs/1162x1280.png')
+        .setThumbnail(osImageURL)
+        .setFooter(`Uptime - ${format(os.uptime())}`)
         .setTimestamp()
-      msg.channel.send(info)
+
+
+        msg.channel.send(info)
 
   }
 }
