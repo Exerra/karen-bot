@@ -184,6 +184,12 @@ const autoEmbeds = (msg) => {
                 case 'all':
                   setCompabilityItem(i, 'All macOS and Linux systems')
                   break;
+                case 'arm64_monterey':
+                  setCompabilityItem(i, 'Apple Silicon Monterey')
+                  break;
+                case 'monterey':
+                  setCompabilityItem(i, 'Intel Monterey')
+                  break;
                 case 'arm64_big_sur':
                   setCompabilityItem(i, 'Apple Silicon Big Sur')
                   break;
