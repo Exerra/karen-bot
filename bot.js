@@ -53,7 +53,6 @@ client.failedCommands = []
 client.failedEvents = []
 let cmdAlpha = {}
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'))
-console.log(chalk.magenta('[Karen Bot]'), chalk.yellow(`[Command]`), chalk.white('[Load]'), `Loading a total of ${commandFiles.length} commands`)
 for(const file of commandFiles) {
 	try{
 		const command = require(`./commands/${file}`)
@@ -63,9 +62,10 @@ for(const file of commandFiles) {
 		client.commands.set(command.name, command)
 	} catch(e) {
 		client.failedCommands.push([file.split('.')[0], e.toString()])
-    log(`Error while loading command: ${file.split('.')[0]}: ${e}`, "error")
+        log(`Error while loading command: ${file.split('.')[0]}: ${e}`, "error")
 	}
 }
+console.log(chalk.magenta('[Karen Bot]'), chalk.yellow(`[Command]`), chalk.white('[Load]'), `Loaded ${commandFiles.length} commands`)
 
 
 // Slash Commands
@@ -74,7 +74,6 @@ client.slashFailedCommands = []
 client.slashFailedEvents = []
 let slashCmdAlpha = {}
 const slashCommandFiles = fs.readdirSync('./slashcommands').filter(file => file.endsWith('.js'))
-console.log(chalk.magenta('[Karen Bot]'), chalk.yellow(`[SlashCommand]`), chalk.white('[Load]'), `Loading a total of ${slashCommandFiles.length} commands`)
 for(const file of slashCommandFiles) {
 	try{
 		const slashCommand = require(`./slashcommands/${file}`)
@@ -84,9 +83,11 @@ for(const file of slashCommandFiles) {
 		client.slashcommands.set(slashCommand.name, slashCommand)
 	} catch(e) {
 		client.slashFailedCommands.push([file.split('.')[0], e.toString()])
-    log(`Error while loading slash command: ${file.split('.')[0]}: ${e}`, "error")
+        log(`Error while loading slash command: ${file.split('.')[0]}: ${e}`, "error")
 	}
 }
+console.log(chalk.magenta('[Karen Bot]'), chalk.yellow(`[SlashCommand]`), chalk.white('[Load]'), `Loaded ${slashCommandFiles.length} commands`)
+
 let evAlpha = {}
 const eventFiles = fs.readdirSync('events/').filter(file => file.endsWith('.js'))
 console.log(chalk.magenta('[Karen Bot]'), chalk.yellow(`[Event]`), chalk.white('[Load]'), `Loading a total of ${eventFiles.length} events`)
@@ -108,13 +109,13 @@ if (process.env.APIACCESS !== "true") console.log(chalk.magenta('[Karen Bot]'), 
 
 require('./server.js')
 
-// Gets settingsmap
+// Gets settings
 axios({
 	"method": "GET",
 	"url": `${process.env.API_SERVER}/karen/settings/map/`,
 	"headers": {
 		"Authorization": process.env.AUTH_B64,
-    'User-Agent': process.env.AUTH_USERAGENT
+        'User-Agent': process.env.AUTH_USERAGENT
 	},
 	"auth": {
 		"username": process.env.AUTH_USER,
@@ -122,6 +123,9 @@ axios({
 	}
 }).then(res => {
     settingsmap = new Map(res.data); // skipcq: JS-0128
+    console.log(chalk.magenta('[Karen Bot]'), chalk.yellow(`[Settings]`), chalk.white('[Load]'), `Loaded guild settings`)
+}).catch(err => {
+    console.log(chalk.magenta('[Karen Bot]'), chalk.yellow(`[Settings]`), chalk.red('[Warn]'), `Failed to load guild settings`)
 })
 
 // Gets guildProfile map //! Levels are not yet released online so hush hush
@@ -130,14 +134,14 @@ axios({
 	"url": `${process.env.API_SERVER}/karen/guildProfile/map/`,
 	"headers": {
 		"Authorization": process.env.AUTH_B64,
-    'User-Agent': process.env.AUTH_USERAGENT
+        'User-Agent': process.env.AUTH_USERAGENT
 	},
 	"auth": {
 		"username": process.env.AUTH_USER,
 		"password": process.env.AUTH_PASS
 	}
 }).then(res => {
-  guildProfile = new Map(res.data);
+    guildProfile = new Map(res.data);
 })
 
 client.on('message', async msg => {
