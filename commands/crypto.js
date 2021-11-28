@@ -52,6 +52,7 @@ module.exports = {
 
     // Makes it so I dont have to type in res.data.field, but I can just do result.field (way quicker)
     const result = res.data
+
     // Credit the API
     embed.setAuthor('Blockchair', 'https://loutre.blockchair.io/images/twitter_card.png')
     embed.setTitle(`Statistics for ${crypto}`)

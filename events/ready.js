@@ -7,26 +7,9 @@ const Discord = require('discord.js')
 const { serverFunc } = require('../modules/serverFunc.js');
 const { log } = require('../modules/log.js');
 
-let statusQuotes = [
-  "5G causes corona cancer",
-  "I have a medical condition that doesn't let me wear masks",
-  "Corona vaccines put Microsoft chips in you",
-  "Vaccines cause autism",
-  "The earth is flat",
-  "One two three four you all suck and need to get baptised",
-  "im gay for jesus mom, mary",
-  "THE LOCHNESS MONSTER HAS RETURNED",
-  "AAAAAAAAAAAAAAAAAAAAAAA",
-  "THE PURGE IS COMING",
-  "WHERE ARE MY KIDS",
-  "luki works for the government",
-  "I ATE MARIJUANA BREAD PLEASE HELP",
-  "are you vaccinated? no? good",
-  "BUT THIS MOMMY BLOG SAYS ITS BAD",
-  "facebook is best social media"
-]
 
 module.exports = (client, guild) => {
+  let statusQuotes = app.config.statusQuotes
   if (process.env.VALIDATION  == undefined) {
     axios({
       "method": "POST",
