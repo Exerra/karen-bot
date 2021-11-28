@@ -88,6 +88,7 @@ for(const file of slashCommandFiles) {
 }
 console.log(chalk.magenta('[Karen Bot]'), chalk.yellow(`[SlashCommand]`), chalk.white('[Load]'), `Loaded ${slashCommandFiles.length} commands`)
 
+// Events
 let evAlpha = {}
 const eventFiles = fs.readdirSync('events/').filter(file => file.endsWith('.js'))
 console.log(chalk.magenta('[Karen Bot]'), chalk.yellow(`[Event]`), chalk.white('[Load]'), `Loading a total of ${eventFiles.length} events`)
