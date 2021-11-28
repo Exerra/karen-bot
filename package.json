@@ -1,6 +1,6 @@
 {
   "name": "karen-bot",
-  "version": "7.2.1",
+  "version": "7.2.2",
   "description": "The marvelous Karen brought to Discord!",
   "main": "app.js",
   "scripts": {
@@ -30,6 +30,7 @@
     "hastebin-gen": "^2.0.5",
     "kahoot-spam": "^1.1.8",
     "lyrics-parse": "^1.1.0",
+    "minecraft-server-util": "^3.6.0",
     "mkdirp": "^1.0.4",
     "moment": "^2.29.1",
     "moment-duration-format": "^2.3.2",
