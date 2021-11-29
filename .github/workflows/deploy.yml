@@ -51,6 +51,7 @@ jobs:
           echo "REGULAR_WEBHOOK=$REGULAR_WEBHOOK" >> .env
           echo "IFTTT_WEBHOOK=$IFTTT_WEBHOOK" >> .env
           echo "SHARD_WEBHOOK=$SHARD_WEBHOOK" >> .env
+          echo "APIACCESS=true" >> .env
       
       - name: Install dependancies
         run: yarn
