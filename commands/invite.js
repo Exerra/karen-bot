@@ -12,6 +12,6 @@ module.exports = {
       msg.channel.send(`Invite Link For Karen Bot:\n${l}`)
     }) */
 
-    msg.channel.send('https://discord.com/oauth2/authorize?client_id=599289687743397889&scope=applications.commands%20bot&permissions=8')
+    msg.channel.send('https://discord.com/oauth2/authorize?client_id=914834579465052210&scope=applications.commands%20bot&permissions=8')
   }
 }
