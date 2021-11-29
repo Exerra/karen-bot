@@ -79,5 +79,5 @@ module.exports = async (client, member) => {
   if (settingsmap.get(member.guild.id).welcomeEnabled == false) return;
   const channel = member.guild.channels.cache.find(ch => ch.id == settingsmap.get(member.guild.id).welcomeChannel);
   channel.send(`Welcome to this server, ${member}.`);
-  member.send('READ THE RULES\nDO IT NOW\nYOU BETTER FUCKING DO IT\n\n\n~~dont take it seriously, but like please do read the rules :)~~ ')
+  member.send('READ THE RULES\nDO IT NOW\nYOU BETTER FUCKING DO IT')
 }
