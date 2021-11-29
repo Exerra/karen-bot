@@ -161,7 +161,7 @@ module.exports = {
 
         // If there are no pronouns, notify the person that, well, there are no pronouns
         // else, display the pronouns
-        if (pronouns == '' || pronouns == undefined) embed.addField("Pronouns", 'Not added. [Add them here](https://pronoundb.org/me)', true)
+        if (pronouns == '' || pronouns == undefined || pronouns == "unspecified") embed.addField("Pronouns", 'Not specified. [Add them here](https://pronoundb.org/me)', true)
         else embed.addField("Pronouns", pronouns, true)
         embed.addField("Gender", gender, true)
         embed.addField("Country", country, true)
