@@ -32,7 +32,7 @@ module.exports = {
             if (settingsmap.get(msg.guild.id) == undefined) app.serverFunc.createGuildSettings(msg.guild.id)
             settingsInfoEmbed.setTitle(`Settings for ${msg.guild.name}`)
             settingsInfoEmbed.setThumbnail(msg.guild.iconURL())
-            settingsInfoEmbed.setDescription(`⚠️ WARNING: Welcome functionality doesn't work. ⚠️\nAll the settings for this guild.\nUsage: ${config.prefix}settings set [setting]`)
+            settingsInfoEmbed.setDescription(`All the settings for this guild.\nUsage: ${config.prefix}settings set [setting]`)
             settingsInfoEmbed.addField('AntiSwear', `Delets all messages with swear words in them\nCurrent setting: **${settingsmap.get(msg.guild.id).swearProtectionEnabled}**`, true)
             if (settingsmap.get(msg.guild.id).welcomeChannel === "") settingsInfoEmbed.addField('Welcome', `Sends a welcome message when a person joins this server.\n**Current settings:**\nWelcome Enabled: **${settingsmap.get(msg.guild.id).welcomeEnabled}**\nWelcome channel N/A`, true)
             else settingsInfoEmbed.addField('Welcome', `Sends a welcome message when a person joins this server.\n**Current settings:**\nWelcome Enabled: **${settingsmap.get(msg.guild.id).welcomeEnabled}**\nWelcome channel <#${settingsmap.get(msg.guild.id).welcomeChannel}>`, true)
@@ -239,7 +239,7 @@ module.exports = {
 
             if (args[1].toLowerCase() == 'welcome' && args[2] == undefined) {
                 msg.channel
-                .send("⚠️ WARNING: Welcome functionality doesn't work. Read more here: https://status.exerra.xyz/incident/73941 ⚠️\nAlso recommended that you join this newspaper to receive blog updates (they will mention incidents and new features) https://newsletter.exerra.xyz\nDo you want it on? Options: Yes, No")
+                .send("Do you want it on? Options: Yes, No")
                 .then(() => {
                     msg.channel
                         .awaitMessages(filter, {

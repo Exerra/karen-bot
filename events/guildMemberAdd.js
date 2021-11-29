@@ -3,7 +3,6 @@ require('dotenv').config()
 const app = require("../bot.js");
 
 module.exports = async (client, guild) => {
-  let why = await (await fetch(`https://nekos.life/api/v2/why`)).json() // skipcq: JS-0128
   axios({
     "method": "POST",
     "url": `${process.env.API_SERVER}/karen/profile/get/`,
