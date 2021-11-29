@@ -26,7 +26,7 @@ let slashCommands = {}
 
 // mobile status
 const Constants = require('./node_modules/discord.js/src/util/Constants.js') // skipcq: JS-0260
-Constants.DefaultOptions.ws.properties.$browser = 'Discord iOS' // Or Discord Android
+//Constants.DefaultOptions.ws.properties.$browser = 'Discord iOS' // Or Discord Android
 //Constants.DefaultOptions.fetchAllMembers = true
 
 // winston logger (hopefully gonna replace console.log with this)
