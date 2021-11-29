@@ -7,6 +7,7 @@
 
 const axios = require('axios')
 const { throwError } = require('./throwError')
+const {checkIfAPIAccess} = require("./apiAccess");
 require('dotenv').config()
 
 /**
@@ -20,30 +21,48 @@ const log = (message, type, serveronly = false) => {
 
 	if (message === undefined) return throwError('Parameter "message" in log() is missing.', "paramMissing")
 
-	if (process.env.APIACCESS === "true") {
+	if (checkIfAPIAccess()) {
 		if (type !== undefined) {
 			axios(`${process.env.API_SERVER}/karen/logs/`, {
 				"method": "POST",
-        "url": `${process.env.API_SERVER}/karen/logs/`,
-        "headers": {
-          "Authorization": process.env.AUTH_B64,
-          "Content-Type": "application/json; charset=utf-8",
-          'User-Agent': process.env.AUTH_USERAGENT
-        },
-        "auth": {
-          "username": process.env.AUTH_USER,
-          "password": process.env.AUTH_PASS
-        },
-        "data": {
-          "content": message,
-          "type": type
-        }
+                "url": `${process.env.API_SERVER}/karen/logs/`,
+                "headers": {
+                    "Authorization": process.env.AUTH_B64,
+                    "Content-Type": "application/json; charset=utf-8",
+                    'User-Agent': process.env.AUTH_USERAGENT
+                },
+                "auth": {
+                    "username": process.env.AUTH_USER,
+                    "password": process.env.AUTH_PASS
+                },
+                "data": {
+                    "content": message,
+                    "type": type
+                }
 			})
-		}
+		} else {
+            axios(`${process.env.API_SERVER}/karen/logs/`, {
+                "method": "POST",
+                "url": `${process.env.API_SERVER}/karen/logs/`,
+                "headers": {
+                    "Authorization": process.env.AUTH_B64,
+                    "Content-Type": "application/json; charset=utf-8",
+                    'User-Agent': process.env.AUTH_USERAGENT
+                },
+                "auth": {
+                    "username": process.env.AUTH_USER,
+                    "password": process.env.AUTH_PASS
+                },
+                "data": {
+                    "content": message,
+                    "type": "info"
+                }
+            })
+        }
 		
 	}
 
-	if (!serveronly) console.log(message)
+	if (!serveronly || !checkIfAPIAccess()) console.log(message)
 }
 
 exports.log = log

@@ -2,7 +2,7 @@ const axios = require('axios')
 require('dotenv').config()
 const app = require("../bot.js");
 const { log } = require('../modules/log.js');
-const {checkIfAPIAccess} = require("../modules/apiAccess");
+const {checkIfAPIAccess, checkIfProd} = require("../modules/apiAccess");
 const {updateStats} = require("../modules/updateStats");
 
 module.exports = async (client, guild) => {
@@ -10,7 +10,7 @@ module.exports = async (client, guild) => {
 
   log(`New guild joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`, "info")
 
-  if (checkIfAPIAccess()) {
+  if (checkIfProd()) {
     updateStats(client)
   }
 }

@@ -5,9 +5,14 @@
 	- Written on 2021-08-20 by Exerra
 */
 
+/**
+ *
+ * @param {RegExp} regex - Regex to validate message with
+ * @param message - Message to use regex against
+ * @returns {boolean}
+ */
 const matchRegex = (regex, message) => {
-	let regexs = regex
-    return (message.match(regexs)) ? true : false ;
+    return (message.match(regex) ? true : false) ;
 }
 
 exports.matchRegex = matchRegex

@@ -52,6 +52,7 @@ client.commands = new Discord.Collection()
 client.failedCommands = []
 client.failedEvents = []
 let cmdAlpha = {}
+let commandAmount = 0
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'))
 for(const file of commandFiles) {
 	try{
@@ -60,12 +61,13 @@ for(const file of commandFiles) {
 			cmdAlpha[command.name.charAt(0)] = true
 		}
 		client.commands.set(command.name, command)
+        commandAmount++
 	} catch(e) {
 		client.failedCommands.push([file.split('.')[0], e.toString()])
         log(`Error while loading command: ${file.split('.')[0]}: ${e}`, "error")
 	}
 }
-console.log(chalk.magenta('[Karen Bot]'), chalk.yellow(`[Command]`), chalk.white('[Load]'), `Loaded ${commandFiles.length} commands`)
+log(`${chalk.magenta('[Karen Bot]')} ${chalk.yellow(`[Command]`)} ${chalk.white('[Load]')} Loaded ${commandAmount} commands`)
 
 
 // Slash Commands
@@ -73,6 +75,7 @@ client.slashcommands = new Discord.Collection()
 client.slashFailedCommands = []
 client.slashFailedEvents = []
 let slashCmdAlpha = {}
+let slashCommandAmount = 0
 const slashCommandFiles = fs.readdirSync('./slashcommands').filter(file => file.endsWith('.js'))
 for(const file of slashCommandFiles) {
 	try{
@@ -81,17 +84,18 @@ for(const file of slashCommandFiles) {
 			slashCmdAlpha[slashCommand.name.charAt(0)] = true
 		}
 		client.slashcommands.set(slashCommand.name, slashCommand)
+        slashCommandAmount++
 	} catch(e) {
 		client.slashFailedCommands.push([file.split('.')[0], e.toString()])
         log(`Error while loading slash command: ${file.split('.')[0]}: ${e}`, "error")
 	}
 }
-console.log(chalk.magenta('[Karen Bot]'), chalk.yellow(`[SlashCommand]`), chalk.white('[Load]'), `Loaded ${slashCommandFiles.length} commands`)
+log(`${chalk.magenta('[Karen Bot]')} ${chalk.yellow(`[SlashCommand]`)} ${chalk.white('[Load]')} Loaded ${slashCommandAmount} commands`)
 
 // Events
 let evAlpha = {}
+let events = 0
 const eventFiles = fs.readdirSync('events/').filter(file => file.endsWith('.js'))
-console.log(chalk.magenta('[Karen Bot]'), chalk.yellow(`[Event]`), chalk.white('[Load]'), `Loading a total of ${eventFiles.length} events`)
 for(const ev of eventFiles) {
 	const eventName = ev.split('.')[0]
 	try {
@@ -100,11 +104,13 @@ for(const ev of eventFiles) {
 		}
 		const evx = require(`./events/${ev}`)
 		client.on(eventName, evx.bind(null, client))
+        events++
 	} catch(e) {
 		client.failedEvents.push([eventName, e.toString()])
-    log(`Error while loading event: ${eventName}: ${e}`, "error")
+        log(`Error while loading event: ${eventName}: ${e}`, "error")
 	}
 }
+log(`${chalk.magenta('[Karen Bot]')} ${chalk.yellow('[Event]')} ${chalk.white("[Load]")} Loaded ${events} events`)
 
 if (process.env.APIACCESS !== "true") console.log(chalk.magenta('[Karen Bot]'), chalk.yellow(`[API]`), chalk.red('[Warn]'), `Without API access many features are disabled`)
 
@@ -155,7 +161,6 @@ client.on('message', async msg => {
     if (settingsmap.get(msg.guild.id).brewSearch == undefined) {
       await settingsmap.set(msg.guild.id, {...settingsmap.get(msg.guild.id), brewSearch: false})
       serverFunc.updateGuildSettings(settingsmap)
-      console.log(msg.guild.id)
     }
   } catch (err) {
     if (msg.guild.id == '793297057216856085') console.log(1.2)
@@ -230,24 +235,9 @@ client.on('message', async msg => {
       await command.execute(client, msg, args)
       msg.channel.stopTyping()
     } catch (error) {
-      console.error(error)
-      axios({
-        "method": "POST",
-        "url": `${process.env.API_SERVER}/karen/logs/`,
-        "headers": {
-          "Authorization": process.env.AUTH_B64,
-          "Content-Type": "application/json; charset=utf-8",
-          'User-Agent': process.env.AUTH_USERAGENT
-        },
-        "auth": {
-          "username": process.env.AUTH_USER,
-          "password": process.env.AUTH_PASS
-        },
-        "data": {
-          "content": `"${msg}" by ${msg.author.id} - ${error}`,
-          "type": "error"
-        }
-      })
+        console.error(error)
+        log(`"${msg}" by ${msg.author.id} - ${error}`, "error", true)
+
       axios.post(process.env.REGULAR_WEBHOOK, {
         "content": `"${msg}" by ${msg.author.id} - ${error}`,
         "embeds": null,
