@@ -2,7 +2,7 @@ const axios = require('axios')
 require('dotenv').config()
 const app = require("../bot.js");
 
-module.exports = async (client, guild) => {
+module.exports = async (client, member) => {
   axios({
     "method": "POST",
     "url": `${process.env.API_SERVER}/karen/profile/get/`,
