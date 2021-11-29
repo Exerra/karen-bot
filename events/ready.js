@@ -38,6 +38,11 @@ module.exports = (client, guild) => {
   //why = "⚠️ WELCOME FUNCTIONALITY DISABLED ⚠️"
   client.user.setActivity(app.config.prefix +`help | ${why}`, { type: "WATCHING" });
 
+  const promises = [
+    client.shard.fetchClientValues('guilds.cache.size'),
+    client.shard.broadcastEval('this.guilds.cache.reduce((prev, guild) => prev + guild.memberCount, 0)'),
+  ];
+
   Promise.all(promises)
     .then(results => {
       const totalGuilds = results[0].reduce((prev, guildCount) => prev + guildCount, 0);

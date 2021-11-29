@@ -34,4 +34,4 @@ const updateStats = (client) => {
         .catch(console.error);
 }
 
-exports.updateStats = updateStats()
+exports.updateStats = updateStats
