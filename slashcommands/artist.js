@@ -1,4 +1,5 @@
 const Discord = require('discord.js')
+const { log } = require("../modules/log")
 
 require('dotenv').config()
 const Spotify = require('node-spotify-api')
@@ -80,10 +81,10 @@ module.exports = {
             }
           }})
         }).catch(err => {
-          console.log(err)
+            log(err, "error")
         })
     } catch (err) {
-      console.log(err)
+        log(err, "error")
     }
   }
 }
