@@ -1,8 +1,15 @@
 const axios = require('axios')
 require('dotenv').config()
 const app = require("../bot.js");
+const {updateStats} = require("../modules/updateStats");
+const {checkIfAPIAccess} = require("../modules/apiAccess");
 
 module.exports = async (client, member) => {
+
+  if (checkIfAPIAccess()) {
+    updateStats(client)
+  }
+
   axios({
     "method": "POST",
     "url": `${process.env.API_SERVER}/karen/profile/get/`,
