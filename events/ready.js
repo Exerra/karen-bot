@@ -36,7 +36,15 @@ module.exports = (client, guild) => {
   let why = statusQuotes[Math.floor(Math.random()*statusQuotes.length)];
   // emergency status
   //why = "⚠️ WELCOME FUNCTIONALITY DISABLED ⚠️"
-  client.user.setActivity(app.config.prefix +`help | ${why}`, { type: "WATCHING" });
+  client.user.setPresence(
+      {
+        activity: {
+          name: `${app.config.prefix}help | ${why}`,
+          type: 'WATCHING'
+        },
+        status: "dnd" // online, idle, invisible, dnd
+      }
+  )
 
   const promises = [
     client.shard.fetchClientValues('guilds.cache.size'),
