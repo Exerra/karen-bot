@@ -30,7 +30,7 @@ module.exports = {
         spotify
             .search({ type: 'track', query: args[0], limit: '1' })
             .then(action = (response) => {
-                // If it doesn't find a resposne, return error
+                // If it doesn't find a response, return error
                 if (response.tracks.items[0] == null) return msg.channel.send(`Error: No search results for \`${args[0]}\``)
                 // idk?
                 action.response = response;
