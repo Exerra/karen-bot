@@ -58,12 +58,14 @@ module.exports = {
                     }
                 ]
             };
-            msg.channel.send({ embed: kickMessage });
             console.log(member)
-            if (settingsmap.get(member.guild.id).modLogEnabled == false) return
+            if (settingsmap.get(member.guild.id).modLogEnabled == false) return msg.channel.send({ embed: kickMessage });
+
             const modLogChannelConst = member.guild.channels.cache.get(settingsmap.get(member.guild.id).modLogChannel);
-            if (!modLogChannelConst) return;
+            if (!modLogChannelConst) return msg.channel.send({ embed: kickMessage });
+
             modLogChannelConst.send({ embed: kickMessage });
+            msg.react("✅")
         } else return msg.reply("Sorry, you don't have permissions to use this!");
     }
 }

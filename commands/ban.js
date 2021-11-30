@@ -83,16 +83,15 @@ module.exports = {
 */
             //nsfai.predict(url).then(handleResult).catch(handleError);
 
-            // Sends ban message in the channel where it got executed
-            msg.channel.send({ embed });
-            // Checks if modlog is enabled
-            if (settingsmap.get(member.guild.id).modLogEnabled == false) return
+            // Checks if modlog is enabled, if not then send in msg channel as there is no other place to send it in
+            if (settingsmap.get(member.guild.id).modLogEnabled == false) return msg.channel.send({ embed });
             // If modlog is enabled then finds the channel by id
             const modLogChannelConst = member.guild.channels.cache.get(settingsmap.get(member.guild.id).modLogChannel);
-            // If it can't find it then just return
-            if (!modLogChannelConst) return;
-            // Send embed
+            // If it can't find it then just return and send in the msg channel
+            if (!modLogChannelConst) return msg.channel.send({ embed });
+            // Send embed and react with done
             modLogChannelConst.send({ embed });
+            msg.react("✅")
         }
         else {
             msg.channel.send('Looks like somebody here doesn\'t have ban permissions!')
