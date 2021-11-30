@@ -137,7 +137,6 @@ module.exports = {
         if (!empty(email)) embed.addField('Email', `[${email}](mailto:${email})`, true); topLineFieldAmount++
         if (!empty(twitter)) embed.addField('Twitter', `[@${twitter}](https://twitter.com/${twitter} '${msg.author.username}'s twitter')`, true); topLineFieldAmount++
 
-        console.log(topLineFieldAmount)
         // Switch statement to determine how much spacers to use
         // If topLineFieldAmount is 0 (aka no contact fields), then do nothing
         // If it is 1, then add 2 spacers
@@ -173,15 +172,14 @@ module.exports = {
         //embed.addField(`Account created at`, createdAt)
         embed.setFooter(`Account created at`)
         embed.setTimestamp(createdAt)
-        console.log(embed.fields)
         msg.channel.send(embed)
     }
 
     if (args[0] == undefined) {
         // Tries to get profile from server
         axios({
-            "method": "POST",
-            "url": `${process.env.API_SERVER}/karen/profile/get/`,
+            "method": "GET",
+            "url": `${process.env.API_SERVER}/karen/profile`,
             "headers": {
                 "Authorization": process.env.AUTH_B64,
                 "Content-Type": "application/json; charset=utf-8",
@@ -191,7 +189,7 @@ module.exports = {
                 "username": process.env.AUTH_USER,
                 "password": process.env.AUTH_PASS
             },
-            "data": {
+            "params": {
                 "id": msg.author.id
             }
         }).then((response) => {
@@ -235,8 +233,8 @@ module.exports = {
     else if (args[0].toLowerCase() == "create") {
         // Gets profile from server
         axios({
-            "method": "POST",
-            "url": `${process.env.API_SERVER}/karen/profile/get/`,
+            "method": "GET",
+            "url": `${process.env.API_SERVER}/karen/profile`,
             "headers": {
                 "Authorization": process.env.AUTH_B64,
                 "Content-Type": "application/json; charset=utf-8",
@@ -246,7 +244,7 @@ module.exports = {
                 "username": process.env.AUTH_USER,
                 "password": process.env.AUTH_PASS
             },
-            "data": {
+            "params": {
                 "id": msg.author.id
             }
         }).then((response) => {
@@ -295,8 +293,8 @@ module.exports = {
     else if (args[0].toLowerCase() == "delete") {
         // Try to get a profile for the user
         axios({
-            "method": "POST",
-            "url": `${process.env.API_SERVER}/karen/profile/get/`,
+            "method": "GET",
+            "url": `${process.env.API_SERVER}/karen/profile`,
             "headers": {
                 "Authorization": process.env.AUTH_B64,
                 "Content-Type": "application/json; charset=utf-8",
@@ -306,7 +304,7 @@ module.exports = {
                 "username": process.env.AUTH_USER,
                 "password": process.env.AUTH_PASS
             },
-            "data": {
+            "params": {
                 "id": msg.author.id
             }
         }).then((response) => {
@@ -348,8 +346,8 @@ module.exports = {
         let profile = {};
         // Tries to get profile from server. I did this so if there isn't a profile, it returns an error and because command reads profile
         axios({
-            "method": "POST",
-            "url": `${process.env.API_SERVER}/karen/profile/get/`,
+            "method": "GET",
+            "url": `${process.env.API_SERVER}/karen/profile`,
             "headers": {
                 "Authorization": process.env.AUTH_B64,
                 "Content-Type": "application/json; charset=utf-8",
@@ -359,7 +357,7 @@ module.exports = {
                 "username": process.env.AUTH_USER,
                 "password": process.env.AUTH_PASS
             },
-            "data": {
+            "params": {
                 "id": msg.author.id
             }
         }).then((response) => {
@@ -491,8 +489,8 @@ module.exports = {
         let member = msg.mentions.users.first();
         let mention = new Discord.MessageEmbed()
         axios({
-            "method": "POST",
-            "url": `${process.env.API_SERVER}/karen/profile/get/`,
+            "method": "GET",
+            "url": `${process.env.API_SERVER}/karen/profile`,
             "headers": {
                 "Authorization": process.env.AUTH_B64,
                 "Content-Type": "application/json; charset=utf-8",
@@ -502,7 +500,7 @@ module.exports = {
                 "username": process.env.AUTH_USER,
                 "password": process.env.AUTH_PASS
             },
-            "data": {
+            "params": {
                 "id": member.id
             }
         }).then((response) => {

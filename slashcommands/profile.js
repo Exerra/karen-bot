@@ -190,8 +190,8 @@ module.exports = {
         var author = client.users.cache.find(user => user.id === interaction.member.user.id)
         // Tries to get profile from server
         axios({
-            "method": "POST",
-            "url": `${process.env.API_SERVER}/karen/profile/get/`,
+            "method": "GET",
+            "url": `${process.env.API_SERVER}/karen/profile`,
             "headers": {
                 "Authorization": process.env.AUTH_B64,
                 "Content-Type": "application/json; charset=utf-8",
@@ -201,7 +201,7 @@ module.exports = {
                 "username": process.env.AUTH_USER,
                 "password": process.env.AUTH_PASS
             },
-            "data": {
+            "params": {
                 "id": author.id
             }
         }).then((response) => {
@@ -256,8 +256,8 @@ module.exports = {
         let member = client.users.cache.find(user => user.id === interaction.data.options[0].value);
         let mention = new Discord.MessageEmbed()
         axios({
-            "method": "POST",
-            "url": `${process.env.API_SERVER}/karen/profile/get/`,
+            "method": "GET",
+            "url": `${process.env.API_SERVER}/karen/profile`,
             "headers": {
                 "Authorization": process.env.AUTH_B64,
                 "Content-Type": "application/json; charset=utf-8",
@@ -267,7 +267,7 @@ module.exports = {
                 "username": process.env.AUTH_USER,
                 "password": process.env.AUTH_PASS
             },
-            "data": {
+            "params": {
                 "id": member.id
             }
         }).then((response) => {
