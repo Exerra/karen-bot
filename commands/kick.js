@@ -39,14 +39,11 @@ module.exports = {
                     url: member.user.avatarURL(),
                 },
                 color: `${config.colordecimal}`,
-                footer: {
-                    text: `Author - ${config.creator}`,
-                    icon_url: `${config.logo}`
-                },
+                timestamp: new Date(),
                 "fields": [
                     {
                         "name": `Member`,
-                        "value": `${member.user.tag}`,
+                        "value": `<@${member.user.id}>`,
                         "inline": false
                     },
                     {
