@@ -1,5 +1,6 @@
 const Discord = require('discord.js')
 const { config } = require('dotenv')
+const axios = require("axios")
 
 module.exports = {
   name: 'ping',
@@ -17,15 +18,42 @@ module.exports = {
       mxg.channel.send(`API ping time: \`${sendElp}ms\``).then(myg => {
         myg.edit(`Editing...`).then(mzg => {
           elapsed = new Date().getTime() - start
-          mxg.delete()
-          mzg.edit('\u200b', new Discord.MessageEmbed()
-            .setTitle('Pong!')
-            .setColor(client.ws.ping > 1000 ? 'RED' : client.ws.ping > 800 ? 'ORANGE' : config.color)
-            .setAuthor(msg.author.username, msg.author.avatarURL({ type: 'png', dynamic: true }))
-            .addField('Heartbeat', `\`${client.ws.ping}ms\``, true)
-            .addField('API', `\`${sendElp}ms\``, true)
-            .addField('Message Edit', `\`${elapsed}ms\``, true)
-            .setFooter(`yes`))
+          if (process.env.APIACCESS == "true") {
+            axios.get("https://cdn.exerra.xyz/server/status")
+                .then(res => {
+                  var elapsed2 = Date.now() - start
+                  mxg.delete()
+                  mzg.edit('\u200b', new Discord.MessageEmbed()
+                      .setTitle('Pong!')
+                      .setColor(client.ws.ping > 1000 ? 'RED' : client.ws.ping > 800 ? 'ORANGE' : config.color)
+                      .setAuthor(msg.author.username, msg.author.avatarURL({ type: 'png', dynamic: true }))
+                      .addField('Heartbeat', `\`${client.ws.ping}ms\``, true)
+                      .addField('Exerra API', `\`${elapsed2}ms\``, true)
+                      .addField('Discord API', `\`${sendElp}ms\``, true)
+                      .addField('Message Edit', `\`${elapsed}ms\``, true)
+                      .setFooter(`yes`))
+                }).catch(err => {
+                  mzg.edit('\u200b', new Discord.MessageEmbed()
+                      .setTitle('Pong!')
+                      .setColor(client.ws.ping > 1000 ? 'RED' : client.ws.ping > 800 ? 'ORANGE' : config.color)
+                      .setAuthor(msg.author.username, msg.author.avatarURL({ type: 'png', dynamic: true }))
+                      .addField('Heartbeat', `\`${client.ws.ping}ms\``, true)
+                      .addField('Exerra API', `\`ERROR\``, true)
+                      .addField('Discord API', `\`${sendElp}ms\``, true)
+                      .addField('Message Edit', `\`${elapsed}ms\``, true)
+                      .setFooter(`yes`))
+                })
+          } else {
+            mxg.delete()
+            mzg.edit('\u200b', new Discord.MessageEmbed()
+                .setTitle('Pong!')
+                .setColor(client.ws.ping > 1000 ? 'RED' : client.ws.ping > 800 ? 'ORANGE' : config.color)
+                .setAuthor(msg.author.username, msg.author.avatarURL({ type: 'png', dynamic: true }))
+                .addField('Heartbeat', `\`${client.ws.ping}ms\``, true)
+                .addField('API', `\`${sendElp}ms\``, true)
+                .addField('Message Edit', `\`${elapsed}ms\``, true)
+                .setFooter(`yes`))
+          }
         })
       })
     })
