@@ -1,5 +1,6 @@
 const Discord = require('discord.js')
 const axios = require('axios')
+const {log} = require("../modules/log");
 
 module.exports = {
   name: 'new',
@@ -110,8 +111,8 @@ module.exports = {
             }
           }
         }
-      } catch (Error) {
-        console.log(Error);
+      } catch (err) {
+        log(error, "error")
         msg.reply("No subreddits named `" + mes + "`.");
       }
     }
