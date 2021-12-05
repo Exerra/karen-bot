@@ -223,7 +223,6 @@ client.on('message', async msg => {
           // TODO: Repalce shard_count with a non-static count (-1 since shard 1 is id 0)
           reply += `\n\`${prefix}${command.name} ${command.example.replace('shard_count', 3)}\``
         }
-        if (msg.guild.id == '793297057216856085') console.log(4)
         return msg.channel.send(reply)
       }
 
