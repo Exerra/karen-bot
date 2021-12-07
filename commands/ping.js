@@ -42,7 +42,7 @@ module.exports = {
                       .addField('Exerra API', `\`ERROR\``, true)
                       .addField('Discord API', `\`${sendElp}ms\``, true)
                       .addField('Message Edit', `\`${elapsed}ms\``, true)
-                      .setFooter(`yes`))
+                      .setFooter(`this is a footer`))
                 })
           } else {
             mxg.delete()
@@ -53,7 +53,7 @@ module.exports = {
                 .addField('Heartbeat', `\`${client.ws.ping}ms\``, true)
                 .addField('API', `\`${sendElp}ms\``, true)
                 .addField('Message Edit', `\`${elapsed}ms\``, true)
-                .setFooter(`yes`))
+                .setFooter(`this is a footer`))
           }
         })
       })
