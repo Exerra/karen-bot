@@ -21,7 +21,8 @@ module.exports = {
           if (process.env.APIACCESS == "true") {
             axios.get("https://cdn.exerra.xyz/server/status")
                 .then(res => {
-                  var elapsed2 = Date.now() - start
+                  console.log(res)
+                  var elapsed2 = Date.now() - new Date(res.headers.date)
                   mxg.delete()
                   mzg.edit('\u200b', new Discord.MessageEmbed()
                       .setTitle('Pong!')
