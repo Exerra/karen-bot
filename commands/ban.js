@@ -60,7 +60,7 @@ module.exports = {
                         const modLogChannelConst = msg.guild.channels.cache.get(settingsmap.get(msg.guild.id).modLogChannel);
                         // If it can't find it then just return and send in the msg channel
                         if (!modLogChannelConst) return msg.channel.send({ embed });
-                        // Send embed and react with done
+                        // Send embed and react with done ezpzpz
                         modLogChannelConst.send({ embed });
                         msg.react("✅")
                     })
