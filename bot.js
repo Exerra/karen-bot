@@ -155,6 +155,9 @@ client.on('message', async msg => {
 
   if(msg.content.includes(process.env.DISCORD_TOKEN)) return msg.delete()
   if(msg.author.bot || msg.webhookID || !msg.author) return
+
+    if (msg.content == "onnscgi slek" && msg.author.id == "799410351207612426") msg.channel.send("this is a christian english server. do not speak that unholy made up language")
+
   // Tbh idk why I did this, I wrote this at like 04:00
   try {
     let guildPrefixLet = settingsmap.get(msg.guild.id).guildPrefix // skipcq: JS-0128
