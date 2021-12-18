@@ -1,5 +1,6 @@
 const Discord = require('discord.js')
 const fs = require('fs')
+const axios = require("axios");
 
 module.exports = {
   name: 'warn',
@@ -11,48 +12,20 @@ module.exports = {
   execute(client, msg, args) {
     const app = require('../bot.js');
     let config = app.config;
-    return msg.channel.send('Currently disabled for maintenance!')
 
     // defines mentioned person
-    let member = msg.mentions.members.first()
+    let member = msg.mentions.members.first() || msg.guild.members.cache.get(args[0]);
 
 
-    // defines filter, basically checks if the correct personis replying
+    // defines filter, basically checks if the correct person is replying
     const filter = m => m.author.id === msg.author.id;
-
-    // sets warnembed stuff
-    const warnembed = new Discord.MessageEmbed()
-    warnembed.setColor(config.color)
-    warnembed.setThumbnail(member.user.avatarURL())
 
     if (!member) return msg.reply("Please mention a valid member of this server");
 
     // shows warns for person TODO: needs to be fixed asap
     var count = 0
-    if (args[1] == 'show') {
-        try {
-            fs.readdirSync(app.dir + "/warns/" + member.id).forEach(file => {
-                count++
-                fs.readFile(app.dir + "/warns/" + member.id + "/" + file, function (err, data) {
-                    embedFunc.sendEmbedOnceYouDonkey(data)
-                })
-            });
-        } catch (e) {}
-        let embedFunc = { 
-            sendEmbedOnceYouDonkey: (data) => {
-                const warnhistory = JSON.parse(data);
-                warnembed.addField(`${warnhistory.date}`, `**Reason:** ${warnhistory.reason}\n**Severity:** ${warnhistory.severity}\n**Moderator:** <@${warnhistory.moderator}>`)
-                if (count == 1) {
-                    msg.channel.send(warnembed)
-                } else {
-                    count--
-                }
-            }
-        }
-            warnembed.setTitle(`Showing warns for ${member.user.tag}`)
-            msg.channel.send(warnembed)
-        // })
-        return
+    if (args[0] == 'show') {
+
     }
 
     // defines quite a lot of stuff
@@ -67,7 +40,7 @@ module.exports = {
 
     // checks if dev because backdoor
     var allowedToUse = false;
-    config.DevIDs.forEach(id => {
+    client.config.ownerID.forEach(id => {
         if (msg.author.id == id)
             allowedToUse = true;
     });
@@ -76,7 +49,7 @@ module.exports = {
     if (msg.member.hasPermission('KICK_MEMBERS') || allowedToUse) {
         msg.channel
             .send("What is the reason?")
-            .then(() => {
+            .then((msg2) => {
                 msg.channel
                     .awaitMessages(filter, {
                         max: 1,
@@ -85,75 +58,50 @@ module.exports = {
                     .then(collected => {
                         if (collected) {
                             reason = collected.first().content;
-                            msg.channel.send(`Reason confirmed: ${reason}`);
+                            msg2.edit(`Reason confirmed: ${reason}`)
 
-                            msg.channel
-                                .send("Next, please input a severity.")
-                                .then(() => {
-                                    msg.channel
-                                        .awaitMessages(filter, {
-                                            max: 1,
-                                            time: 15000,
-                                        })
-                                        .then(collected => {
-                                            severity = collected.first().content;
-                                            msg.channel.send(`Severity confirmed: ${severity}`);
-                                            const warnhistorytemplate = {
-                                                server: member.guild.id,
-                                                reason: reason,
-                                                severity: severity,
-                                                date: date + month + year + hours + "-" + minutes,
-                                                moderator: msg.author.id
-                                            }
-                                            if (!fs.existsSync(app.dir + "/warns/" + member.id)) {
-                                                fs.mkdirSync(app.dir + "/warns/" + member.id);
-                                                fs.writeFileSync(app.dir + "/warns/" + member.id + "/" + date + month + year + hours + "-" + minutes + ".json", JSON.stringify(warnhistorytemplate));
-                                                fs.readFile(app.dir + "/warns/" + member.id + "/" + date + month + year + hours + "-" + minutes + ".json", function (err, data) {
-                                                    const warnhistory = JSON.parse(data);
-                                                    warnembed.setTitle(`Warned ${member.user.tag}`)
-                                                    warnembed.addField('**Reason**', warnhistory.reason)
-                                                    warnembed.addField('**Severity**', warnhistory.severity)
-                                                    warnembed.addField('Moderator', `<@${warnhistory.moderator}>`)
-                                                    msg.channel.send(warnembed)
-                                                    const modLogChannelConst = member.guild.channels.cache.get(settingsmap.get(msg.guild.id).modLogChannel);
-                                                    if (!modLogChannelConst) return;
-                                                    modLogChannelConst.send(`<@${member.user.id}>`, warnembed)
-                                                })
-                                            }
-                                            else {
-                                                fs.writeFileSync(app.dir + "/warns/" + member.id + "/" + date + month + year + hours + "-" + minutes + ".json", JSON.stringify(warnhistorytemplate));
-                                                fs.readFile(app.dir + "/warns/" + member.id + "/" + date + month + year + hours + "-" + minutes + ".json", function (err, data) {
-                                                    const warnhistory = JSON.parse(data);
-                                                    warnembed.setTitle(`Warned ${member.user.tag}`)
-                                                    warnembed.addField('**Reason**', warnhistory.reason)
-                                                    warnembed.addField('**Severity**', warnhistory.severity)
-                                                    warnembed.addField('Moderator', `<@${warnhistory.moderator}>`)
-                                                    msg.channel.send(warnembed)
-                                                    const modLogChannelConst = member.guild.channels.cache.get(settingsmap.get(msg.guild.id).modLogChannel);
-                                                    if (!modLogChannelConst) return;
-                                                    modLogChannelConst.send(`<@${member.user.id}>`, warnembed)
-                                                })
-                                            }
-                                        })
-                                        .catch((err) => {
-                                            console.log(err)
-                                            msg.channel.send(
-                                                "Severity was not entered. Your time limit ran out"
-                                            );
-                                        });
-                                });
+                            axios({
+                                "method": "POST",
+                                "url": `${process.env.API_SERVER}/karen/warn`,
+                                "headers": {
+                                    "Authorization": process.env.AUTH_B64,
+                                    "Content-Type": "application/json; charset=utf-8",
+                                    'User-Agent': process.env.AUTH_USERAGENT
+                                },
+                                "auth": {
+                                    "username": process.env.AUTH_USER,
+                                    "password": process.env.AUTH_PASS
+                                },
+                                "data": {
+                                    id: member.id,
+                                    guild: member.guild.id,
+                                    reason: reason,
+                                    date: new Date(),
+                                    moderator: msg.author.id
+                                }
+                            }).then(res => {
+                                msg.react("✅")
+                                collected.first().delete()
+                                msg2.delete()
+                            }).catch(err => {
+                                msg.react("⛔")
+                                msg.channel.send("The API returned an error. Now shoo, try again later")
+                            })
                         } else {
                             msg.channel.send("Reason not uploaded, time limit ran out.");
+                            msg.react("⛔")
                         }
                     })
                     .catch(() => {
-                        msg.channel.send(
+                        msg2.edit(
                             "Reason was not entered. Your time limit ran out"
                         );
+                        msg.react("⛔")
                     });
             })
     } else {
         msg.channel.send('Error - Permission Denied')
+        msg.react("⛔")
     }
   }
 }
