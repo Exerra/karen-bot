@@ -98,10 +98,30 @@ module.exports = {
                                     moderator: msg.author.id
                                 }
                             }).then(res => {
+                                let user = res.data
                                 msg.react("✅")
                                 collected.first().delete()
                                 msg2.delete()
+
+
+                                if (settingsmap.get(member.guild.id).modLogEnabled == false) return
+
+                                const modLogChannelConst = member.guild.channels.cache.get(settingsmap.get(member.guild.id).modLogChannel);
+                                if (!modLogChannelConst) return
+
+                                const warnEmbed = new Discord.MessageEmbed()
+                                    .setColor(config.color)
+                                    .setTitle("Member warned")
+                                    .setDescription(`<@${member.id}> has been warned`)
+                                    .setThumbnail(member.user.avatarURL())
+                                    .setTimestamp(new Date())
+                                    .addField("Reason", reason)
+                                    .addField("Moderator", `<@${msg.author.id}>`)
+                                    .addField("Warn ID", res.data.warnID)
+
+                                modLogChannelConst.send({ embed: warnEmbed });
                             }).catch(err => {
+                                console.log(err)
                                 msg.react("⛔")
                                 msg.channel.send("The API returned an error. Now shoo, try again later")
                             })
