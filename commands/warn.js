@@ -31,7 +31,8 @@ module.exports = {
             },
             params: {
                 id: member.id,
-                fetchUser: true
+                fetchUser: true,
+                includeWarns: true
             }
         }).then(res => {
             const warnEmbed = new Discord.MessageEmbed()
