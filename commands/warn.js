@@ -8,7 +8,7 @@ module.exports = {
   type: 'Moderation',
   args: true,
   usage: '@[user]',
-  example: '@Burrit0z',
+  example: '@Carl-bot',
   execute(client, msg, args) {
     const app = require('../bot.js');
     let config = app.config;
@@ -25,7 +25,37 @@ module.exports = {
     // shows warns for person TODO: needs to be fixed asap
     var count = 0
     if (args[0] == 'show') {
+        axios.get(`${process.env.API_SERVER}/karen/profile`, {
+            headers: {
+                "User-Agent": process.env.AUTH_USERAGENT
+            },
+            params: {
+                id: member.id,
+                fetchUser: true
+            }
+        }).then(res => {
+            const warnEmbed = new Discord.MessageEmbed()
+            let user = res.data
+            let warns = res.data.warns
 
+            warnEmbed.setColor(config.color)
+            warnEmbed.setTitle(`Warns for ${user.username}`)
+            warnEmbed.setThumbnail(user.avatar.url.png)
+
+            warns.sort((a, b) => new Date(b.date) - new Date(a.date))
+
+            for (let i = 0; i < (warns.length > 10 ? 10 : warns.length); i++) {
+                warnEmbed.addField(
+                    `${warns[i].id}`,
+                    `**Reason:** ${warns[i].reason}
+                    **Moderator:** <@${warns[i].moderator}>
+                    **Date:** ${new Date(warns[i].date).toISOString().substring(0,10)}`
+                )
+            }
+            warnEmbed.setFooter(`Showing ${warns.length > 10 ? 10 : warns.length}/${warns.length} warns`)
+            msg.channel.send(warnEmbed)
+        })
+        return
     }
 
     // defines quite a lot of stuff
