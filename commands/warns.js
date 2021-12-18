@@ -36,7 +36,7 @@ module.exports = {
 
             const warnEmbed = new Discord.MessageEmbed()
                 .setColor(config.color)
-                .setTitle(`${args[1 == "all" ? "All warns" : "Guild warns"]} for ${user.username}`)
+                .setTitle(`${args[1] == "all" ? "All warns" : "Guild warns"} for ${user.username}`)
                 .setThumbnail(user.avatar.url.png)
 
             for (let i = 0; i < (warns.length > 10 ? 10 : warns.length); i++) {
