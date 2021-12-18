@@ -156,7 +156,7 @@ client.on('message', async msg => {
   if(msg.content.includes(process.env.DISCORD_TOKEN)) return msg.delete()
   if(msg.author.bot || msg.webhookID || !msg.author) return
 
-    if (msg.content == "onnscgi slek" && msg.author.id == "799410351207612426") msg.reply("this is a christian english server. do not speak that unholy made up language")
+    if (msg.content == "onnscgi slek" && msg.author.id == "799410351207612426") msg.lineReply("this is a christian english server. do not speak that unholy made up language")
 
   // Tbh idk why I did this, I wrote this at like 04:00
   try {
