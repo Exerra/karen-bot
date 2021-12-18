@@ -65,6 +65,9 @@ module.exports = {
 
     // actual warn section
     if (msg.member.hasPermission('KICK_MEMBERS') || allowedToUse) {
+
+        if (msg.guild.members.cache.get(msg.author.id).roles.highest.comparePositionTo(member.roles.highest) < 0 && !allowedToUse) return msg.lineReply("employees cannot warn their own managers you half brained imbecile")
+
         msg.channel
             .send("What is the reason?")
             .then((msg2) => {
