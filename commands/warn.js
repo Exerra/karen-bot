@@ -69,7 +69,7 @@ module.exports = {
         if (msg.guild.members.cache.get(msg.author.id).roles.highest.comparePositionTo(member.roles.highest) < 0 && !allowedToUse) return msg.lineReply("employees cannot warn their own managers you half brained imbecile")
 
         msg.channel
-            .send("What is the reason?")
+            .send("What is the reason? Type `abort` to, well, abort")
             .then((msg2) => {
                 msg.channel
                     .awaitMessages(filter, {
@@ -79,6 +79,9 @@ module.exports = {
                     .then(collected => {
                         if (collected) {
                             reason = collected.first().content;
+                            if (reason == "abort") {
+                                return msg.channel.send("fine then")
+                            }
                             msg2.edit(`Reason confirmed: ${reason}`)
 
                             axios({

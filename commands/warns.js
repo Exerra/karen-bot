@@ -57,25 +57,15 @@ module.exports = {
 
             client.api.channels(msg.channel.id).messages.post({
                 data: {
-                    //adds the embed here, so the button and embed will be sent together
                     embeds: [warnEmbed],
                     components: [
                         {
                             type: 1,
-                            components: [
-                                {
-                                    type: 2,
-                                    style: 5,
-                                    label: `View all ${args[1] == "all" ? "" : "guild"} warns`,
-                                    url: `https://check.exerra.xyz/warns/${args[1] == "all" ? member.id : `${msg.guild.id}/${member.id}`}`
-                                }
-                            ]
+                            components: [button]
                         }
                     ],
                 }
             });
-
-            //msg.channel.send({embeds: [warnEmbed], components: [button]})
         })
     }
 }
