@@ -26,6 +26,8 @@ module.exports = {
         // defines mentioned person
         let member = msg.mentions.members.first() || msg.guild.members.cache.get(args[0]);
 
+        if (msg.guild.members.cache.get(msg.author.id).roles.highest.comparePositionTo(member.roles.highest) < 0 && !allowedToUse) return msg.lineReply("employees cannot do this to their own managers you half brained imbecile")
+
         // defines filter, basically checks if the correct person is replying
         const filter = m => m.author.id === msg.author.id;
 
