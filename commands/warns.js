@@ -2,6 +2,7 @@ const Discord = require('discord.js')
 const fs = require('fs')
 const axios = require("axios");
 const app = require("../bot.js");
+const disbut = require('discord-buttons');
 
 module.exports = {
     name: 'warns',
@@ -39,7 +40,7 @@ module.exports = {
                 .setTitle(`${args[1] == "all" ? "All warns" : "Guild warns"} for ${user.username}`)
                 .setThumbnail(user.avatar.url.png)
 
-            for (let i = 0; i < (warns.length > 10 ? 10 : warns.length); i++) {
+            for (let i = 0; i < (warns.length > 5 ? 5 : warns.length); i++) {
                 warnEmbed.addField(
                     `${warns[i].id}`,
                     `**Reason:** ${warns[i].reason}
@@ -47,8 +48,34 @@ module.exports = {
                     **Date:** ${new Date(warns[i].date).toISOString().substring(0, 10)}`
                 )
             }
-            warnEmbed.setFooter(`Showing ${warns.length > 10 ? 10 : warns.length}/${warns.length} warns`)
-            msg.lineReply(warnEmbed)
+            warnEmbed.setFooter(`Showing ${warns.length > 5 ? 5 : warns.length}/${warns.length} warns`)
+
+            let button = new disbut.MessageButton()
+                .setStyle('url')
+                .setURL(`https://check.exerra.xyz/warns/${args[1] == "all" ? member.id : `${msg.guild.id}/${member.id}`}`)
+                .setLabel(`View all ${args[1] == "all" ? "" : "guild"} warns`)
+
+            client.api.channels(msg.channel.id).messages.post({
+                data: {
+                    //adds the embed here, so the button and embed will be sent together
+                    embeds: [warnEmbed],
+                    components: [
+                        {
+                            type: 1,
+                            components: [
+                                {
+                                    type: 2,
+                                    style: 5,
+                                    label: `View all ${args[1] == "all" ? "" : "guild"} warns`,
+                                    url: `https://check.exerra.xyz/warns/${args[1] == "all" ? member.id : `${msg.guild.id}/${member.id}`}`
+                                }
+                            ]
+                        }
+                    ],
+                }
+            });
+
+            //msg.channel.send({embeds: [warnEmbed], components: [button]})
         })
     }
 }
