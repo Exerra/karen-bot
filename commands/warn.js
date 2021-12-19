@@ -68,6 +68,62 @@ module.exports = {
 
         if (msg.guild.members.cache.get(msg.author.id).roles.highest.comparePositionTo(member.roles.highest) < 0 && !allowedToUse) return msg.lineReply("employees cannot warn their own managers you half brained imbecile")
 
+
+        if (args.length > 1) {
+            let index = args.indexOf(args[0]);
+            args.splice(index, 1)
+            args.forEach(d => {
+                reason += `${d} `
+            })
+
+            axios({
+                "method": "POST",
+                "url": `${process.env.API_SERVER}/karen/warn`,
+                "headers": {
+                    "Authorization": process.env.AUTH_B64,
+                    "Content-Type": "application/json; charset=utf-8",
+                    'User-Agent': process.env.AUTH_USERAGENT
+                },
+                "auth": {
+                    "username": process.env.AUTH_USER,
+                    "password": process.env.AUTH_PASS
+                },
+                "data": {
+                    id: member.id,
+                    guild: member.guild.id,
+                    reason: reason,
+                    date: new Date(),
+                    moderator: msg.author.id
+                }
+            }).then(res => {
+                let user = res.data
+                msg.react("✅")
+
+
+                if (settingsmap.get(member.guild.id).modLogEnabled == false) return
+
+                const modLogChannelConst = member.guild.channels.cache.get(settingsmap.get(member.guild.id).modLogChannel);
+                if (!modLogChannelConst) return
+
+                const warnEmbed = new Discord.MessageEmbed()
+                    .setColor(config.color)
+                    .setTitle("Member warned")
+                    .setDescription(`<@${member.id}> has been warned`)
+                    .setThumbnail(member.user.avatarURL())
+                    .setTimestamp(new Date())
+                    .addField("Reason", reason)
+                    .addField("Moderator", `<@${msg.author.id}>`)
+                    .addField("Warn ID", res.data.warnID)
+
+                modLogChannelConst.send({ embed: warnEmbed });
+            }).catch(err => {
+                console.log(err)
+                msg.react("⛔")
+                msg.channel.send("The API returned an error. Now shoo, try again later")
+            })
+            return
+        }
+
         msg.channel
             .send("What is the reason? Type `abort` to, well, abort")
             .then((msg2) => {
