@@ -19,10 +19,10 @@ module.exports = {
         myg.edit(`Editing...`).then(mzg => {
           elapsed = new Date().getTime() - start
           if (process.env.APIACCESS == "true") {
-            axios.get("https://cdn.exerra.xyz/server/status")
+            start = new Date().getTime()
+            axios.get(`${process.env.API_SERVER}/server/status`)
                 .then(res => {
-                  console.log(res)
-                  var elapsed2 = Date.now() - new Date(res.headers.date)
+                  var elapsed2 = new Date().getTime() - start
                   mxg.delete()
                   mzg.edit('\u200b', new Discord.MessageEmbed()
                       .setTitle('Pong!')
