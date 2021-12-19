@@ -8,7 +8,7 @@ module.exports = {
     description: 'Removes a warn from user',
     type: 'Moderation',
     args: true,
-    usage: 'remove @[user] [warnID]',
+    usage: '@[user] [warnID]',
     example: '@Carl-bot 5e1039097fc9ee968a6a68a606c50bac',
     execute(client, msg, args) {
         const app = require('../bot.js');
@@ -21,10 +21,12 @@ module.exports = {
                 allowedToUse = true;
         });
 
-        if (!msg.member.hasPermission('KICK_MEMBERS') || !allowedToUse) return msg.lineReply("Who the fuck are you? Get a manager for this one, sweetie")
+        if (!msg.member.hasPermission('KICK_MEMBERS')) return msg.lineReply("Who the fuck are you? Get a manager for this one, sweetie")
 
         // defines mentioned person
         let member = msg.mentions.members.first() || msg.guild.members.cache.get(args[0]);
+
+        if (!member) return msg.lineReply("wheres.\nthe.\nuser.")
 
         if (msg.guild.members.cache.get(msg.author.id).roles.highest.comparePositionTo(member.roles.highest) < 0 && !allowedToUse) return msg.lineReply("employees cannot do this to their own managers you half brained imbecile")
 
