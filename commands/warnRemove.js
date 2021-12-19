@@ -10,6 +10,7 @@ module.exports = {
     args: true,
     usage: '@[user] [warnID]',
     example: '@Carl-bot 5e1039097fc9ee968a6a68a606c50bac',
+    aliases: ["warnremove"],
     execute(client, msg, args) {
         const app = require('../bot.js');
         let config = app.config;

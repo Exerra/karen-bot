@@ -52,6 +52,7 @@ jobs:
           echo "IFTTT_WEBHOOK=$IFTTT_WEBHOOK" >> .env
           echo "SHARD_WEBHOOK=$SHARD_WEBHOOK" >> .env
           echo "APIACCESS=true" >> .env
+          echo "NODE_TLS_REJECT_UNAUTHORIZED=0" >> .env
       
       - name: Install dependancies
         run: yarn
