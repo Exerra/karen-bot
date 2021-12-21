@@ -76,6 +76,9 @@ module.exports = {
               } else {
                 image = null;
               }
+
+              if (text.title.length > 256) text.title = text.title.truncate(256)
+
               const embed = {
                 title: `${text.title}`,
                 url: `https://www.reddit.com${text.permalink}`,
@@ -90,10 +93,6 @@ module.exports = {
                   url: image
                 },
                 color: `${config.colordecimal}`,
-                footer: {
-                  text: `Author - ${config.creator}`,
-                  icon_url: `${config.logo}`
-                },
                 "fields": [
                   {
                     "name": `❤ Upvoted by`,
