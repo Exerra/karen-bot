@@ -47,7 +47,7 @@ module.exports = {
           .setFooter(msg.author.tag, msg.author.avatarURL({ dynamic: true, format: `png` }))
           .setThumbnail(client.user.avatarURL({ dynamic: true, format: `png` })))
       .then(() => {
-        msg.channel.send(`<@!${msg.author.id}>, I\`ve sent a DM!`)
+        msg.lineReply(`<@!${msg.author.id}>, bing bong check dms`)
       })
       .catch(_ => {
   			msg.channel.send(`:warning: Couldn\`t send DM. The following may contain sensitive server information. Please store this information and delete the message soon after.`).then(mxg => {
