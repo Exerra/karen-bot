@@ -34,6 +34,10 @@ module.exports = client => {
         return 'Hi, My name is ' + this
     };
 
+    String.prototype.truncate = function(n) {
+        return (this.length > n) ? this.substr(0, n-3) + '...' : this;
+    };
+
     client.code = (lang, contents) => {
         return `${'```'}${lang}\n${contents}${'\n```'}`
     }
