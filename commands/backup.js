@@ -28,12 +28,13 @@ module.exports = {
         "method": "POST",
         "url": `${process.env.API_SERVER}/karen/backups/post/${bd.id}`,
         "headers": {
-          "Authorization": process.env.API_B64,
-          "Content-Type": "application/json; charset=utf-8"
+          "Authorization": process.env.AUTH_B64,
+          "Content-Type": "application/json; charset=utf-8",
+          'User-Agent': process.env.AUTH_USERAGENT
         },
         "auth": {
-          "username": process.env.API_USER,
-          "password": process.env.API_PASS
+          "username": process.env.AUTH_USER,
+          "password": process.env.AUTH_PASS
         },
         "data": bd
       })
@@ -70,11 +71,12 @@ module.exports = {
           "method": "GET",
           "url": `${process.env.API_SERVER}/karen/backups/get/${args[1]}`,
           "headers": {
-            "Authorization": process.env.API_B64
+            "Authorization": process.env.AUTH_B64,
+            'User-Agent': process.env.AUTH_USERAGENT
           },
           "auth": {
-            "username": process.env.API_USER,
-            "password": process.env.API_PASS
+            "username": process.env.AUTH_USER,
+            "password": process.env.AUTH_PASS
           }
         }).then(res => {
           fs.writeFileSync(app.dir + "/commands/backups/" + args[1] + ".json", JSON.stringify(res.data))
