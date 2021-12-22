@@ -157,8 +157,18 @@ client.on('message', async msg => {
   if(msg.author.bot || msg.webhookID || !msg.author) return
 
     // el troll
-    if (msg.content.includes("onnscgi slek") && msg.author.id == "799410351207612426") msg.lineReply("this is a christian english server. do not speak that unholy made up language")
-    if (msg.content == "https://tenor.com/view/cope-dont-care-crying-cry-chips-gif-21606846") msg.lineReply("https://tenor.com/view/cope-dont-care-crying-cry-chips-gif-21606846")
+    for (let i in config.trolls) {
+        let troll = config.trolls[i]
+
+        if (msg.content.includes(troll.content)) {
+            if (troll.id == "") msg.lineReply(troll.reply)
+            else if (msg.author.id == troll.id) msg.lineReply(troll.reply)
+        }
+    }
+
+
+    //if (msg.content.includes("onnscgi slek") && msg.author.id == "799410351207612426") msg.lineReply("this is a christian english server. do not speak that unholy made up language")
+    //if (msg.content == "https://tenor.com/view/cope-dont-care-crying-cry-chips-gif-21606846") msg.lineReply("https://tenor.com/view/cope-dont-care-crying-cry-chips-gif-21606846")
 
   // Tbh idk why I did this, I wrote this at like 04:00
   try {

@@ -1,6 +1,6 @@
 {
     "prefix": "m!",
-    "botversion": "7.2.2",
+    "botversion": "8.0.0",
     "logo": "https://cdn.exerra.xyz/files/png/pfp.png",
     "creator": "Occult Waifu#1659",
     "color": [
@@ -75,5 +75,17 @@
         "are you vaccinated? no? good",
         "BUT THIS MOMMY BLOG SAYS ITS BAD",
         "facebook is best social media"
+    ],
+    "trolls": [
+        {
+            "content": "onnscgi slek",
+            "reply": "this is a christian english server. do not speak that unholy made up language",
+            "id": "799410351207612426"
+        },
+        {
+            "content": "https://tenor.com/view/cope-dont-care-crying-cry-chips-gif-21606846",
+            "reply": "https://tenor.com/view/cope-dont-care-crying-cry-chips-gif-21606846",
+            "id": "521753871673065473"
+        }
     ]
 }
