@@ -68,6 +68,7 @@ module.exports = {
 
         if (msg.guild.members.cache.get(msg.author.id).roles.highest.comparePositionTo(member.roles.highest) < 0 && !allowedToUse) return msg.lineReply("employees cannot warn their own managers you half brained imbecile")
 
+        if (member.id == client.user.id && !allowedToUse) return msg.lineReply("fuck off bitch")
 
         if (args.length > 1) {
             let index = args.indexOf(args[0]);
