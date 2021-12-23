@@ -1,5 +1,17 @@
+/*
+  This module provides code that updates Karen Bot stats.
+  These stats include:
+    - Total members
+    - Total guilds
+    - Discord.js version
+
+  - Written on 2021-12-23 by Exerra
+*/
+
+
 const axios = require("axios")
 const Discord = require("discord.js");
+const {log} = require("./log");
 
 const updateStats = (client) => {
     const promises = [
@@ -30,8 +42,7 @@ const updateStats = (client) => {
                     "DiscordJS": `${Discord.version}`
                 }
             })
-        })
-        .catch(console.error);
+        }).catch(e => log(e, "error"));
 }
 
 exports.updateStats = updateStats
