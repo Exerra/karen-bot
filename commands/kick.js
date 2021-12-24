@@ -28,7 +28,7 @@ module.exports = {
             if (!reason) reason = "No reason provided";
 
             await member.send(`onmg AHahaHAHahaAHAHAHAHA im wheezing rn you got kicked from ${msg.guild.name} (id: ${msg.guild.id}) for ${reason}. thats what you get you devil! REPEL THE DEMONS! UNBLOW!!! YOU ARE DESTROYED FOREVER!!! AND YOU WILL NEVER BE BACK!!!! thank you god... let it happen... cause it to happen`).catch(() => ignoreError())
-            await member.send('https://cdn.exerra.xyz/files/png/kenneth_copeland.png').catch(() => ignoreError())
+            await member.send('https://cdn.exerra.xyz/png/kenneth_copeland.png').catch(() => ignoreError())
 
             await member.kick(reason)
                 .catch(error => msg.reply(`Sorry ${msg.author} I couldn't kick because of : ${error}`));

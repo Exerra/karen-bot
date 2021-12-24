@@ -19,8 +19,8 @@ module.exports = {
         .setColor(config.color)
         .setTitle('ESO server status')
         .setDescription('Server status for the Elder Scrolls Online game')
-        .setThumbnail('https://cdn.exerra.xyz/files/png/eso.png')
-        .setAuthor('Zenimax', 'https://cdn.exerra.xyz/files/png/companies/zenimax/zenimax-small-no_outline.png')
+        .setThumbnail('https://cdn.exerra.xyz/png/eso.png')
+        .setAuthor('Zenimax', 'https://cdn.exerra.xyz/png/companies/zenimax/zenimax-small-no_outline.png')
         .addFields(
           { name: 'Store', value: data.eso_store.raw_information },
           { name: 'Accounts', value: data.account_system.raw_information },

@@ -61,7 +61,7 @@ module.exports = {
 		if (limited_availability) embed.setDescription(`⚠️ Warning: There is limited information for ${crypto}`)
 
 		// Fetches image for crypto from my CDN
-		embed.setThumbnail(`https://cdn.exerra.xyz/files/png/crypto/${crypto}.png`)
+		embed.setThumbnail(`https://cdn.exerra.xyz/png/crypto/${crypto}.png`)
 
 		// While testing I noticed that some cryptocurrencies have quite low median transaction fees
 		// soooo

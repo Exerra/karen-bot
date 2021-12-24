@@ -2,7 +2,7 @@ const express = require('express')
 const chalk = require('chalk'); 
 const { log } = require('./modules/log');
 const app = express()
-const port = process.env.PORT || 80;
+const port = process.env.PORT || 4432;
 
 app.get('/', (req, res) => {
   res.send('Karen Bot is up!')
