@@ -1,6 +1,6 @@
 /*
 	This module was made to standardize logging and effortlessly bring console logging *and* sending logs to API easier
-  If a developer does not have API access (either hasn't yet been assigned a user&pass or is an unafilliated entity) then it does not send to the API.
+  	If a developer does not have API access (either hasn't yet been assigned a user&pass or is an unaffiliated entity) then it does not send to the API.
 	
 	- Written on 2021-09-05 by Exerra
 */
@@ -14,7 +14,7 @@ require('dotenv').config()
  * 
  * @param {string} message Message to console log
  * @param {string} type Type of message (info, error)
- * @param {boolean} serveronly Wether the log should only be sent to the API
+ * @param {boolean} serveronly Whether the log should only be sent to the API
  * @returns A better logging system
  */
 const log = (message, type, serveronly = false) => {

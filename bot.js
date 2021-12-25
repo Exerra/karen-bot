@@ -166,20 +166,16 @@ client.on('message', async msg => {
         }
     }
 
-
-    //if (msg.content.includes("onnscgi slek") && msg.author.id == "799410351207612426") msg.lineReply("this is a christian english server. do not speak that unholy made up language")
-    //if (msg.content == "https://tenor.com/view/cope-dont-care-crying-cry-chips-gif-21606846") msg.lineReply("https://tenor.com/view/cope-dont-care-crying-cry-chips-gif-21606846")
-
   // Tbh idk why I did this, I wrote this at like 04:00
   try {
-    let guildPrefixLet = settingsmap.get(msg.guild.id).guildPrefix // skipcq: JS-0128
-    if (settingsmap.get(msg.guild.id).brewSearch == undefined) {
-      await settingsmap.set(msg.guild.id, {...settingsmap.get(msg.guild.id), brewSearch: false})
-      serverFunc.updateGuildSettings(settingsmap)
-    }
+		let guildPrefixLet = settingsmap.get(msg.guild.id).guildPrefix // skipcq: JS-0128
+		if (settingsmap.get(msg.guild.id).brewSearch == undefined) {
+			await settingsmap.set(msg.guild.id, {...settingsmap.get(msg.guild.id), brewSearch: false})
+			serverFunc.updateGuildSettings(settingsmap)
+		}
   } catch (err) {
-    if (msg.guild.id == '793297057216856085') console.log(1.2)
-    serverFunc.createGuildSettings(msg.guild.id)
+	if (msg.guild.id == '793297057216856085') console.log(1.2)
+	serverFunc.createGuildSettings(msg.guild.id)
   }
 
   autoEmbeds(msg)
@@ -227,6 +223,11 @@ client.on('message', async msg => {
     msg.member.user.permLevel = level
 
     try {
+
+    	if (command.disabled) {
+    		return msg.lineReply("Its ✨ disabled ✨\n\n\n\n\n\n\n..just like you apparently lMFAOOO")
+		}
+
       if(command.args && !args.length) {
         let reply = `Where are the arguments?? Explain yourself, WHERE IN THE FUCK DO YOU SEE ARGUMENTS!?!?!?`
 
