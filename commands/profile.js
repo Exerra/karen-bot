@@ -24,18 +24,6 @@ module.exports = {
 
     /**
      * 
-     * @param {string} str - String to check if it is undefined or empty
-     * @returns True if string is undefined or empty, false if it isn't
-     */
-    const empty = (str) => {
-        if (typeof str == 'undefined' || !str || str.length === 0 || str === "" || !/[^\s]/.test(str) || /^\s*$/.test(str) || str.replace(/\s/g,"") === "")
-            return true;
-        else
-            return false;
-    }
-
-    /**
-     * 
      * @param {string} pronouns - The response body for the pronoun.db API call
      */
     const determinePronouns = (pronouns) => {
@@ -133,9 +121,9 @@ module.exports = {
         embed.addField("Description", description)
 
         // Adds the contact info fields
-        if (!empty(website)) embed.addField('Website', `[${website.replace(/(^\w+:|^)\/\//, '')}](${website} '${msg.author.username}'s website')`, true); topLineFieldAmount++
-        if (!empty(email)) embed.addField('Email', `[${email}](mailto:${email})`, true); topLineFieldAmount++
-        if (!empty(twitter)) embed.addField('Twitter', `[@${twitter}](https://twitter.com/${twitter} '${msg.author.username}'s twitter')`, true); topLineFieldAmount++
+        if (!website.isEmpty()) embed.addField('Website', `[${website.replace(/(^\w+:|^)\/\//, '')}](${website} '${msg.author.username}'s website')`, true); topLineFieldAmount++
+        if (!email.isEmpty()) embed.addField('Email', `[${email}](mailto:${email})`, true); topLineFieldAmount++
+        if (!twitter.isEmpty()) embed.addField('Twitter', `[@${twitter}](https://twitter.com/${twitter} '${msg.author.username}'s twitter')`, true); topLineFieldAmount++
 
         // Switch statement to determine how much spacers to use
         // If topLineFieldAmount is 0 (aka no contact fields), then do nothing
