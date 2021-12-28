@@ -36,7 +36,7 @@ module.exports = {
 
     /**
      * 
-     * @param {string} pronouns - The response body for the pronoum.db API call
+     * @param {string} pronouns - The response body for the pronoun.db API call
      */
     const determinePronouns = (pronouns) => {
         switch (pronouns) {
@@ -194,31 +194,20 @@ module.exports = {
             }
         }).then((response) => {
             // If success, return profile
-            //const profile = JSON.parse(response.data.profile);
-            axios({
-                "method": "GET",
-                "url": "https://pronoundb.org/api/v1/lookup",
-                "params": {
-                    "platform": "discord",
-                    "id": msg.author.id
-                }
-            }).then(res => {
-                determinePronouns(res.data.pronouns)
-                sendProfile(msg.author.username,
-                    msg.author.avatarURL({ dynamic: true }),
-                    response.data.profile.description,
-                    pronoun,
-                    response.data.profile.birthday,
-                    msg.author.createdAt,
-                    response.data.profile.gender,
-                    response.data.profile.country,
-                    response.data.profile.rank,
-                    response.data.profile.languages,
-                    response.data.profile.email,
-                    response.data.profile.website,
-                    response.data.profile.twitter
-                )
-            }, error => sendProfile(msg.author.username, msg.author.avatarURL({ dynamic: true }), response.data.profile.description, pronoun, response.data.profile.birthday, msg.author.createdAt, response.data.profile.gender, response.data.profile.country, response.data.profile.rank, response.data.profile.languages, response.data.profile.email, response.data.profile.website, response.data.profile.twitter))
+            sendProfile(msg.author.username,
+                msg.author.avatarURL({ dynamic: true }),
+                response.data.profile.description,
+                response.data.profile.pronouns,
+                response.data.profile.birthday,
+                msg.author.createdAt,
+                response.data.profile.gender,
+                response.data.profile.country,
+                response.data.profile.rank,
+                response.data.profile.languages,
+                response.data.profile.email,
+                response.data.profile.website,
+                response.data.profile.twitter
+            )
         }, (error) => {
             // If error (which means person doesn't have a profile), return error
             if (error.response.status === 404) {
@@ -504,32 +493,21 @@ module.exports = {
                 "id": member.id
             }
         }).then((response) => {
-            axios({
-                "method": "GET",
-                "url": "https://pronoundb.org/api/v1/lookup",
-                "params": {
-                    "platform": "discord",
-                    "id": member.id
-                }
-            }).then(res => {
-                determinePronouns(res.data.pronouns)
-
-                sendProfile(
-                    member.username,
-                    member.avatarURL({ dynamic: true }),
-                    response.data.profile.description,
-                    pronoun,
-                    response.data.profile.birthday,
-                    member.createdAt,
-                    response.data.profile.gender,
-                    response.data.profile.country,
-                    response.data.profile.rank,
-                    response.data.profile.languages,
-                    response.data.profile.email,
-                    response.data.profile.website,
-                    response.data.profile.twitter
-                )
-            }, error => sendProfile(member.username, member.avatarURL({ dynamic: true }), response.data.profile.description, pronoun, response.data.profile.birthday, member.createdAt, response.data.profile.gender, response.data.profile.country, response.data.profile.rank, response.data.profile.languages, response.data.profile.email, response.data.profile.website, response.data.profile.twitter))
+            sendProfile(
+                member.username,
+                member.avatarURL({ dynamic: true }),
+                response.data.profile.description,
+                response.data.profile.pronouns,
+                response.data.profile.birthday,
+                member.createdAt,
+                response.data.profile.gender,
+                response.data.profile.country,
+                response.data.profile.rank,
+                response.data.profile.languages,
+                response.data.profile.email,
+                response.data.profile.website,
+                response.data.profile.twitter
+            )
         }, (error) => {
             if (error.response.status === 404) {
                 embed.setTitle("Profile command: error");
