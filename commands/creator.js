@@ -1,14 +1,3 @@
-/*
-	This was made a while ago back before the profile system. I will probably rework this to be similar to the profile command but only show my profile
-	Current implementation uses the old "API" that was just a static JSON file hosted along-side https://exerra.xyz using Vercel. The "api.exerra.xyz" has been changed from that to my actual API and now the command is broken.
-
-	- Exerra 2021-12-28
- */
-
-
-
-
-
 const Discord = require('discord.js')
 const fetch = require('node-fetch')
 
