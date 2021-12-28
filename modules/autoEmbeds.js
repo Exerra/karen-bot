@@ -69,7 +69,7 @@ const autoEmbeds = (msg) => {
         } else {
             embed.addField(aname, data.album.artists[0].name)
         }
-        embed.addField('Release Date', data.album.release_date + '\n(Year-Month-Day)', true)
+        embed.addField('Release Date', `<t:${Date.parse(response.tracks.items[0].album.release_date) / 1000}:D>`, true)
         embed.setTimestamp()
         embed.setFooter(`Triggered by ${msg.author.username}`, msg.author.avatarURL({ dynamic: true }))
         msg.delete()
