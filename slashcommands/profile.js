@@ -130,7 +130,7 @@ module.exports = {
      * @param {string} website - Users website (domain)
      * @param {string} twitter - Users twitter handle
      */
-    const sendProfile = (username, avatarURL, description, pronouns, birthday, createdAt, gender, country, rank, languages, email, website, twitter) => {
+    const sendProfile = (username, avatarURL, description, pronouns, birthday, createdAt, gender, country, rank, languages, email, website, twitter, id) => {
         // Variable to check how much fields the top line has
         // Useful for adding spacers
         let topLineFieldAmount = 0
@@ -140,9 +140,9 @@ module.exports = {
         embed.addField("Description", description)
 
         // Adds the contact info fields
-        if (!empty(website)) embed.addField('Website', `[${website.replace(/(^\w+:|^)\/\//, '')}](${website} '${author.username}'s website')`, true); topLineFieldAmount++
+        if (!empty(website)) embed.addField('Website', `[${website.replace(/(^\w+:|^)\/\//, '')}](${website} '${username}'s website')`, true); topLineFieldAmount++
         if (!empty(email)) embed.addField('Email', `[${email}](mailto:${email})`, true); topLineFieldAmount++
-        if (!empty(twitter)) embed.addField('Twitter', `[@${twitter}](https://twitter.com/${twitter} '${author.username}'s twitter')`, true); topLineFieldAmount++
+        if (!empty(twitter)) embed.addField('Twitter', `[@${twitter}](https://twitter.com/${twitter} '${username}'s twitter')`, true); topLineFieldAmount++
         // Switch statement to determine how much spacers to use
         // If topLineFieldAmount is 0 (aka no contact fields), then do nothing
         // If it is 1, then add 2 spacers
@@ -172,12 +172,15 @@ module.exports = {
         embed.addField("Country", country, true)
 
         embed.addField("Languages", languages, true);
-        if (rank != "") embed.addField("Flowered?", rank, true);
+        if (rank != "") embed.setAuthor("Flowered", "https://cdn.exerra.xyz/png/discord/cherry_36x36.png")
         embed.addField('\u200B', '\u200B', true)
 
         //embed.addField(`Account created at`, createdAt)
         embed.setFooter(`Account created at`)
         embed.setTimestamp(createdAt)
+
+        if (id == client.config.trueOwner) embed.setAuthor("Karen Bot developer", "https://cdn.exerra.xyz/png/discord/verified-bot-developer.png")
+
         client.api.interactions(interaction.id, interaction.token).callback.post({data: {
             type: 4,
             data: {
@@ -206,7 +209,8 @@ module.exports = {
             }
         }).then((response) => {
             // If success, return profile
-            sendProfile(author.username,
+            sendProfile(
+                author.username,
                 author.avatarURL({ dynamic: true }),
                 response.data.profile.description,
                 response.data.profile.pronouns,
@@ -218,7 +222,8 @@ module.exports = {
                 response.data.profile.languages,
                 response.data.profile.email,
                 response.data.profile.website,
-                response.data.profile.twitter
+                response.data.profile.twitter,
+                author.id
             )
         }, (error) => {
             // If error (which means person doesn't have a profile), return error
@@ -273,7 +278,8 @@ module.exports = {
                 response.data.profile.languages,
                 response.data.profile.email,
                 response.data.profile.website,
-                response.data.profile.twitter
+                response.data.profile.twitter,
+                member.id
             )
         }, (error) => {
             if (error.response.status === 404) {

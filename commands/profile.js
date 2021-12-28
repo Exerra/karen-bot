@@ -123,7 +123,7 @@ module.exports = {
      * @param {string} website - Users website (domain)
      * @param {string} twitter - Users twitter handle
      */
-    const sendProfile = (username, avatarURL, description, pronouns, birthday, createdAt, gender, country, rank, languages, email, website, twitter) => {
+    const sendProfile = (username, avatarURL, description, pronouns, birthday, createdAt, gender, country, rank, languages, email, website, twitter, id) => {
         // Variable to check how much fields the top line has
         // Useful for adding spacers
         let topLineFieldAmount = 0
@@ -166,12 +166,14 @@ module.exports = {
         embed.addField("Country", country, true)
 
         embed.addField("Languages", languages, true);
-        if (rank != "") embed.addField("Flowered?", rank, true);
+        if (rank != "") embed.setAuthor("Flowered", "https://cdn.exerra.xyz/png/discord/cherry_36x36.png")
         embed.addField('\u200B', '\u200B', true)
 
         //embed.addField(`Account created at`, createdAt)
         embed.setFooter(`Account created at`)
         embed.setTimestamp(createdAt)
+
+        if (msg.author.id == client.config.trueOwner) embed.setAuthor("Karen Bot developer", "https://cdn.exerra.xyz/png/discord/verified-bot-developer.png")
         msg.channel.send(embed)
     }
 
@@ -206,7 +208,8 @@ module.exports = {
                 response.data.profile.languages,
                 response.data.profile.email,
                 response.data.profile.website,
-                response.data.profile.twitter
+                response.data.profile.twitter,
+                msg.author.id
             )
         }, (error) => {
             // If error (which means person doesn't have a profile), return error
@@ -506,7 +509,8 @@ module.exports = {
                 response.data.profile.languages,
                 response.data.profile.email,
                 response.data.profile.website,
-                response.data.profile.twitter
+                response.data.profile.twitter,
+                member.id
             )
         }, (error) => {
             if (error.response.status === 404) {
