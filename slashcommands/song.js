@@ -71,7 +71,7 @@ module.exports = {
               embed.addField(aname, response.tracks.items[0].album.artists[0].name)
           }
 
-          embed.addField('Release Date', response.tracks.items[0].album.release_date + '\n(Year-Month-Day)', true)
+          embed.addField('Release Date', `<t:${Date.parse(response.tracks.items[0].album.release_date) / 1000}:D>`, true)
           embed.setTimestamp()
           
           client.api.interactions(interaction.id, interaction.token).callback.post({data: {
