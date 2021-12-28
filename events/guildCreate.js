@@ -14,7 +14,6 @@ module.exports = async (client, guild) => {
 		.then((members) =>
 			members.forEach((member) => {
 				let user = member.user
-				console.log(`${user.username} - ${user.id}`)
 				axios({
 					"method": "GET",
 					"url": `${process.env.API_SERVER}/karen/profile/`,
