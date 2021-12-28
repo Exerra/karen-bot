@@ -38,6 +38,13 @@ module.exports = client => {
         return (this.length > n) ? this.substr(0, n-3) + '...' : this;
     };
 
+    String.prototype.isEmpty = function() {
+        if (typeof this == 'undefined' || !this || this.length === 0 || this === "" || !/[^\s]/.test(this) || /^\s*$/.test(this) || this.replace(/\s/g,"") === "")
+            return true;
+        else
+            return false;
+    }
+
     client.code = (lang, contents) => {
         return `${'```'}${lang}\n${contents}${'\n```'}`
     }
