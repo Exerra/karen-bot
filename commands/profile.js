@@ -173,7 +173,7 @@ module.exports = {
         embed.setFooter(`Account created at`)
         embed.setTimestamp(createdAt)
 
-        if (msg.author.id == client.config.trueOwner) embed.setAuthor("Karen Bot developer", "https://cdn.exerra.xyz/png/discord/verified-bot-developer.png")
+        if (id === client.config.trueOwner) embed.setAuthor("Karen Bot developer", "https://cdn.exerra.xyz/png/discord/verified-bot-developer.png")
         msg.channel.send(embed)
     }
 
