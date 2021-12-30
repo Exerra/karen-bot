@@ -19,12 +19,6 @@ Too bad! Karen, unlike literally 97% of all Discord bots does not care about you
 
 [Profile viewer](https://check.exerra.xyz)
 
-## Commit etiquette
-
-* Push small commits (e.g If you changed 2 directories, commit one directory, then commit the other directory and only THEN push)
-* Keep commit titles short and then explain them in the description of the commit.
-* **DO NOT PUSH TO MASTER BRANCH!** Push to a new branch (e.g username-whatyouchanged and create a PR)
-
 ## Setup instructions
 Setup instructions can be viewed at [docs.karen.exerra.xyz/#/development/setupguide](https://docs.karen.exerra.xyz/#/development/setupguide)
 
