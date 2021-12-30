@@ -2,20 +2,12 @@
   <img src="readme.svg">
 </p>
 
-<a href="https://status.exerra.xyz" id="freshstatus-badge-root" data-banner-style="compact">
-  <img src="https://public-api.freshstatus.io/v1/public/badge.svg/?badge=0b9b52df-6e1d-4d16-b836-5595b35bcef8" />
-</a>
-
-![Guilds](https://img.shields.io/badge/dynamic/json?color=success&label=Guilds&query=servercount&url=https%3A%2F%2Fcdn.exerra.xyz%2Fkaren%2Fstats%2F)
-![Users](https://img.shields.io/badge/dynamic/json?color=success&label=Users&query=users&url=https%3A%2F%2Fcdn.exerra.xyz%2Fkaren%2Fstats%2F)
-![DiscordJS version](https://img.shields.io/badge/dynamic/json?color=informational&label=DiscordJS&prefix=v&query=DiscordJS&url=https%3A%2F%2Fcdn.exerra.xyz%2Fkaren%2Fstats%2F)
 ![License](https://img.shields.io/github/license/exerra-discord/karen-bot)
-
 ![Repository size](https://img.shields.io/github/repo-size/exerra-discord/karen-bot)
 
-Karen Bot is a multi-purpose bot
+Enjoy being treated nicely?
 
-TODO: finish readme later
+Too bad! Karen, unlike literally 97% of all Discord bots does not care about your stupid little feelings.
 
 ## Links
 
@@ -25,7 +17,7 @@ TODO: finish readme later
 
 [Status page](https://status.exerra.xyz)
 
-[Invite link](https://discord.com/oauth2/authorize?client_id=599289687743397889&scope=applications.commands%20bot&permissions=8)
+[Profile viewer](https://check.exerra.xyz)
 
 ## Commit etiquette
 
