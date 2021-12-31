@@ -22,16 +22,14 @@ module.exports = {
     var member = guild.members.cache.find(user => user.id === interaction.member.user.id)
     var member2 = client.users.cache.find(user => user.id === interaction.member.user.id)
 
-    if (!member.kickable) {
-      client.api.interactions(interaction.id, interaction.token).callback.post({data: {
-          type: 4,
-          data: {
-            content: 'You fucking imbecile.\nYou dared to type this command. Shame on you. Wheres your manager? Where is he?\n\nOh so now your manager isn\'t here somehow. Let me tell you something sweetie, managers *have* to be in work managing the store, so you\'re lying. Your bitch ass ding dong brain really lied. I will tell the CEO of this! I know him1!!!',
-            flags: 64
-          }
-        }})
-      return
-    }
+	  client.api.interactions(interaction.id, interaction.token).callback.post({data: {
+	      type: 4,
+	      data: {
+	        content: 'You fucking imbecile.\nYou dared to type this command. Shame on you. Wheres your manager? Where is he?\n\nOh so now your manager isn\'t here somehow. Let me tell you something sweetie, managers *have* to be in work managing the store, so you\'re lying. Your bitch ass ding dong brain really lied. I will tell the CEO of this! I know him1!!!',
+	        flags: 64
+	      }
+	    }})
+	  return
 
     member2.send(`fuck you. thats what you get you devil! REPEL THE DEMONS! UNBLOW!!! YOU ARE DESTROYED FOREVER!!! AND YOU WILL NEVER BE BACK!!!! thank you god... let it happen... cause it to happen`).catch(() => ignoreError())
     member2.send('https://cdn.exerra.xyz/png/kenneth_copeland.png').catch(() => ignoreError())
