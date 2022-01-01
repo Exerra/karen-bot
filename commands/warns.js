@@ -48,6 +48,7 @@ module.exports = {
                     **Date:** ${new Date(warns[i].date).toISOString().substring(0, 10)}`
                 )
             }
+
             warnEmbed.setFooter(`Showing ${warns.length > 5 ? 5 : warns.length}/${warns.length} warns`)
 
             let button = new disbut.MessageButton()
