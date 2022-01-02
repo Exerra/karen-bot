@@ -22,6 +22,7 @@ jobs:
           SPOTIFY_SECRET: ${{ secrets.SPOTIFY_SECRET }}
           GENIUS_ACCESSTOKEN: ${{ secrets.GENIUS_ACCESSTOKEN }}
           NSFAI_KEY: ${{ secrets.NSFAI_KEY }}
+          RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
 
           # API stuff
           API_SERVER: ${{ secrets.API_SERVER }}
@@ -42,6 +43,7 @@ jobs:
           echo "SPOTIFY_SECRET=$SPOTIFY_SECRET" >> .env
           echo "GENIUS_ACCESSTOKEN=$GENIUS_ACCESSTOKEN" >> .env
           echo "NSFAI_KEY=$NSFAI_KEY" >> .env
+          echo "RAPIDAPI_KEY=$RAPIDAPI_KEY" >> .env
           echo "API_SERVER=$API_SERVER" >> .env
           echo "AUTH_B64=$AUTH_B64" >> .env
           echo "AUTH_USER=$AUTH_USER" >> .env
