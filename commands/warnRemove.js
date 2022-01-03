@@ -69,7 +69,7 @@ module.exports = {
                 .setThumbnail(member.user.avatarURL())
                 .setTimestamp(new Date())
                 .addField("Moderator", `<@${msg.author.id}>`)
-                .addField("Warn ID", res.data.warnID)
+                .addField("Warn ID", args[1])
 
             modLogChannelConst.send({ embed: warnEmbed });
         }).catch(err => {

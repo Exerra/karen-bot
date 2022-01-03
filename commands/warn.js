@@ -52,6 +52,19 @@ module.exports = {
 				}
 			}).then(res => {
 				msg.react("✅")
+				if (settingsmap.get(member.guild.id).modLogEnabled == false) return
+
+				const modLogChannelConst = member.guild.channels.cache.get(settingsmap.get(member.guild.id).modLogChannel);
+				if (!modLogChannelConst) return
+
+				const warnEmbed = new Discord.MessageEmbed()
+					.setColor(config.color)
+					.setTitle("Warn removed")
+					.setDescription(`A warn for <@${member.id}> has been removed`)
+					.setThumbnail(member.user.avatarURL())
+					.setTimestamp(new Date())
+					.addField("Moderator", `<@${msg.author.id}>`)
+					.addField("Warn ID", args[1])
 			}).catch(err => {
 				msg.react("⛔")
 				if (err.response.status == 404) msg.lineReply("That warn doesnt exist stupid ass bitch ass")
