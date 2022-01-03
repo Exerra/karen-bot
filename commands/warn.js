@@ -66,6 +66,55 @@ module.exports = {
 		// actual warn section
 		if (msg.member.hasPermission('KICK_MEMBERS') || allowedToUse) {
 
+			if (member.id == client.user.id) {
+				axios({
+					"method": "POST",
+					"url": `${process.env.API_SERVER}/karen/warn`,
+					"headers": {
+						"Authorization": process.env.AUTH_B64,
+						"Content-Type": "application/json; charset=utf-8",
+						'User-Agent': process.env.AUTH_USERAGENT
+					},
+					"auth": {
+						"username": process.env.AUTH_USER,
+						"password": process.env.AUTH_PASS
+					},
+					"data": {
+						id: msg.author.id,
+						guild: msg.guild.id,
+						reason: "Trying to warn the mighty Karen",
+						date: new Date(),
+						moderator: client.user.id
+					}
+				}).then(res => {
+					let user = res.data
+					msg.react("✅")
+
+
+					if (settingsmap.get(msg.guild.id).modLogEnabled == false) return
+
+					const modLogChannelConst = msg.guild.channels.cache.get(settingsmap.get(msg.guild.id).modLogChannel);
+					if (!modLogChannelConst) return
+
+					const warnEmbed = new Discord.MessageEmbed()
+						.setColor(config.color)
+						.setTitle("Member warned")
+						.setDescription(`<@${msg.author.id}> has been warned`)
+						.setThumbnail(msg.author.avatarURL())
+						.setTimestamp(new Date())
+						.addField("Reason", "Trying to warn the mighty Karen")
+						.addField("Moderator", `<@${client.user.id}>`)
+						.addField("Warn ID", res.data.warnID)
+
+					modLogChannelConst.send({ embed: warnEmbed });
+				}).catch(err => {
+					console.log(err)
+					msg.react("⛔")
+					msg.channel.send("The API returned an error. Now shoo, try again later")
+				})
+				return
+			}
+
 			if (msg.guild.members.cache.get(msg.author.id).roles.highest.comparePositionTo(member.roles.highest) < 0 && !allowedToUse) return msg.lineReply("employees cannot warn their own managers you half brained imbecile")
 
 			if (member.id == client.user.id && !allowedToUse) return msg.lineReply("fuck off bitch")
