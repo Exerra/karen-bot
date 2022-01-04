@@ -266,6 +266,7 @@ client.on('message', async msg => {
 	}
 
 	const annoyCookies = () => {
+	return
 
 		if (msg.author.id != "817581327095693315") return
 
