@@ -71,12 +71,16 @@ module.exports = (client, guild) => {
 
   // For each command, create a slash command
   for(const command of slashCommandsArr) {
+    let data = {
+      name: command.name,
+      description: command.description,
+      options: command.options
+    }
+
+    if (command.type != undefined) data.type = command.type
+
     //                                            Only used for testing
-    client.api.applications(client.user.id)/* .guilds('701064832136249355') */.commands.post({data: {
-      "name": command.name,
-      "description": command.description,
-      "options": command.options
-    }})
+    client.api.applications(client.user.id)/* .guilds('701064832136249355') */.commands.post({data: data})
   }
 
   // When a slash command is triggered
