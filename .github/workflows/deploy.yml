@@ -36,6 +36,10 @@ jobs:
           REGULAR_WEBHOOK: ${{ secrets.REGULAR_WEBHOOK }}
           IFTTT_WEBHOOK: ${{ secrets.IFTTT_WEBHOOK }}
           SHARD_WEBHOOK: ${{ secrets.SHARD_WEBHOOK }}
+          AZURE_TRANSLATOR_KEY1: ${{ secrets.AZURE_TRANSLATOR_KEY1 }}
+          AZURE_TRANSLATOR_KEY2: ${{ secrets.AZURE_TRANSLATOR_KEY2 }}
+          AZURE_TRANSLATOR_REGION: ${{ secrets.AZURE_TRANSLATOR_REGION }}
+          AZURE_TRANSLATOR_TEXTENDPOINT: ${{ secrets.AZURE_TRANSLATOR_TEXTENDPOINT }}
 
         run: |
           echo "DISCORD_TOKEN=$DISCORD_TOKEN" >> .env
@@ -54,6 +58,10 @@ jobs:
           echo "IFTTT_WEBHOOK=$IFTTT_WEBHOOK" >> .env
           echo "SHARD_WEBHOOK=$SHARD_WEBHOOK" >> .env
           echo "APIACCESS=true" >> .env
+          echo "AZURE_TRANSLATOR_KEY1=$AZURE_TRANSLATOR_KEY1" >> .env
+          echo "AZURE_TRANSLATOR_KEY2=$AZURE_TRANSLATOR_KEY2" >> .env
+          echo "AZURE_TRANSLATOR_REGION=$AZURE_TRANSLATOR_REGION" >> .env
+          echo "AZURE_TRANSLATOR_TEXTENDPOINT=$AZURE_TRANSLATOR_TEXTENDPOINT" >> .env
         #  echo "NODE_TLS_REJECT_UNAUTHORIZED=0" >> .env
       
       - name: Install dependancies
