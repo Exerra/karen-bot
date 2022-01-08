@@ -60,4 +60,4 @@ jobs:
         run: yarn
       
       - name: Run karen-bot
-        run: pm2 stop karen-bot-gh && pm2 start app.js --name karen-bot-gh
+        run: pm2 stop krn-bot-gh && pm2 start app.js --name krn-bot-gh
