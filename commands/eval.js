@@ -50,7 +50,7 @@ module.exports = {
 			fail = true
 		}
 		if (result.length > 1024 && result.length < 80000) {
-			hastebin(result, { extension: lang.extension, url: 'https://paste.exerra.xyz'} ).then(haste => msg.channel.send(`Result was too big: ` + haste))
+			hastebin(result, { extension: lang.extension, url: "https://paste.exerra.xyz"} ).then(haste => msg.channel.send(`Result was too big: ` + haste))
 		} else if(result.length > 80000) {
 			msg.channel.send(`I was going to send this in a hastebin, but the result is over 80,000 characters!`)
 		} else {
