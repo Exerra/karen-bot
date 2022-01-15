@@ -160,7 +160,15 @@ client.on('message', async msg => {
 	for (let i in config.trolls) {
 		let troll = config.trolls[i]
 
-		if (msg.content.includes(troll.content)) {
+		if (msg.content.toLowerCase().includes(troll.content)) {
+			if (troll.guildID == undefined) {
+				if (troll.id == "") msg.lineReply(troll.reply)
+				else if (msg.author.id == troll.id) msg.lineReply(troll.reply)
+				return
+			}
+
+			if (troll.guildID != msg.guild.id) return
+
 			if (troll.id == "") msg.lineReply(troll.reply)
 			else if (msg.author.id == troll.id) msg.lineReply(troll.reply)
 		}
