@@ -14,7 +14,7 @@ module.exports = {
     if (args[0] == null) msg.channel.send("You need to have something to say. >w<")
 
 
-    if (msg.content.match(/[0-9]{18}/)) {
+    if (msg.content.match(/<@[0-9]{18}?>/) || msg.content.match(/@everyone/)) {
       axios({
         "method": "POST",
         "url": `${process.env.API_SERVER}/karen/warn`,
