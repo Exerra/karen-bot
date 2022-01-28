@@ -53,6 +53,8 @@ module.exports = {
             .addField("Warn ID", res.data.warnID)
 
         modLogChannelConst.send({ embed: warnEmbed });
+
+        return
       })
     }
 
