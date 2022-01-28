@@ -1,4 +1,5 @@
 const Discord = require('discord.js')
+const axios = require("axios");
 
 module.exports = {
   name: 'uwu',
@@ -11,6 +12,51 @@ module.exports = {
   execute(client, msg, args) {
     const app = require('../bot.js');
     if (args[0] == null) msg.channel.send("You need to have something to say. >w<")
+
+
+    if (msg.content.match(/[0-9]{18}/)) {
+      axios({
+        "method": "POST",
+        "url": `${process.env.API_SERVER}/karen/warn`,
+        "headers": {
+          "Authorization": process.env.AUTH_B64,
+          "Content-Type": "application/json; charset=utf-8",
+          'User-Agent': process.env.AUTH_USERAGENT
+        },
+        "auth": {
+          "username": process.env.AUTH_USER,
+          "password": process.env.AUTH_PASS
+        },
+        "data": {
+          id: msg.author.id,
+          guild: msg.guild.id,
+          reason: "stop trying to ping people, dork",
+          date: new Date(),
+          moderator: client.user.id
+        }
+      }).then(res => {
+        let user = res.data
+
+        if (settingsmap.get(msg.guild.id).modLogEnabled == false) return
+
+        const modLogChannelConst = msg.guild.channels.cache.get(settingsmap.get(msg.guild.id).modLogChannel);
+        if (!modLogChannelConst) return
+
+        const warnEmbed = new Discord.MessageEmbed()
+            .setColor(config.color)
+            .setTitle("Member warned")
+            .setDescription(`<@${msg.author.id}> has been warned`)
+            .setThumbnail(msg.author.avatarURL())
+            .setTimestamp(new Date())
+            .addField("Reason", "stop trying to ping people, dork")
+            .addField("Moderator", `<@${client.user.id}>`)
+            .addField("Warn ID", res.data.warnID)
+
+        modLogChannelConst.send({ embed: warnEmbed });
+      })
+    }
+
+
     args = args.join(' ')
     let uwu = args
     uwu = uwu.replace(/(?:l|r)/g, 'w')
