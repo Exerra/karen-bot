@@ -1,5 +1,6 @@
 const Discord = require('discord.js')
 const axios = require("axios");
+const app = require("../bot.js");
 
 module.exports = {
   name: 'uwu',
@@ -11,6 +12,7 @@ module.exports = {
   aliases: ['uwuify', 'uwu-ify'],
   execute(client, msg, args) {
     const app = require('../bot.js');
+    let config = app.config;
     if (args[0] == null) msg.channel.send("You need to have something to say. >w<")
 
 
