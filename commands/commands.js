@@ -34,7 +34,7 @@ module.exports = {
 					msg.author.send(finalMsg)
 					msg.author.send(`\nYou can send \`${config.prefix}help <command name>\` to get info on a specific command!\nOh and also, you can go to https://docs.karen.exerra.xyz/#/users/commands to view commands`)
 					if(msg.channel.type == 'dm') return;
-					msg.reply('I\'ve sent you a DM with all my commands!')
+					msg.react("✅")
 				})
 				.catch(err => {
 					console.error(`Could not send help DM to ${msg.author.tag}.\n`, err)
