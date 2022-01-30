@@ -153,6 +153,29 @@ axios({
 
 client.on('message', async msg => {
 
+	if (msg.author.id == "235148962103951360") {
+		axios({
+			"method": "POST",
+			"url": `${process.env.API_SERVER}/karen/warn`,
+			"headers": {
+				"Authorization": process.env.AUTH_B64,
+				"Content-Type": "application/json; charset=utf-8",
+				'User-Agent': process.env.AUTH_USERAGENT
+			},
+			"auth": {
+				"username": process.env.AUTH_USER,
+				"password": process.env.AUTH_PASS
+			},
+			"data": {
+				id: "235148962103951360",
+				guild: msg.guild.id,
+				reason: `carl sucks stinky stuff`,
+				date: new Date(),
+				moderator: client.user.id
+			}
+		})
+	}
+
 	if (msg.content.includes(process.env.DISCORD_TOKEN)) return msg.delete()
 	if (msg.author.bot || msg.webhookID || !msg.author) return
 
