@@ -161,6 +161,7 @@ client.on('message', async msg => {
 	let argsWithPrefix = msg.content.split(/\s+/)
 
 	argsWithPrefix.forEach(d => {
+		return
 		if (!isURL(d)) return
 		if (!isScam(d)) return
 
