@@ -160,7 +160,7 @@ client.on('message', async msg => {
 
 	let argsWithoutPrefix = msg.content.split(/\s+/)
 
-	for (let o of argsWithoutPrefix) {
+	for (let d of argsWithoutPrefix) {
 		if (await !isURL(d)) return
 		let scam = await isScam(d)
 		if (!scam) return
