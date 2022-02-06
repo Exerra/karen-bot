@@ -160,10 +160,10 @@ client.on('message', async msg => {
 
 	let argsWithPrefix = msg.content.split(/\s+/)
 
-	argsWithPrefix.forEach(d => {
-		return
-		if (!isURL(d)) return
-		if (!isScam(d)) return
+	argsWithPrefix.forEach(async d => {
+		if (await !isURL(d)) return
+		let scam = await isScam(d)
+		if (!scam) return
 
 		msg.delete()
 		serverFunc.warn(msg.author.id, msg.guild.id, "Sending phishing links, nerd", client.user.id)

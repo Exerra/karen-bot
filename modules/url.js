@@ -7,7 +7,7 @@
 const axios = require("axios");
 const isURL = (str) => {
 	let regex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*)/
-	if (!str.match(regex)) return false
+	if (!regex.test(str)) return false
 	try {
 		new URL(str)
 		return true
@@ -28,7 +28,7 @@ const isScam = async (url) => {
 		}
 	})
 
-	return (data.status = 200 ? true : false)
+	return data.data.isScam
 }
 
 exports.isURL = isURL
