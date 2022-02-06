@@ -45,7 +45,7 @@ module.exports = {
                     `${warns[i].id}`,
                     `**Reason:** ${warns[i].reason}
                     **Moderator:** <@${warns[i].moderator}>${args[1] == "all" ? `\n**Guild:** ${warns[i].guild}` : ""}
-                    **Date:** ${new Date(warns[i].date).toISOString().substring(0, 10)}`
+                    **Date:** <t:${Math.floor(new Date(warns[i].date).getTime() / 1000)}>`
                 )
             }
 
