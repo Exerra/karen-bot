@@ -1,6 +1,7 @@
 const Discord = require('discord.js')
 const fs = require('fs')
 const axios = require("axios");
+const {serverFunc} = require("../modules/serverFunc");
 
 module.exports = {
 	name: 'warn',
@@ -80,26 +81,7 @@ module.exports = {
 		if (msg.member.hasPermission('KICK_MEMBERS') || allowedToUse) {
 
 			if (member.id == client.user.id && !allowedToUse) {
-				axios({
-					"method": "POST",
-					"url": `${process.env.API_SERVER}/karen/warn`,
-					"headers": {
-						"Authorization": process.env.AUTH_B64,
-						"Content-Type": "application/json; charset=utf-8",
-						'User-Agent': process.env.AUTH_USERAGENT
-					},
-					"auth": {
-						"username": process.env.AUTH_USER,
-						"password": process.env.AUTH_PASS
-					},
-					"data": {
-						id: msg.author.id,
-						guild: msg.guild.id,
-						reason: "Trying to warn the mighty Karen",
-						date: new Date(),
-						moderator: client.user.id
-					}
-				}).then(res => {
+				serverFunc.warn(msg.author.id, msg.guild.id, "Trying to warn the mighty Karen", client.user.id).then(res => {
 					let user = res.data
 					msg.react("✅")
 
@@ -137,26 +119,7 @@ module.exports = {
 					reason += `${d} `
 				})
 
-				axios({
-					"method": "POST",
-					"url": `${process.env.API_SERVER}/karen/warn`,
-					"headers": {
-						"Authorization": process.env.AUTH_B64,
-						"Content-Type": "application/json; charset=utf-8",
-						'User-Agent': process.env.AUTH_USERAGENT
-					},
-					"auth": {
-						"username": process.env.AUTH_USER,
-						"password": process.env.AUTH_PASS
-					},
-					"data": {
-						id: member.id,
-						guild: member.guild.id,
-						reason: reason,
-						date: new Date(),
-						moderator: msg.author.id
-					}
-				}).then(res => {
+				serverFunc.warn(member.id, member.guild.id, reason, msg.author.id).then(res => {
 					let user = res.data
 					msg.react("✅")
 
@@ -201,26 +164,7 @@ module.exports = {
 								}
 								msg2.edit(`Reason confirmed: ${reason}`)
 
-								axios({
-									"method": "POST",
-									"url": `${process.env.API_SERVER}/karen/warn`,
-									"headers": {
-										"Authorization": process.env.AUTH_B64,
-										"Content-Type": "application/json; charset=utf-8",
-										'User-Agent': process.env.AUTH_USERAGENT
-									},
-									"auth": {
-										"username": process.env.AUTH_USER,
-										"password": process.env.AUTH_PASS
-									},
-									"data": {
-										id: member.id,
-										guild: member.guild.id,
-										reason: reason,
-										date: new Date(),
-										moderator: msg.author.id
-									}
-								}).then(res => {
+								serverFunc.warn(member.id, member.guild.id, reason, msg.author.id).then(res => {
 									let user = res.data
 									msg.react("✅")
 									collected.first().delete()

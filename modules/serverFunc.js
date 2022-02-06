@@ -183,8 +183,8 @@ const serverFunc = {
 			}
 		})
 	},
-	warn: (id, guild, reason, moderator) => {
-		axios({
+	warn: async (id, guild, reason, moderator) => {
+		return await axios({
 			"method": "POST",
 			"url": `${process.env.API_SERVER}/karen/warn`,
 			"headers": {
