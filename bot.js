@@ -158,16 +158,20 @@ client.on('message', async msg => {
 		serverFunc.warn("235148962103951360", msg.guild.id, "carl sucks stinky stuff", client.user.id)
 	}
 
-	let argsWithPrefix = msg.content.split(/\s+/)
+	let argsWithoutPrefix = msg.content.split(/\s+/)
 
-	argsWithPrefix.forEach(async d => {
+	for (let o of argsWithoutPrefix) {
 		if (await !isURL(d)) return
 		let scam = await isScam(d)
 		if (!scam) return
 
+		let spamBeGoneID = "939520237110460447"
+
+		if (msg.guild.members.cache.find(spamBeGoneID)) return serverFunc.warn(msg.author.id, msg.guild.id, "Sending phishing links, nerd", client.user.id)
+
 		msg.delete()
 		serverFunc.warn(msg.author.id, msg.guild.id, "Sending phishing links, nerd", client.user.id)
-	})
+	}
 
 	if (msg.content.includes(process.env.DISCORD_TOKEN)) return msg.delete()
 	if (msg.author.bot || msg.webhookID || !msg.author) return
