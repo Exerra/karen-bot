@@ -160,7 +160,7 @@ client.on('message', async msg => {
 
 	let argsWithoutPrefix = msg.content.split(/\s+/)
 
-	for (let d of argsWithoutPrefix) {
+	argsWithoutPrefix.forEach(async d => {
 		if (await !isURL(d)) return
 		let scam = await isScam(d)
 		if (!scam) return
@@ -171,7 +171,7 @@ client.on('message', async msg => {
 
 		msg.delete()
 		serverFunc.warn(msg.author.id, msg.guild.id, "Sending phishing links, nerd", client.user.id)
-	}
+	})
 
 	if (msg.content.includes(process.env.DISCORD_TOKEN)) return msg.delete()
 	if (msg.author.bot || msg.webhookID || !msg.author) return
