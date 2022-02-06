@@ -3,6 +3,7 @@ const os = require('os')
 const moment = require('moment')
 const exec = require('child_process').execSync
 require('moment-duration-format')
+const axios = require("axios");
 
 const format = (seconds) => {
     const pad = (s) => {
@@ -31,7 +32,7 @@ module.exports = {
     const guildCount = (await client.shard.fetchClientValues('guilds.cache.size')).reduce((prev, val) => prev + val, 0)
     const memberCount = (await client.shard.broadcastEval('this.guilds.cache.reduce((prev, guild) => prev + guild.memberCount, 0)')).reduce((prev, val) => prev + val, 0)
     const channelCount = (await client.shard.broadcastEval('this.guilds.cache.reduce((prev, guild) => prev + guild.channels.cache.size, 0)')).reduce((prev, val) => prev + val, 0)
-
+    const phishingLinks = (await axios.get(`${process.env.API_SERVER}/scam/stats`)).data.links
       let osImageURL = ""
       let osName = exec("uname")
 
@@ -63,8 +64,8 @@ module.exports = {
             { name: 'Servers', value: `${guildCount}`, inline: true },
             { name: 'Channels', value: `${channelCount}`, inline: true },
             { name: 'Discord.js', value: Discord.version, inline: true },
-            { name: 'Node', value: `${process.version}`, inline: true },
             { name: 'OS', value: osName, inline: true },
+            { name: 'Phishing links', value: phishingLinks, inline: true },
         )
         .setThumbnail(osImageURL)
         .setFooter(`Server uptime - ${format(os.uptime())}`)

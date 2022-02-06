@@ -2,7 +2,7 @@
 const Discord = require('discord.js');
 const fs = require('fs');
 require('discord-reply');
-const client = new Discord.Client();
+const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
 const config = require("./config.json");
 const axios = require("axios");
 /* const ytdl = require('ytdl-core'); */
@@ -115,6 +115,7 @@ log(`${chalk.magenta('[Karen Bot]')} ${chalk.yellow('[Event]')} ${chalk.white("[
 if (process.env.APIACCESS !== "true") console.log(chalk.magenta('[Karen Bot]'), chalk.yellow(`[API]`), chalk.red('[Warn]'), `Without API access many features are disabled`)
 
 require('./server.js')
+const {isScam, isURL} = require("./modules/url");
 
 // Gets settings
 axios({
@@ -154,27 +155,18 @@ axios({
 client.on('message', async msg => {
 
 	if (msg.author.id == "235148962103951360") {
-		axios({
-			"method": "POST",
-			"url": `${process.env.API_SERVER}/karen/warn`,
-			"headers": {
-				"Authorization": process.env.AUTH_B64,
-				"Content-Type": "application/json; charset=utf-8",
-				'User-Agent': process.env.AUTH_USERAGENT
-			},
-			"auth": {
-				"username": process.env.AUTH_USER,
-				"password": process.env.AUTH_PASS
-			},
-			"data": {
-				id: "235148962103951360",
-				guild: msg.guild.id,
-				reason: `carl sucks stinky stuff`,
-				date: new Date(),
-				moderator: client.user.id
-			}
-		})
+		serverFunc.warn("235148962103951360", msg.guild.id, "carl sucks stinky stuff", client.user.id)
 	}
+
+	let argsWithPrefix = msg.content.split(/\s+/)
+
+	argsWithPrefix.forEach(d => {
+		if (!isURL(d)) return
+		if (!isScam(d)) return
+
+		msg.delete()
+		serverFunc.warn(msg.author.id, msg.guild.id, "Sending phishing links, nerd", client.user.id)
+	})
 
 	if (msg.content.includes(process.env.DISCORD_TOKEN)) return msg.delete()
 	if (msg.author.bot || msg.webhookID || !msg.author) return
@@ -296,77 +288,11 @@ client.on('message', async msg => {
 		}
 	}
 
-	const annoyCookies = () => {
-	return
-
-		if (msg.author.id != "817581327095693315") return
-
-		let args = msg.content.split(/\s+/)
-
-		for (let arg of args) {
-			if (arg.isURL()) {
-				let index = args.indexOf(arg);
-				if (index > -1) {
-					args.splice(index, 1);
-				}
-			}
-		}
-
-		if (args.length == 0) return
-
-		var options = {
-			method: 'POST',
-			url: 'https://jspell-checker.p.rapidapi.com/check',
-			headers: {
-				'content-type': 'application/json',
-				'x-rapidapi-host': 'jspell-checker.p.rapidapi.com',
-				'x-rapidapi-key': process.env.RAPIDAPI_KEY
-			},
-			data: {
-				language: 'enUS',
-				fieldvalues: args,
-				config: {
-					forceUpperCase: false,
-					ignoreIrregularCaps: false,
-					ignoreFirstCaps: true,
-					ignoreNumbers: true,
-					ignoreUpper: false,
-					ignoreDouble: false,
-					ignoreWordsWithNumbers: true
-				}
-			}
-		};
-
-		axios.request(options).then((response) => {
-			let data = response.data
-
-			if (data.spellingErrorCount === 0) return
-
-			let sentence = ""
-
-			for (let element of data.elements) {
-
-				if (element.errors.length == 0) {
-					sentence += `${args[element.id]} `
-					continue
-				}
-
-				sentence += `~~${args[element.id]}~~ ${element.errors[0].suggestions[0]} `
-			}
-
-			msg.lineReply(sentence)
-		})
-	}
-
 	if (msg.content.toLowerCase().startsWith(config.prefix)) executeCommand(config.prefix)
 	else if (settingsmap.get(msg.guild.id).guildPrefix !== "") {
 		if (msg.content.toLowerCase().startsWith(settingsmap.get(msg.guild.id).guildPrefix)) executeCommand(settingsmap.get(msg.guild.id).guildPrefix)
-                else annoyCookies()
-	} else {
-		annoyCookies()
 	}
 
-	var message = msg.content.toLowerCase();
 	config.badwords.forEach(function (value) {
 		if (msg.content.toLowerCase() == value) {
 			if (msg.author.permLevel >= 4) return;
@@ -377,7 +303,7 @@ client.on('message', async msg => {
 	});
 
 	// Literally the first lines of code in this project (back in 2019 or something). I find it funny how this has sorta became my "author check"
-	if (message === '> >run ping') {
+	if (msg.content.toLowerCase() === '> >run ping') {
 		msg.channel.send(`**Running Ping.exe...**`).then((msg) => {
 			setTimeout(() => {
 				msg.edit('**Running Ping.exe...**\n**Found subroutine named "Ping Pong"**').then((msg) => {

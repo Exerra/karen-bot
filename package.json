@@ -32,10 +32,12 @@
     "mkdirp": "^1.0.4",
     "moment": "^2.29.1",
     "moment-duration-format": "^2.3.2",
+    "nanospinner": "^1.0.0",
     "node-fetch": "^2.6.1",
     "node-spotify-api": "^1.1.1",
     "nsfai": "^2.0.0",
     "qrcode": "^1.4.4",
+    "toad-scheduler": "^1.6.0",
     "twitter": "^1.7.1",
     "uuid": "^8.3.2",
     "winston": "^3.3.3"
