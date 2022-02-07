@@ -2,13 +2,14 @@ const Discord = require('discord.js')
 let fs = require('fs');
 const axios = require('axios');
 const { settings } = require("cluster");
+const disbut = require("discord-buttons");
 require('dotenv').config()
 
 module.exports = {
   name: 'settings',
   description: 'Server settings',
   type: 'Settings',
-  execute(client, msg, args) {
+  async execute(client, msg, args) {
     const app = require('../bot.js');
     let config = app.config;
     // * filter for the followup question, basically makes sure the correct person can respond
@@ -51,6 +52,8 @@ module.exports = {
 
             if (settingsmap.get(msg.guild.id).brewSearch == false) settingsInfoEmbed.addField('BrewSearch', `Automatically sends an embed with brew.sh formulae info if triggered by {{formulae}}\n**Currently Disabled**`, true)
             else settingsInfoEmbed.addField('BrewSearch', `Automatically sends an embed with brew.sh formulae info if triggered by {{formulae}}\n**Currently Enabled**`, true)
+
+            settingsInfoEmbed.addField('Scam', `Blocks scam links\nCurrent setting: **${settingsmap.get(msg.guild.id).phishingAction}**`, true)
 
             // Empty, just like my emotions - Amelia
             settingsInfoEmbed.addField('\u200B', '\u200B', true)
@@ -351,6 +354,46 @@ module.exports = {
                             }
                         })
                 })
+            }
+
+            if (args[1].toLowerCase() == 'scam' && args[2] == undefined) {
+                const spamEmbed = new Discord.MessageEmbed()
+                    .setTitle("Scam block")
+                    .setColor(config.color)
+                    .setDescription("Pick what Karen Bot will do to scammers using the buttons down below.")
+                    .addField("Ban", "Karen will ban and warn the scammer.", true)
+                    .addField("Kick", "Karen will kick and warn the scammer.", true)
+                    .addField("Warn (default)", "Karen will just warn them.", true)
+                    .setFooter(`${(await axios.get(`${process.env.API_SERVER}/scam/stats`)).data.links} blocked links`)
+                    .setThumbnail("https://cdn.exerra.xyz/png/phishing.png")
+                    .setTimestamp()
+
+                let banButton = new disbut.MessageButton()
+                    .setStyle('red')
+                    .setLabel(`Ban`)
+                    .setID(`${msg.author.id}-settings-ban`)
+
+                let kickButton = new disbut.MessageButton()
+                    .setStyle("blurple")
+                    .setLabel(`Kick`)
+                    .setID(`${msg.author.id}-settings-kick`)
+
+                let warnButton = new disbut.MessageButton()
+                    .setStyle("green")
+                    .setLabel(`Warn`)
+                    .setID(`${msg.author.id}-settings-warn`)
+
+                client.api.channels(msg.channel.id).messages.post({
+                    data: {
+                        embeds: [spamEmbed],
+                        components: [
+                            {
+                                type: 1,
+                                components: [banButton, kickButton, warnButton]
+                            }
+                        ],
+                    }
+                });
             }
         }
     } else {

@@ -167,10 +167,102 @@ client.on('message', async msg => {
 
 		let spamBeGoneID = "939520237110460447"
 
-		if (msg.guild.members.cache.find(spamBeGoneID)) return serverFunc.warn(msg.author.id, msg.guild.id, "Sending phishing links, nerd", client.user.id)
+		if (msg.guild.members.cache.find(fn => fn.id == spamBeGoneID) != undefined) {
+			if (msg.guild.members.cache.find(fn => fn.id == spamBeGoneID).presence.status != "offline") return serverFunc.warn(msg.author.id, msg.guild.id, "Sending phishing links, nerd", client.user.id)
+		}
 
 		msg.delete()
-		serverFunc.warn(msg.author.id, msg.guild.id, "Sending phishing links, nerd", client.user.id)
+		let reason = "Sending phishing links"
+
+		let member = msg.guild.members.cache.get(msg.author.id)
+
+		let embed = {}
+
+		if (settingsmap.get(msg.guild.id).phishingAction == "kick") {
+			if (!member.kickable) return
+			await member.send(`onmg AHahaHAHahaAHAHAHAHA im wheezing rn you got kicked from ${msg.guild.name} (id: ${msg.guild.id}) for ${reason}. thats what you get you devil! REPEL THE DEMONS! UNBLOW!!! YOU ARE DESTROYED FOREVER!!! AND YOU WILL NEVER BE BACK!!!! thank you god... let it happen... cause it to happen`).catch(() => null)
+			await member.send('https://cdn.exerra.xyz/png/kenneth_copeland.png').catch(() => null)
+			await member.kick(reason)
+			embed = {
+				title: `Scammer nerd kicked`,
+				description: `${member.user.tag} has been kicked`,
+				thumbnail: {
+					url: member.user.avatarURL(),
+				},
+				color: `${config.colordecimal}`,
+				timestamp: new Date(),
+				"fields": [
+					{
+						"name": `Member`,
+						"value": `<@${member.user.id}>`,
+						"inline": false
+					},
+					{
+						"name": `Moderator`,
+						"value": `<@${client.user.id}>`,
+						"inline": false
+					},
+					{
+						"name": `Reason`,
+						"value": `${reason}`,
+						"inline": false
+					}
+				]
+			};
+		}
+		else if (settingsmap.get(msg.guild.id).phishingAction == "ban") {
+			if (!member.bannable) return console.log("bruh")
+			await member.send(`onmg AHahaHAHahaAHAHAHAHA im wheezing rn you got banned from ${msg.guild.name} (id: ${msg.guild.id}) for ${reason}. thats what you get you devil! REPEL THE DEMONS! UNBLOW!!! YOU ARE DESTROYED FOREVER!!! AND YOU WILL NEVER BE BACK!!!! thank you god... let it happen... cause it to happen`).catch(() => null)
+			await member.send('https://cdn.exerra.xyz/png/kenneth_copeland.png').catch(() => null)
+			await member.send('oh and btw 5g causes corona cancer and reptiliioans are hacking our brrains from mars while probing our pets so like you should be saying thanks for getting educated 😒').catch(() => null)
+			await member.ban({reason}).catch(error => null);
+			embed = {
+				title: `Scammer nerd banned`,
+				description: `${member.user.tag} has been banned`,
+				thumbnail: {
+					url: member.user.avatarURL(),
+				},
+				color: `${config.colordecimal}`,
+				timestamp: new Date(),
+				"fields": [
+					{
+						"name": `Member`,
+						"value": `<@${member.user.id}>`,
+						"inline": false
+					},
+					{
+						"name": `Moderator`,
+						"value": `<@${client.user.id}>`,
+						"inline": false
+					},
+					{
+						"name": `Reason`,
+						"value": `${reason}`,
+						"inline": false
+					}
+				]
+			};
+		}
+
+		serverFunc.warn(msg.author.id, msg.guild.id, "Sending phishing links, nerd", client.user.id).then(res => {
+			if (settingsmap.get(msg.guild.id).modLogEnabled == false) return
+
+			const modLogChannelConst = msg.guild.channels.cache.get(settingsmap.get(msg.guild.id).modLogChannel);
+			if (!modLogChannelConst) return
+
+			const warnEmbed = new Discord.MessageEmbed()
+				.setColor(config.color)
+				.setTitle("Member warned")
+				.setDescription(`<@${msg.author.id}> has been warned`)
+				.setThumbnail(msg.author.avatarURL())
+				.setTimestamp(new Date())
+				.addField("Reason", "Sending phishing links, nerd")
+				.addField("Moderator", `<@${client.user.id}>`)
+				.addField("Warn ID", res.data.warnID)
+
+			modLogChannelConst.send({ embed: warnEmbed });
+			if (embed != {}) modLogChannelConst.send({ embed: embed });
+		})
 	})
 
 	if (msg.content.includes(process.env.DISCORD_TOKEN)) return msg.delete()
@@ -199,6 +291,11 @@ client.on('message', async msg => {
 		let guildPrefixLet = settingsmap.get(msg.guild.id).guildPrefix // skipcq: JS-0128
 		if (settingsmap.get(msg.guild.id).brewSearch == undefined) {
 			await settingsmap.set(msg.guild.id, {...settingsmap.get(msg.guild.id), brewSearch: false})
+			serverFunc.updateGuildSettings(settingsmap)
+		}
+
+		if (settingsmap.get(msg.guild.id).phishingAction == undefined) {
+			await settingsmap.set(msg.guild.id, {...settingsmap.get(msg.guild.id), phishingAction: "warn"})
 			serverFunc.updateGuildSettings(settingsmap)
 		}
 	} catch (err) {

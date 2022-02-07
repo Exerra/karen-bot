@@ -30,6 +30,7 @@ const serverFunc = {
 			antiNSFW: false,
 			autoSpotifyEmbed: false,
 			brewSearch: false,
+			phishingAction: "warn",
 			modLogSettingsBool: {
 				memberJoined: false,
 				memberLeft: false,
