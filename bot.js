@@ -172,10 +172,9 @@ client.on('message', async msg => {
 		}
 
 		msg.delete()
+
 		let reason = "Sending phishing links"
-
 		let member = msg.guild.members.cache.get(msg.author.id)
-
 		let embed = {}
 
 		if (settingsmap.get(msg.guild.id).phishingAction == "kick") {
