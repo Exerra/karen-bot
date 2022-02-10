@@ -8,7 +8,6 @@ const {serverFunc} = require('../modules/serverFunc.js');
 const {log} = require('../modules/log.js');
 const {updateStats} = require("../modules/updateStats");
 const {checkIfAPIAccess, checkIfProd} = require("../modules/apiAccess");
-const {settings} = require("../modules/settings");
 
 
 module.exports = (client, guild) => {
@@ -86,20 +85,6 @@ module.exports = (client, guild) => {
 
 	// When a slash command is triggered
 	client.ws.on('INTERACTION_CREATE', async interaction => {
-
-		if (interaction.data.component_type == 3) {
-			console.log(interaction)
-			if (interaction.data.custom_id == "settingsMessageMenu") {
-				let id = interaction.data.values[0]
-				let command = client.settings.get(id)
-				try {
-					await command.execute(client, interaction)
-				} catch (e) {
-					console.log(e)
-				}
-			}
-			return
-		}
 
 		if (interaction.data.component_type == 2) {
 			let regex = new RegExp(/([0-9]{17,18})-(settings)-(.*)/)

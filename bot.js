@@ -3,8 +3,6 @@ const Discord = require('discord.js');
 const fs = require('fs');
 require('discord-reply');
 const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
-const disbut = require('discord-buttons');
-disbut(client);
 const config = require("./config.json");
 const axios = require("axios");
 /* const ytdl = require('ytdl-core'); */
@@ -113,28 +111,6 @@ for (const ev of eventFiles) {
 	}
 }
 log(`${chalk.magenta('[Karen Bot]')} ${chalk.yellow('[Event]')} ${chalk.white("[Load]")} Loaded ${events} events`)
-
-// Settings
-client.settings = new Discord.Collection()
-client.failedSettings = []
-client.failedSettingEvents = []
-let settingCmdAlpha = {}
-let settingAmount = 0
-const settingFiles = fs.readdirSync('./settings').filter(file => file.endsWith('.js'))
-for (const file of settingFiles) {
-	try {
-		const setting = require(`./settings/${file}`)
-		if (!settingCmdAlpha[setting.name.charAt(0)]) {
-			settingCmdAlpha[setting.name.charAt(0)] = true
-		}
-		client.settings.set(setting.name, setting)
-		settingAmount++
-	} catch (e) {
-		client.failedSettingEvents.push([file.split('.')[0], e.toString()])
-		log(`Error while loading setting: ${file.split('.')[0]}: ${e}`, "error")
-	}
-}
-log(`${chalk.magenta('[Karen Bot]')} ${chalk.yellow(`[Settings]`)} ${chalk.white('[Load]')} Loaded ${settingAmount} settings`)
 
 if (process.env.APIACCESS !== "true") console.log(chalk.magenta('[Karen Bot]'), chalk.yellow(`[API]`), chalk.red('[Warn]'), `Without API access many features are disabled`)
 
