@@ -46,6 +46,7 @@ module.exports = {
         msg.author.avatarURL({ format: 'png' })
       )
       .setTimestamp()
+    if (anime.isAdult && !msg.channel.nsfw) return msg.channel.send("This is a christian channel, go watch your sinful cartoons in an nsfw channel")
     return msg.channel.send(animeEmbed)
   }
 }
