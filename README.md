@@ -2,9 +2,6 @@
   <img src="readme.svg">
 </p>
 
-![License](https://img.shields.io/github/license/exerra-discord/karen-bot)
-![Repository size](https://img.shields.io/github/repo-size/exerra-discord/karen-bot)
-
 Enjoy being treated nicely?
 
 Too bad! Karen, unlike literally 97% of all Discord bots does not care about your stupid little feelings.
