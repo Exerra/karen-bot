@@ -4,7 +4,7 @@ module.exports = {
 	name: 'brew',
 	description: 'Search brew.sh',
 	type: 'Search',
-	args: false,
+	args: true,
 	usage: '[formulae]',
 	example: 'cask',
 	aliases: [ 'formulae' ],
