@@ -6,6 +6,7 @@ module.exports = {
   name: 'profile',
   description: 'Profile command',
   type: 'User',
+  usage: '[set <field> (optional, for setting fields)]',
   execute(client, msg, args) {
     const app = require('../bot.js');
     let config = app.config;
