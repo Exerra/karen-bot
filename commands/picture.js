@@ -3,7 +3,7 @@ const Discord = require('discord.js')
 module.exports = {
   name: 'picture',
   description: 'Returns a mentioned users picture',
-  type: 'Search',
+  type: 'Image',
   args: true,
   usage: '@[user]',
   execute(client, msg, args) {

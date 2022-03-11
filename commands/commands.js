@@ -99,13 +99,13 @@ emojiForKey = key => {
 		case 'Text':
 			return ":regional_indicator_t:"
 		case 'User':
-			return '<:dorime:824992571406155801>'
+			return '<:guraAmenKaren:846387188932935691>'
 		case 'Search':
 			return ':compass:'
 		case 'Under Development':
 			return ':keyboard:'
 		case 'Reddit':
-			return '<:redditplat:841329105575215134>'
+			return '<:redditplat:951838853424107521>'
 		case 'Uncategorized':
 			return ':question:'
 		default:
