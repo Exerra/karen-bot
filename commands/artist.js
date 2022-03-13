@@ -42,19 +42,17 @@ module.exports = {
                 embed.addField('Followers', response.artists.items[0].followers.total)
                 embed.addField('Monthly popularity', `${response.artists.items[0].popularity}%`)
                 var aname = 'Genres'
-                if (response.artists.items[0].genres.length != 1 && response.artists.items[0].genres.length != 0) {
+                console.log(response.artists.items[0])
+                if (response.artists.items[0].genres.length != 0) {
                     var a = [];
                     for (i in response.artists.items[0].genres) {
                         a[i] = response.artists.items[0].genres[i].toString().capitalize()
                     }
                     aname = 'Genres'
                     embed.addField(aname, a.join('\n'))
-                }
-                else {
+                } else {
                     if (response.artists.items[0].genres.length == 0) {
                         embed.addField(aname, 'Artist hasn\'t defined them yet')
-                    } else {
-                        embed.addField(aname, response.artists.items[0].album.genres[0])
                     }
                 }
                 embed.setTimestamp()
