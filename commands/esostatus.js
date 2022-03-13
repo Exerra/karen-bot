@@ -8,6 +8,10 @@ for (let value of valuesArray) {
 	values.set(value.name, value.value)
 }
 
+const generateValue = (key, value) => {
+	return `${key.toUpperCase()} - ${values.get(value)}\n`
+}
+
 module.exports = {
 	name: 'esostatus',
 	description: 'Gets server status of The Elder Scrolls Online game',
@@ -19,12 +23,14 @@ module.exports = {
 	async execute(client, msg, args) {
 		const app = require('../bot.js');
 		let config = app.config;
-		const {EsoStatus} = require("@dov118/eso-status");
-
-
-		const generateValue = (key, value) => {
-			return `${key.toUpperCase()} - ${values.get(value)}\n`
-		}
+		const statusEmbed = new Discord.MessageEmbed()
+			.setColor(config.color)
+			.setTitle('ESO server status')
+			.setDescription('Server status for the Elder Scrolls Online game')
+			.setThumbnail('https://cdn.exerra.xyz/png/eso.png')
+			.setAuthor('Zenimax', 'https://cdn.exerra.xyz/png/companies/zenimax/zenimax-small-no_outline.png')
+			.setTimestamp()
+			.setFooter('Provided by Zenimax')
 
 
 		let data = await (await axios.get("https://statty.p.rapidapi.com/", {
@@ -36,15 +42,6 @@ module.exports = {
 				service: "eso"
 			}
 		})).data
-
-		const statusEmbed = new Discord.MessageEmbed()
-			.setColor(config.color)
-			.setTitle('ESO server status')
-			.setDescription('Server status for the Elder Scrolls Online game')
-			.setThumbnail('https://cdn.exerra.xyz/png/eso.png')
-			.setAuthor('Zenimax', 'https://cdn.exerra.xyz/png/companies/zenimax/zenimax-small-no_outline.png')
-			.setTimestamp()
-			.setFooter('Provided by Zenimax')
 
 		let pcValue = ``
 		let xboxValue = ``
