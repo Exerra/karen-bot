@@ -1,43 +1,73 @@
 const Discord = require('discord.js')
+const axios = require('axios')
+
+let values = new Map()
+let valuesArray = [{ name: "Up", value: "✅" }]
+
+for (let value of valuesArray) {
+	values.set(value.name, value.value)
+}
 
 module.exports = {
-  name: 'esostatus',
-  description: 'Gets server status of The Elder Scrolls Online game',
-  args: false,
-  usage: '',
-  example: '',
-  type: 'Private',
-  permissionsLevel: 'Bot Owner',
-  execute(client, msg, args) {
-    const app = require('../bot.js');
-    let config = app.config;
-    const { EsoStatus } = require("@dov118/eso-status");
+	name: 'esostatus',
+	description: 'Gets server status of The Elder Scrolls Online game',
+	args: false,
+	usage: '',
+	example: '',
+	type: 'Private',
+	permissionsLevel: 'Bot Owner',
+	async execute(client, msg, args) {
+		const app = require('../bot.js');
+		let config = app.config;
+		const {EsoStatus} = require("@dov118/eso-status");
 
-    EsoStatus.getEsoStatus().then(data => {
-      console.log(data.eso_store)
-      const esostatusembed = new Discord.MessageEmbed()
-        .setColor(config.color)
-        .setTitle('ESO server status')
-        .setDescription('Server status for the Elder Scrolls Online game')
-        .setThumbnail('https://cdn.exerra.xyz/png/eso.png')
-        .setAuthor('Zenimax', 'https://cdn.exerra.xyz/png/companies/zenimax/zenimax-small-no_outline.png')
-        .addFields(
-          { name: 'Store', value: data.eso_store.raw_information },
-          { name: 'Accounts', value: data.account_system.raw_information },
-          { name: 'PC EU', value: data.pc_eu.raw_information },
-          { name: 'PC NA', value: data.pc_na.raw_information },
-          { name: 'Public Test Server', value: data.pts.raw_information },
-          { name: 'Xbox NA', value: data.xbox_na.raw_information },
-          { name: 'Xbox EU', value: data.xbox_eu.raw_information },
-          { name: 'PS NA', value: data.ps_na.raw_information },
-          { name: 'PS EU', value: data.ps_eu.raw_information },
-          { name: 'Website', value: data.site_web.raw_information }
-        )
-        .setTimestamp()
-        .setFooter('Provided by Zenimax')
-      
 
-      msg.channel.send(esostatusembed)
-    })
-  }
+		const generateValue = (key, value) => {
+			return `${key.toUpperCase()} - ${values.get(value)}\n`
+		}
+
+
+		let data = await (await axios.get("https://statty.p.rapidapi.com/", {
+			headers: {
+				'x-rapidapi-host': 'statty.p.rapidapi.com',
+				'x-rapidapi-key': process.env.RAPIDAPI_KEY
+			},
+			params: {
+				service: "eso"
+			}
+		})).data
+
+		const statusEmbed = new Discord.MessageEmbed()
+			.setColor(config.color)
+			.setTitle('ESO server status')
+			.setDescription('Server status for the Elder Scrolls Online game')
+			.setThumbnail('https://cdn.exerra.xyz/png/eso.png')
+			.setAuthor('Zenimax', 'https://cdn.exerra.xyz/png/companies/zenimax/zenimax-small-no_outline.png')
+			.setTimestamp()
+			.setFooter('Provided by Zenimax')
+
+		let pcValue = ``
+		let xboxValue = ``
+		let ps4Value = ``
+
+		for (let [key, value] of Object.entries(data.pc)) {
+			pcValue += generateValue(key, value)
+		}
+
+		for (let [key, value] of Object.entries(data.xbox)) {
+			xboxValue += generateValue(key, value)
+		}
+
+		for (let [key, value] of Object.entries(data.ps4)) {
+			ps4Value += generateValue(key, value)
+		}
+
+		statusEmbed.addField("PC", pcValue)
+		statusEmbed.addField("Xbox", xboxValue)
+		statusEmbed.addField("PS4", ps4Value)
+
+		msg.channel.send(statusEmbed)
+
+		return
+	}
 }
