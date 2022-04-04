@@ -152,23 +152,7 @@ module.exports = {
 						languages: "None"
 					}
 					// Sends profile to server
-					axios({
-						"method": "POST",
-						"url": `${process.env.API_SERVER}/karen/profile/`,
-						"headers": {
-							"Authorization": process.env.AUTH_B64,
-							"Content-Type": "application/json; charset=utf-8",
-							'User-Agent': process.env.AUTH_USERAGENT
-						},
-						"auth": {
-							"username": process.env.AUTH_USER,
-							"password": process.env.AUTH_PASS
-						},
-						"data": {
-							profile,
-							"id": user.id
-						}
-					}).then((response) => {
+					serverFunc.users.post(msg.author.id, profile).then((response) => {
 						// If success, return profile
 						serverFunc.users.get(msg.author.id).then((response) => {
 							// If success, return profile
@@ -217,23 +201,8 @@ module.exports = {
 				embed.setTitle("Profile creation");
 				embed.setDescription(`Profile has been created successfully.\nDo ${config.prefix}profile to show your profile(cross-server)`);
 				// Sends profile to server
-				axios({
-					"method": "POST",
-					"url": `${process.env.API_SERVER}/karen/profile/`,
-					"headers": {
-						"Authorization": process.env.AUTH_B64,
-						"Content-Type": "application/json; charset=utf-8",
-						'User-Agent': process.env.AUTH_USERAGENT
-					},
-					"auth": {
-						"username": process.env.AUTH_USER,
-						"password": process.env.AUTH_PASS
-					},
-					"data": {
-						profile,
-						"id": msg.author.id
-					}
-				})
+				serverFunc.users.post(msg.author.id, profile)
+
 				embed.setFooter(`With ❤️ from ${config.creator}`, config.logo)
 				msg.channel.send(embed);
 			});
@@ -346,23 +315,7 @@ module.exports = {
 					embed.setFooter(`With ❤️ from ${config.creator}`, config.logo)
 					msg.channel.send(embed);
 				}
-				axios({
-					"method": "POST",
-					"url": `${process.env.API_SERVER}/karen/profile/`,
-					"headers": {
-						"Authorization": process.env.AUTH_B64,
-						"Content-Type": "application/json; charset=utf-8",
-						'User-Agent': process.env.AUTH_USERAGENT
-					},
-					"auth": {
-						"username": process.env.AUTH_USER,
-						"password": process.env.AUTH_PASS
-					},
-					"data": {
-						profile,
-						"id": msg.author.id
-					}
-				})
+				serverFunc.users.post(msg.author.id, profile)
 			}, (error) => {
 				embed.setTitle("Profile error: ");
 				embed.setDescription(`You don't have a profile yet. Make one with "${config.prefix}profile create"`);
