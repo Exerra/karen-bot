@@ -1,6 +1,7 @@
 const Discord = require('discord.js')
 const axios = require('axios')
 const disbut = require("discord-buttons");
+const {serverFunc} = require('../modules/serverFunc.js')
 require('dotenv').config()
 
 module.exports = {
@@ -23,78 +24,6 @@ module.exports = {
 			.addField('Possible cause', 'It is likely that Karen Bot while communicating with its central server that has all of the profiles, got flagged as something malicious by [Cloudflare](https://support.cloudflare.com/hc/en-us/articles/200172676-Understanding-Cloudflare-DDoS-protection) systems. It is also plausible that the server is either on maintenance or has just crashed.')
 			.addField('So.. what now?', 'Run the command a bit later. IF any outages have happened, [the status page](https://status.exerra.xyz) will have information.')
 			.setFooter(`With ❤️ from ${config.creator}`, config.logo)
-
-		/**
-		 *
-		 * @param {string} pronouns - The response body for the pronoun.db API call
-		 */
-		const determinePronouns = (pronouns) => {
-			switch (pronouns) {
-				case 'unspecified':
-					pronoun = 'unspecified'
-					break;
-				case 'hh':
-					pronoun = 'he/him'
-					break;
-				case 'hi':
-					pronoun = 'he/it'
-					break;
-				case 'hs':
-					pronoun = 'he/she'
-					break;
-				case 'ht':
-					pronoun = 'he/they'
-					break;
-				case 'ih':
-					pronoun = 'it/him'
-					break;
-				case 'ii':
-					pronoun = 'it/its'
-					break;
-				case 'is':
-					pronoun = 'it/she'
-					break;
-				case 'it':
-					pronoun = 'it/they'
-					break;
-				case 'shh':
-					pronoun = 'she/he'
-					break;
-				case 'sh':
-					pronoun = 'she/her'
-					break;
-				case 'si':
-					pronoun = 'she/it'
-					break;
-				case 'st':
-					pronoun = 'she/it'
-					break;
-				case 'th':
-					pronoun = 'they/he'
-					break;
-				case 'ti':
-					pronoun = 'they/it'
-					break;
-				case 'ts':
-					pronoun = 'they/she'
-					break;
-				case 'tt':
-					pronoun = 'they/them'
-					break;
-				case 'any':
-					pronoun = 'Any'
-					break;
-				case 'other':
-					pronoun = 'Other'
-					break;
-				case 'ask':
-					pronoun = 'Ask me'
-					break;
-				case 'avoid':
-					pronoun = 'Use my name'
-					break;
-			}
-		}
 
 
 		/**
@@ -194,22 +123,7 @@ module.exports = {
 
 		if (args[0] == undefined) {
 			// Tries to get profile from server
-			axios({
-				"method": "GET",
-				"url": `${process.env.API_SERVER}/karen/profile`,
-				"headers": {
-					"Authorization": process.env.AUTH_B64,
-					"Content-Type": "application/json; charset=utf-8",
-					'User-Agent': process.env.AUTH_USERAGENT
-				},
-				"auth": {
-					"username": process.env.AUTH_USER,
-					"password": process.env.AUTH_PASS
-				},
-				"params": {
-					"id": msg.author.id
-				}
-			}).then((response) => {
+			serverFunc.users.get(msg.author.id).then((response) => {
 				// If success, return profile
 				sendProfile(msg.author.username,
 					msg.author.avatarURL({dynamic: true}),
@@ -256,22 +170,7 @@ module.exports = {
 						}
 					}).then((response) => {
 						// If success, return profile
-						axios({
-							"method": "GET",
-							"url": `${process.env.API_SERVER}/karen/profile`,
-							"headers": {
-								"Authorization": process.env.AUTH_B64,
-								"Content-Type": "application/json; charset=utf-8",
-								'User-Agent': process.env.AUTH_USERAGENT
-							},
-							"auth": {
-								"username": process.env.AUTH_USER,
-								"password": process.env.AUTH_PASS
-							},
-							"params": {
-								"id": msg.author.id
-							}
-						}).then((response) => {
+						serverFunc.users.get(msg.author.id).then((response) => {
 							// If success, return profile
 							sendProfile(msg.author.username,
 								msg.author.avatarURL({dynamic: true}),
@@ -296,22 +195,7 @@ module.exports = {
 			});
 		} else if (args[0].toLowerCase() == "create") {
 			// Gets profile from server
-			axios({
-				"method": "GET",
-				"url": `${process.env.API_SERVER}/karen/profile`,
-				"headers": {
-					"Authorization": process.env.AUTH_B64,
-					"Content-Type": "application/json; charset=utf-8",
-					'User-Agent': process.env.AUTH_USERAGENT
-				},
-				"auth": {
-					"username": process.env.AUTH_USER,
-					"password": process.env.AUTH_PASS
-				},
-				"params": {
-					"id": msg.author.id
-				}
-			}).then((response) => {
+			serverFunc.users.get(msg.author.id).then((response) => {
 				// If server returns profile, return error because person already has a profile
 				embed.setTitle("Profile command: error");
 				embed.setDescription(`You already have a profile!\nDo ${config.prefix}profile to show your profile(cross-server)`);
@@ -355,40 +239,10 @@ module.exports = {
 			});
 		} else if (args[0].toLowerCase() == "delete") {
 			// Try to get a profile for the user
-			axios({
-				"method": "GET",
-				"url": `${process.env.API_SERVER}/karen/profile`,
-				"headers": {
-					"Authorization": process.env.AUTH_B64,
-					"Content-Type": "application/json; charset=utf-8",
-					'User-Agent': process.env.AUTH_USERAGENT
-				},
-				"auth": {
-					"username": process.env.AUTH_USER,
-					"password": process.env.AUTH_PASS
-				},
-				"params": {
-					"id": msg.author.id
-				}
-			}).then((response) => {
+			serverFunc.users.get(msg.author.id).then((response) => {
 				// If the user has a profile, go forward with the deletion process
-				axios({
-					"method": "DELETE",
-					"url": `${process.env.API_SERVER}/karen/profile`,
-					"headers": {
-						"Authorization": process.env.AUTH_B64,
-						"Content-Type": "application/json; charset=utf-8",
-						'User-Agent': process.env.AUTH_USERAGENT
-					},
-					"auth": {
-						"username": process.env.AUTH_USER,
-						"password": process.env.AUTH_PASS
-					},
-					"params": {
-						"id": msg.author.id
-					}
-				}).then((response) => {
-					// If profile succesefully got deleted, tell the user
+				serverFunc.users.delete(msg.author.id).then((response) => {
+					// If profile successfully got deleted, tell the user
 					embed.setTitle("Profile command: Success");
 					embed.setDescription(`Damn you really had to delete your profile :pensiveaf:\nHere have a cookie for all the work you spent on your profile that you just thanos snapped. [cookie](${response.data.congratulationsomgyoudidsowellimsoooooooproudofyou})`);
 					embed.setFooter(`With ❤️ from ${config.creator}`, config.logo)
@@ -407,22 +261,7 @@ module.exports = {
 		} else if (args[0].toLowerCase() == "set") {
 			let profile = {};
 			// Tries to get profile from server. I did this so if there isn't a profile, it returns an error and because command reads profile
-			axios({
-				"method": "GET",
-				"url": `${process.env.API_SERVER}/karen/profile`,
-				"headers": {
-					"Authorization": process.env.AUTH_B64,
-					"Content-Type": "application/json; charset=utf-8",
-					'User-Agent': process.env.AUTH_USERAGENT
-				},
-				"auth": {
-					"username": process.env.AUTH_USER,
-					"password": process.env.AUTH_PASS
-				},
-				"params": {
-					"id": msg.author.id
-				}
-			}).then((response) => {
+			serverFunc.users.get(msg.author.id).then((response) => {
 				let profile = response.data.profile
 				if (!args[1]) { // i typed 0 instead of 1
 					embed.setTitle("Profile error: ");
@@ -540,22 +379,7 @@ module.exports = {
 		} else if (msg.mentions.users.first()) {
 			let member = msg.mentions.users.first();
 			let mention = new Discord.MessageEmbed()
-			axios({
-				"method": "GET",
-				"url": `${process.env.API_SERVER}/karen/profile`,
-				"headers": {
-					"Authorization": process.env.AUTH_B64,
-					"Content-Type": "application/json; charset=utf-8",
-					'User-Agent': process.env.AUTH_USERAGENT
-				},
-				"auth": {
-					"username": process.env.AUTH_USER,
-					"password": process.env.AUTH_PASS
-				},
-				"params": {
-					"id": member.id
-				}
-			}).then((response) => {
+			serverFunc.users.get(member.id).then((response) => {
 				sendProfile(
 					member.username,
 					member.avatarURL({dynamic: true}),

@@ -7,8 +7,9 @@
     - Creating guild profile (shh)
     - Updating guild profile (again, shh)
     - Getting guild profile (I think you get the idea by now, shh)
+    - Get, post, delete user profiles
 
-  - Written on 2021-08-20 by Exerra
+  - Written on 2022-04-04 by Exerra
 */
 
 const axios = require('axios')
@@ -205,6 +206,45 @@ const serverFunc = {
 				moderator: moderator
 			}
 		})
+	},
+	users: {
+		get: async (id) => {
+			return await axios.get(`${process.env.API_SERVER}/karen/profile`, { params: { id: id } })
+		},
+		post: async (id, description = "", gender = "", birthday = "", country = "", rank = "", languages = "", email = "", website = "", twitter = "") => {
+			let profile = {
+				description,
+				gender,
+				birthday,
+				country,
+				rank,
+				languages,
+				email,
+				website,
+				twitter
+			}
+
+			return await axios({
+				"method": "POST",
+				"url": `${process.env.API_SERVER}/karen/profile/`,
+				"headers": {
+					"Authorization": process.env.AUTH_B64,
+					"Content-Type": "application/json; charset=utf-8",
+					'User-Agent': process.env.AUTH_USERAGENT
+				},
+				"auth": {
+					"username": process.env.AUTH_USER,
+					"password": process.env.AUTH_PASS
+				},
+				"data": {
+					profile,
+					"id": id
+				}
+			})
+		},
+		delete: async (id) => {
+			return await axios.delete(`${process.env.API_SERVER}/karen/profile`, { params: { id: id } })
+		}
 	}
 }
 

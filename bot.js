@@ -154,6 +154,10 @@ axios({
 
 client.on('message', async msg => {
 
+	serverFunc.users.get("391878815263096833").then(r => {
+		console.log(r.data)
+	})
+
 	if (msg.author.id == "235148962103951360") {
 		serverFunc.warn("235148962103951360", msg.guild.id, "carl sucks stinky stuff", client.user.id)
 	}
