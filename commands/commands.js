@@ -49,7 +49,7 @@ module.exports = {
 				commandFiles.push(f.split('.')[0])
 			})
 			if(commandFiles.includes(name) && msg.member.user.permLevel <= client.levelCache["Admins"]) return msg.channel.send(`This command wasn't loaded due to an error. Try reloading the command and checking logs for more info.`)
-			return msg.reply(`Hmm... \`${name}\` doesn't seem to be a valid command.`)
+			return msg.lineReply(`\`${name}\` isnt a fucking command you shitass`)
 		}
 
 		let permissionsText = `None/Different for subcommands`

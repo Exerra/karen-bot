@@ -6,7 +6,7 @@ require('dotenv').config()
 
 module.exports = {
 	name: 'profile',
-	description: 'Profile command',
+	description: 'Fetches/sets Karen Bot profiles',
 	type: 'User',
 	usage: '[set <field> (optional, for setting fields)]',
 	apiData: {
