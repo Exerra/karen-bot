@@ -208,8 +208,16 @@ const serverFunc = {
 		})
 	},
 	users: {
-		get: async (id) => {
-			return await axios.get(`${process.env.API_SERVER}/karen/profile`, { params: { id: id } })
+		get: async (id, fetchUser = false, includeWarns = false) => {
+
+			let params = {
+				id: id,
+				fetchUser: fetchUser
+			}
+
+			includeWarns ? params.includeWarns = includeWarns : null
+
+			return await axios.get(`${process.env.API_SERVER}/karen/profile`, { params: params })
 		},
 		post: async (id, { description, gender, birthday, country, rank, languages, email, website, twitter }) => {
 			let profile = {
