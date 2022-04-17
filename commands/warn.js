@@ -15,7 +15,6 @@ module.exports = {
 		usesAnAPI: true,
 		listOfAPIs: [
 			"exerra"
-			"exerra"
 		]
 	},
 	execute(client, msg, args) {
