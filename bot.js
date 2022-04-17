@@ -335,19 +335,23 @@ client.on('message', async msg => {
 			|| client.commands.find(c => c.aliases && c.aliases.includes(commandName))
 
 		if (!command) return;
+		const level = client.permLevel(msg)
 
 		if ("permissions" in command) {
 			for (let permission of command.permissions) {
-				console.log(permission)
-				console.log(msg.member.hasPermission(permission))
+				if (level >= client.levelCache["Admins"]) {
+					msg.react("💳") // Indicates bypass
+					continue
+				}
+
+
 				if (!msg.member.hasPermission(permission)) {
-					msg.channel.send(`shut your mouth, you don't have \`${command.permissions.join(", ")}\` permission${command.permissions.length == 1 ? "" : "s"}`)
+					msg.channel.send(`What makes your disrespectful yee yee ass think you can access this command? YOu dont even have \`${command.permissions.join(", ")}\` permission${command.permissions.length == 1 ? "" : "s"} permission! Stop disrespecting your elders and apologize before I call the manager`)
 					return
 				}
 			}
 		}
 
-		const level = client.permLevel(msg)
 		if (level < client.levelCache[command.permissionsLevel || "User"]) {
 			return msg.channel.send(`Shut up, you're not my mom 😒🙄`)
 		}
