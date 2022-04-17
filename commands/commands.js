@@ -23,10 +23,8 @@ module.exports = {
 				filteredByType[commandType] += `${command.name}, `
 			}
 			let finalMsg = ""
-			for(let [key, value] of Object.entries(filteredByType)) {
-				console.log(key)
-				console.log(value)
-				if(key == 'Private' && msg.member.user.permLevel != 10) continue
+			for (let [key, value] of Object.entries(filteredByType)) {
+				if (key == 'Private' && msg.member.user.permLevel <= client.levelCache["Admins"]) continue
 				finalMsg += `${emojiForKey(key)} **${key}**\n\`\`\`${value.replace("undefined", "").trim().slice(0, -1)}\`\`\`\n`
 			}
 			return msg.author.send(data)
@@ -50,24 +48,31 @@ module.exports = {
 			commandFilesTMP.forEach(f => {
 				commandFiles.push(f.split('.')[0])
 			})
-			if(commandFiles.includes(name) && msg.author.permLevel == 10) return msg.channel.send(`This command wasn't loaded due to an error. Try reloading the command and checking logs for more info.`)
+			if(commandFiles.includes(name) && msg.member.user.permLevel <= client.levelCache["Admins"]) return msg.channel.send(`This command wasn't loaded due to an error. Try reloading the command and checking logs for more info.`)
 			return msg.reply(`Hmm... \`${name}\` doesn't seem to be a valid command.`)
 		}
+
+		let permissionsText = `None/Different for subcommands`
+
+		if ("permissions" in command) {
+			permissionsText = command.permissions.join(", ")
+		}
+
 		let commandDetails = new Discord.MessageEmbed()
-			.setFooter(`Requested by ${msg.author.username}`, msg.author.avatarURL({ dynamic: true }))
 			.setColor(config.color)
 			.setTitle(`Details for: ${command.name}`)
-			.setThumbnail(msg.author.avatarURL({ size: 512, dynamic: true, format: "png" }))
-			.setAuthor(`Karen Bot command details`, client.user.avatarURL({ size: 128, dynamic: true, format: "png" }))
-			.setTimestamp()
+			.setAuthor(`Command details`, client.user.avatarURL({ size: 128, dynamic: true, format: "png" }))
+			.setDescription(command.description)
 			.addFields(
 				{ name: 'Aliases', value: `${typeof command.aliases == "undefined" ? 'None' : command.aliases.join(", ")}`, inline: true },
-				{ name: 'Description', value: `${command.description}`, inline: true },
+				{ name: 'NSFW', value: `${typeof command.nsfw == "boolean"? (command.nsfw ? "Yes" : "No") : "No"}`, inline: true },
 				{ name: 'Usage', value: `\`${config.prefix}${command.name} ${command.usage || ""}\``, inline: false },
 				{ name: 'Example', value: `\`${config.prefix}${command.name} ${command.example || ""}\``, inline: false },
-				{ name: 'NSFW', value: `${typeof command.nsfw == "boolean"? (command.nsfw ? "Yes" : "No") : "No"}`, inline: true }
+				{ name: "Permissions", value: permissionsText }
 			)
-		msg.channel.send(commandDetails)
+			.setTimestamp()
+
+		msg.lineReplyNoMention(commandDetails)
 	}
 }
 
