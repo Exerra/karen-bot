@@ -382,7 +382,7 @@ client.on('message', async msg => {
 				if (!msg.channel.name.includes('nsfw')) return msg.channel.send(`Ugh this is an NSFW command, go to an NSFW channel 🙄`)
 			}
 
-			msg.channel.startTyping()
+			if ("apiData" in command) (command.apiData.usesAnAPI ? msg.channel.startTyping() : null)
 			await command.execute(client, msg, args)
 			msg.channel.stopTyping()
 		} catch (error) {

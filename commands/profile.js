@@ -9,6 +9,12 @@ module.exports = {
 	description: 'Profile command',
 	type: 'User',
 	usage: '[set <field> (optional, for setting fields)]',
+	apiData: {
+		usesAnAPI: true,
+		listOfAPIs: [
+			"exerra"
+		]
+	},
 	execute(client, msg, args) {
 		const app = require('../bot.js');
 		let config = app.config;
