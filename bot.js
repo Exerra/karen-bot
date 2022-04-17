@@ -339,13 +339,12 @@ client.on('message', async msg => {
 
 		if ("permissions" in command) {
 			for (let permission of command.permissions) {
-				if (level >= client.levelCache["Admins"]) {
-					msg.react("💳") // Indicates bypass
-					continue
-				}
-
-
 				if (!msg.member.hasPermission(permission)) {
+					if (level >= client.levelCache["Admins"]) {
+						msg.react("💳") // Indicates bypass
+						continue
+					}
+
 					msg.channel.send(`What makes your disrespectful yee yee ass think you can access this command? YOu dont even have \`${command.permissions.join(", ")}\` permission${command.permissions.length == 1 ? "" : "s"} permission! Stop disrespecting your elders and apologize before I call the manager`)
 					return
 				}

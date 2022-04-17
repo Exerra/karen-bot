@@ -252,6 +252,28 @@ const serverFunc = {
 		},
 		delete: async (id) => {
 			return await axios.delete(`${process.env.API_SERVER}/karen/profile`, { params: { id: id } })
+		},
+		warns: {
+			delete: async (id, warnID, guild) => {
+				return await axios({
+					"method": "DELETE",
+					"url": `${process.env.API_SERVER}/karen/warn`,
+					"headers": {
+						"Authorization": process.env.AUTH_B64,
+						"Content-Type": "application/json; charset=utf-8",
+						'User-Agent': process.env.AUTH_USERAGENT
+					},
+					"auth": {
+						"username": process.env.AUTH_USER,
+						"password": process.env.AUTH_PASS
+					},
+					"params": {
+						"id": id,
+						"warnID": warnID,
+						"guild": guild
+					}
+				})
+			}
 		}
 	}
 }

@@ -2,6 +2,7 @@ const Discord = require('discord.js')
 const fs = require('fs')
 const axios = require("axios");
 const app = require("../bot.js");
+const {serverFunc} = require("../modules/serverFunc");
 
 module.exports = {
     name: 'removewarn',
@@ -11,25 +12,17 @@ module.exports = {
     usage: '@[user] [warnID]',
     example: '@Carl-bot 5e1039097fc9ee968a6a68a606c50bac',
     aliases: ["warnremove"],
+    permissions: ["MANAGE_GUILD"],
     execute(client, msg, args) {
         const app = require('../bot.js');
         let config = app.config;
-
-        // checks if dev because backdoor
-        var allowedToUse = false;
-        client.config.ownerID.forEach(id => {
-            if (msg.author.id == id)
-                allowedToUse = true;
-        });
-
-        if (!msg.member.hasPermission('KICK_MEMBERS')) return msg.lineReply("Who the fuck are you? Get a manager for this one, sweetie")
 
         // defines mentioned person
         let member = msg.mentions.members.first() || msg.guild.members.cache.get(args[0]);
 
         if (!member) return msg.lineReply("wheres.\nthe.\nuser.")
 
-        if (msg.guild.members.cache.get(msg.author.id).roles.highest.comparePositionTo(member.roles.highest) < 0 && !allowedToUse) return msg.lineReply("employees cannot do this to their own managers you half brained imbecile")
+        if (msg.guild.members.cache.get(msg.author.id).roles.highest.comparePositionTo(member.roles.highest) < 0 && msg.author.permLevel < client.levelCache["Admins"]) return msg.lineReply("employees cannot do this to their own managers you half brained imbecile")
 
         // defines filter, basically checks if the correct person is replying
         const filter = m => m.author.id === msg.author.id;
@@ -38,24 +31,7 @@ module.exports = {
 
         if (args[1] == undefined) return msg.lineReply("Wheres the warn ID?? It is the large letter and number combination stupid ass.")
 
-        axios({
-            "method": "DELETE",
-            "url": `${process.env.API_SERVER}/karen/warn`,
-            "headers": {
-                "Authorization": process.env.AUTH_B64,
-                "Content-Type": "application/json; charset=utf-8",
-                'User-Agent': process.env.AUTH_USERAGENT
-            },
-            "auth": {
-                "username": process.env.AUTH_USER,
-                "password": process.env.AUTH_PASS
-            },
-            "params": {
-                "id": member.id,
-                "warnID": args[1],
-                "guild": msg.guild.id
-            }
-        }).then(res => {
+        serverFunc.users.warns.delete(member.id, args[1], msg.guild.id).then(res => {
             msg.react("✅")
             if (settingsmap.get(member.guild.id).modLogEnabled == false) return
 

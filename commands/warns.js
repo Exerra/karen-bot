@@ -3,6 +3,7 @@ const fs = require('fs')
 const axios = require("axios");
 const app = require("../bot.js");
 const disbut = require('discord-buttons');
+const {serverFunc} = require("../modules/serverFunc");
 
 module.exports = {
     name: 'warns',
@@ -20,16 +21,7 @@ module.exports = {
 
         if (!member) return msg.lineReply("Please mention a valid member of this server");
 
-        axios.get(`${process.env.API_SERVER}/karen/profile`, {
-            headers: {
-                "User-Agent": process.env.AUTH_USERAGENT
-            },
-            params: {
-                id: member.id,
-                fetchUser: true,
-                includeWarns: true
-            }
-        }).then(res => {
+        serverFunc.users.get(member.id, true, true).then(res => {
             let user = res.data
             let warns = res.data.warns
             warns.sort((a, b) => new Date(b.date) - new Date(a.date))

@@ -100,7 +100,7 @@ module.exports = {
 			return
 		}
 
-		if (msg.guild.members.cache.get(msg.author.id).roles.highest.comparePositionTo(member.roles.highest) < 0 && msg.member.user.permLevel <= client.levelCache["Admins"]) return msg.lineReply("employees cannot warn their own managers you half brained imbecile")
+		if (msg.guild.members.cache.get(msg.author.id).roles.highest.comparePositionTo(member.roles.highest) < 0 && msg.author.permLevel < client.levelCache["Admins"]) return msg.lineReply("employees cannot warn their own managers you half brained imbecile")
 
 		if (args.length > 1) {
 			let index = args.indexOf(args[0]);

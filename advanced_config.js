@@ -1,8 +1,8 @@
 const config = {
     "self": "702896046480818218",
     "owner": "391878815263096833",
-    "admins": ['166601149774954496', '334067823229796367'],
-    //              floyd                    con
+    "admins": ['166601149774954496', '334067823229796367', '474581812526710804'],
+    //              floyd                    con                my alt
     permLevels: [
         // This is the lowest permission level, this is for non-roled users.
         {
