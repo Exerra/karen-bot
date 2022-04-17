@@ -10,6 +10,12 @@ module.exports = {
 	description: 'Server settings',
 	type: 'Settings',
     permissions: ["MANAGE_GUILD"],
+	apiData: {
+		usesAnAPI: true,
+		listOfAPIs: [
+			"exerra"
+		]
+	},
 	async execute(client, msg, args) {
 		const app = require('../bot.js');
 		let config = app.config;

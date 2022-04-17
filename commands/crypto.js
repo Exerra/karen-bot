@@ -7,6 +7,12 @@ module.exports = {
 	args: true,
 	usage: '[cryptocurrency]',
 	example: 'dogecoin',
+	apiData: {
+		usesAnAPI: true,
+		listOfAPIs: [
+			"blockchair"
+		]
+	},
 	async execute(client, msg, args) {
 		// Defines stuff
 		const app = require('../bot.js')

@@ -8,6 +8,12 @@ module.exports = {
 	usage: '[formulae]',
 	example: 'cask',
 	aliases: [ 'formulae' ],
+	apiData: {
+		usesAnAPI: true,
+		listOfAPIs: [
+			"brew"
+		]
+	},
 	execute(client, msg, args) {
 		const app = require('../bot.js');
 		let config = app.config;

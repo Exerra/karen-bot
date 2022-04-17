@@ -11,6 +11,12 @@ module.exports = {
 	usage: '@[user]',
 	example: '@Carl-bot',
 	permissions: ["MANAGE_GUILD"],
+	apiData: {
+		usesAnAPI: true,
+		listOfAPIs: [
+			"exerre"
+		]
+	},
 	execute(client, msg, args) {
 		const app = require('../bot.js');
 		let config = app.config;

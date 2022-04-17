@@ -20,6 +20,12 @@ module.exports = {
 	example: '',
 	type: 'Private',
 	permissionsLevel: 'Bot Owner',
+	apiData: {
+		usesAnAPI: true,
+		listOfAPIs: [
+			"statty"
+		]
+	},
 	async execute(client, msg, args) {
 		const app = require('../bot.js');
 		let config = app.config;

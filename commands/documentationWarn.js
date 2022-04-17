@@ -15,6 +15,12 @@ module.exports = {
 	args: true,
 	usage: '@[user]',
 	example: '@Carl-bot',
+	apiData: {
+		usesAnAPI: true,
+		listOfAPIs: [
+			"exerra"
+		]
+	},
 	execute(client, msg, args) {
 		const app = require('../bot.js');
 		let config = app.config;
