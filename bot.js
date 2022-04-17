@@ -336,6 +336,17 @@ client.on('message', async msg => {
 
 		if (!command) return;
 
+		if ("permissions" in command) {
+			for (let permission of command.permissions) {
+				console.log(permission)
+				console.log(msg.member.hasPermission(permission))
+				if (!msg.member.hasPermission(permission)) {
+					msg.channel.send(`shut your mouth, you don't have \`${command.permissions.join(", ")}\` permission${command.permissions.length == 1 ? "" : "s"}`)
+					return
+				}
+			}
+		}
+
 		const level = client.permLevel(msg)
 		if (level < client.levelCache[command.permissionsLevel || "User"]) {
 			return msg.channel.send(`Shut up, you're not my mom 😒🙄`)
