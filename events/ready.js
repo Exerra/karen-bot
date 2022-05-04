@@ -29,6 +29,8 @@ module.exports = (client, guild) => {
 				"content": `Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`,
 				"type": "info"
 			}
+		}).catch(err => {
+			console.log(chalk.magenta('[Karen Bot]'), chalk.yellow(`[Logs]`), chalk.red('[Warn]'), `Failed to post startup logs`)
 		})
 	}
 

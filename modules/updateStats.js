@@ -12,6 +12,7 @@
 const axios = require("axios")
 const Discord = require("discord.js");
 const {log} = require("./log");
+const chalk = require("chalk");
 
 const updateStats = (client) => {
     const promises = [
@@ -41,6 +42,8 @@ const updateStats = (client) => {
                     "users": `${totalMembers}`,
                     "DiscordJS": `${Discord.version}`
                 }
+            }).catch(err => {
+                console.log(chalk.magenta('[Karen Bot]'), chalk.yellow(`[Stats]`), chalk.red('[Warn]'), `Failed to post stats`)
             })
         }).catch(e => log(e, "error"));
 }

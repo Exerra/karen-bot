@@ -136,22 +136,6 @@ axios({
 	console.log(chalk.magenta('[Karen Bot]'), chalk.yellow(`[Settings]`), chalk.red('[Warn]'), `Failed to load guild settings`)
 })
 
-// Gets guildProfile map //! Levels are not yet released online so hush hush
-axios({
-	"method": "GET",
-	"url": `${process.env.API_SERVER}/karen/guildProfile/map/`,
-	"headers": {
-		"Authorization": process.env.AUTH_B64,
-		'User-Agent': process.env.AUTH_USERAGENT
-	},
-	"auth": {
-		"username": process.env.AUTH_USER,
-		"password": process.env.AUTH_PASS
-	}
-}).then(res => {
-	guildProfile = new Map(res.data);
-})
-
 client.on('message', async msg => {
 
 	if (settingsmap == null) return
