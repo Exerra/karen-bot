@@ -154,6 +154,8 @@ axios({
 
 client.on('message', async msg => {
 
+	if (settingsmap == null) return
+
 	let argsWithoutPrefix = msg.content.split(/\s+/)
 
 	argsWithoutPrefix.forEach(async d => {
