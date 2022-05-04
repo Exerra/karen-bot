@@ -8,6 +8,7 @@
 const axios = require('axios')
 const { throwError } = require('./throwError')
 const {checkIfAPIAccess} = require("./apiAccess");
+const chalk = require("chalk");
 require('dotenv').config()
 
 /**
@@ -39,6 +40,8 @@ const log = (message, type, serveronly = false) => {
                     "content": message,
                     "type": type
                 }
+			}).catch(err => {
+				console.log(chalk.magenta('[Karen Bot]'), chalk.yellow(`[Logs]`), chalk.red('[Warn]'), `Failed to post startup logs`)
 			})
 		} else {
             axios(`${process.env.API_SERVER}/karen/logs/`, {
@@ -57,7 +60,9 @@ const log = (message, type, serveronly = false) => {
                     "content": message,
                     "type": "info"
                 }
-            })
+            }).catch(err => {
+				console.log(chalk.magenta('[Karen Bot]'), chalk.yellow(`[Logs]`), chalk.red('[Warn]'), `Failed to post startup logs`)
+			})
         }
 		
 	}
