@@ -1689,6 +1689,13 @@ which-module@^2.0.0:
   resolved "https://registry.yarnpkg.com/which-module/-/which-module-2.0.0.tgz#d9ef07dce77b9902b8a3a8fa4b31c3e3f7e6e87a"
   integrity sha1-2e8H3Od7mQK4o6j6SzHD4/fm6Ho=
 
+whoiser@^1.13.1:
+  version "1.13.1"
+  resolved "https://registry.yarnpkg.com/whoiser/-/whoiser-1.13.1.tgz#943a2030199efd774d5047df22528316ac6de5de"
+  integrity sha512-4MF0LoIsSdM7R9rs9A+PxbCXMDRmRdF7eZb8IC8pGethCrSizqMLcbJCXZO5iZGqOKovQlRhpSFGGUlwUPzoQA==
+  dependencies:
+    punycode "^2.1.1"
+
 winston-transport@^4.4.0:
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/winston-transport/-/winston-transport-4.4.0.tgz#17af518daa690d5b2ecccaa7acf7b20ca7925e59"
