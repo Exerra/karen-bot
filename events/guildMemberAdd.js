@@ -10,7 +10,7 @@ module.exports = async (client, member) => {
 		updateStats(client)
 	}
 
-	if (!member.bot()) {
+	if (!member.user.bot()) {
 		axios({
 			"method": "GET",
 			"url": `${process.env.API_SERVER}/karen/profile/`,
