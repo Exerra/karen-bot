@@ -45,7 +45,7 @@ module.exports = {
 					embed.setTitle(response.tracks.items[0].name)
 					embed.setURL(response.tracks.items[0].external_urls.spotify)
 					embed.setThumbnail(response.tracks.items[0].album.images[0].url)
-					embed.setAuthor('Spotify', 'https://cdn.exerra.xyz/png/companies/spotify/240px-Spotify_logo_without_text.png')
+					embed.setAuthor('Spotify', 'https://cdn.exerra.xyz/png/companies/spotify/notext-transparent-2000x2000.png')
 					embed.setColor(config.color)
 					embed.addField('Monthly popularity', `${response.tracks.items[0].popularity}%`)
 					embed.addField('Album name', response.tracks.items[0].album.name)
