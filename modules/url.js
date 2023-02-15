@@ -22,13 +22,17 @@ const getDomain = (str) => {
 }
 
 const isScam = async (url) => {
-	let data = await axios.get(`${process.env.API_SERVER}/scam`, {
+	let data = await axios.get(`https://exerra-phishing-check.p.rapidapi.com/`, {
 		params: {
 			url: url
+		},
+		headers: {
+			"X-RapidAPI-Key": process.env.RAPIDAPI_KEY,
+			"X-RapidAPI-Host": "exerra-phishing-check.p.rapidapi.com"
 		}
 	})
 
-	return data.data.isScam
+	return data.data.data.isScam
 }
 
 exports.isURL = isURL
